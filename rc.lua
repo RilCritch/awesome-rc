@@ -179,6 +179,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- variables
     local l = awful.layout.suit
+    -- tag index -   t[1]    t[2]    t[3]    t[4]    t[5]    t[6]    t[7]    t[8]    t[9]
     local names =   { "1",    "2",    "3",    "4",    "5",    "6",    "7",    "8",    "9" }
     local layouts = { l.tile, l.tile. l.tile, l.tile, l.tile, l.tile, l.tile, l.tile, l.tile }
 
