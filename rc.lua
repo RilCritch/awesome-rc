@@ -39,13 +39,22 @@ local menubar = require("menubar") -- XDG (application) menu implementation
 local hotkeys = require("awful.hotkeys_popup")
 
 local my_hotkeys_popup = hotkeys.widget.new({
-    width  = 1800,
-    height = 1200,
+    width        = 1800,
+    height       = 1200,
+    group_margin = 36,
 })
+
+-- Setting group colors
+my_hotkeys_popup:add_group_rules("awesome",  { color = "#83A598" })
+my_hotkeys_popup:add_group_rules("client",   { color = "#D5C4A1" })
+my_hotkeys_popup:add_group_rules("launcher", { color = "#A89984" })
+my_hotkeys_popup:add_group_rules("layout",   { color = "#D5C4A1" })
+my_hotkeys_popup:add_group_rules("screen",   { color = "#A89984" })
+my_hotkeys_popup:add_group_rules("tag",      { color = "#D5C4A1" })
 
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
-require("awful.hotkeys_popup.keys")
+-- require("awful.hotkeys_popup.keys")
 
 -- }}}
 

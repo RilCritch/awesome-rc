@@ -40,7 +40,6 @@ theme.hotkeys_label_bg         = "#D5C4A1"
 theme.hotkeys_label_fg         = "#1D2021"
 theme.hotkeys_font             = "MononokiNerdFont 16"
 theme.hotkeys_description_font = "UbuntuNerdFont 14"
-theme.group_margin             = 20
 
 -- There are other variable sets
 -- overriding the default one when
