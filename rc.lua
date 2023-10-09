@@ -31,14 +31,23 @@ local naughty = require("naughty") -- notification handling
 local ruled = require("ruled") -- define declarative rules on various rules
 local menubar = require("menubar") -- XDG (application) menu implementation
 
+-- Imports end }}}
+
+-- Hotkeys popup {{{
+
 -- Popup widget that shows declared hotkeys w/ descriptions
-local hotkeys_popup = require("awful.hotkeys_popup")
+local hotkeys = require("awful.hotkeys_popup")
+
+local my_hotkeys_popup = hotkeys.widget.new({
+    width  = 1800,
+    height = 1200,
+})
 
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
--- Imports end }}}
+-- }}}
 
 -- Error Handling {{{
 
@@ -64,7 +73,7 @@ end)
 -- default:
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 -- user:
-beautiful.init(gears.filesystem.get_xdg_config_home() .. "awesome/themes/default/theme.lua")
+beautiful.init(gears.filesystem.get_xdg_config_home() .. "awesome/themes/gruvbox/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 -- terminal = "xterm" -- default
@@ -85,7 +94,7 @@ modkey = "Mod4" -- super key (AKA logo key)
 
 -- Create a launcher widget and a main menu
 myawesomemenu = {
-   { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
+   { "hotkeys", function() my_hotkeys_popup.show_help(nil, awful.screen.focused()) end },
    { "manual", terminal .. " -e man awesome" },
    { "edit config", editor_cmd .. " " .. awesome.conffile },
    { "restart", awesome.restart },
@@ -181,7 +190,7 @@ awful.screen.connect_for_each_screen(function(s)
     local l = awful.layout.suit
     -- tag index -   t[1]    t[2]    t[3]    t[4]    t[5]    t[6]    t[7]    t[8]    t[9]
     local names =   { "1",    "2",    "3",    "4",    "5",    "6",    "7",    "8",    "9" }
-    local layouts = { l.tile, l.tile. l.tile, l.tile, l.tile, l.tile, l.tile, l.tile, l.tile }
+    local layouts = { l.tile, l.tile, l.tile, l.tile, l.tile, l.tile, l.tile, l.tile, l.tile }
 
     -- tags
     awful.tag.add(names[1], {
@@ -345,7 +354,10 @@ awful.mouse.append_global_mousebindings({
 -- use xev to see button values for system
 -- General Awesome keys
 awful.keyboard.append_global_keybindings({
-    awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
+    awful.key({ modkey }, "s",
+              function ()
+                  my_hotkeys_popup:show_help()
+              end,
               {description="show help", group="awesome"}),
     awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
               {description = "show main menu", group = "awesome"}),
