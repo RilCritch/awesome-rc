@@ -1,5 +1,5 @@
 ---------------------------
--- Default awesome theme --
+-- Gruvbox awesome theme --
 ---------------------------
 
 local theme_assets = require("beautiful.theme_assets")
@@ -31,6 +31,13 @@ theme.border_color_normal = "#000000"
 theme.border_color_active = "#535d6c"
 theme.border_color_marked = "#91231c"
 
+theme.hotkeys_bg               = "#1D2021"
+theme.hotkeys_fg               = "#EBDBB2"
+theme.hotkeys_border_width     = dpi(2)
+theme.hotkeys_border_color     = "#EBDBB2"
+theme.hotkeys_modifiers_fg     = "#8EC07C"
+theme.hotkeys_label_bg         = "#D5C4A1"
+theme.hotkeys_label_fg         = "#1D2021"
 theme.hotkeys_font             = "MononokiNerdFont 16"
 theme.hotkeys_description_font = "UbuntuNerdFont 14"
 theme.group_margin             = 20
