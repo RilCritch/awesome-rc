@@ -2,6 +2,11 @@
 -- Gruvbox awesome theme --
 ---------------------------
 
+-- NOTE: This is just an initial theme
+-- I need to create a more indepth theme
+-- I want to use a colors table for this
+-- This is so I can create themes easier
+
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
 local rnotification = require("ruled.notification")
@@ -14,22 +19,22 @@ local theme = {}
 
 theme.font          = "MononokiNerdFont 15"
 
-theme.bg_normal     = "#222222"
-theme.bg_focus      = "#535d6c"
-theme.bg_urgent     = "#ff0000"
-theme.bg_minimize   = "#444444"
+theme.bg_normal     = "#282828"
+theme.bg_focus      = "#665C54"
+theme.bg_urgent     = "#CC241D"
+theme.bg_minimize   = "#504945"
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = "#aaaaaa"
-theme.fg_focus      = "#ffffff"
-theme.fg_urgent     = "#ffffff"
-theme.fg_minimize   = "#ffffff"
+theme.fg_normal     = "#BDAE93"
+theme.fg_focus      = "#FBF1C7"
+theme.fg_urgent     = "#EBDBB2"
+theme.fg_minimize   = "#BDAE93"
 
 theme.useless_gap         = dpi(10)
 theme.border_width        = dpi(2)
-theme.border_color_normal = "#000000"
-theme.border_color_active = "#535d6c"
-theme.border_color_marked = "#91231c"
+theme.border_color_normal = "#1D2021"
+theme.border_color_active = "#8EC07C"
+theme.border_color_marked = "#9D0006"
 
 theme.hotkeys_bg               = "#1D2021"
 theme.hotkeys_fg               = "#EBDBB2"
@@ -54,7 +59,7 @@ theme.hotkeys_description_font = "UbuntuNerdFont 14"
 --theme.taglist_bg_focus = "#ff0000"
 
 -- Generate taglist squares:
-local taglist_square_size = dpi(4)
+local taglist_square_size = dpi(6)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
     taglist_square_size, theme.fg_normal
 )
@@ -72,8 +77,8 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
 theme.menu_submenu_icon = themes_path.."default/submenu.png"
-theme.menu_height = dpi(15)
-theme.menu_width  = dpi(100)
+theme.menu_height = dpi(32)
+theme.menu_width  = dpi(240)
 
 -- You can add as many variables as
 -- you wish and access them by using
@@ -140,7 +145,7 @@ theme.icon_theme = nil
 rnotification.connect_signal('request::rules', function()
     rnotification.append_rule {
         rule       = { urgency = 'critical' },
-        properties = { bg = '#ff0000', fg = '#ffffff' }
+        properties = { bg = '#CC241D', fg = '#FBF1C7' }
     }
 end)
 
