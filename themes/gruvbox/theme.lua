@@ -12,8 +12,10 @@ local xresources = require("beautiful.xresources")
 local rnotification = require("ruled.notification")
 local dpi = xresources.apply_dpi
 
+local gears = require("gears") -- utilities such as color parsing and objects
+
 local gfs = require("gears.filesystem")
-local themes_path = gfs.get_themes_dir()
+local themes_path = gfs.get_xdg_config_home() .. "awesome/themes/"
 
 local theme = {}
 
@@ -67,6 +69,8 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
     taglist_square_size, theme.fg_normal
 )
 
+theme.taglist_spacing = dpi(2)
+
 -- Variables set for theming notifications:
 -- notification_font
 -- notification_[bg|fg]
@@ -76,7 +80,12 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
-theme.menu_submenu_icon = themes_path.."default/submenu.png"
+theme.menu_submenu_icon = themes_path.."icons/submenu.svg"
+theme.menu_submenu_icon = gears.color.recolor_image(
+    theme.menu_submenu_icon,
+    theme.fg_focus
+)
+
 theme.menu_height = dpi(32)
 theme.menu_width  = dpi(240)
 
@@ -86,51 +95,51 @@ theme.menu_width  = dpi(240)
 --theme.bg_widget = "#cc0000"
 
 -- Define the image to load
-theme.titlebar_close_button_normal = themes_path.."default/titlebar/close_normal.png"
-theme.titlebar_close_button_focus  = themes_path.."default/titlebar/close_focus.png"
+-- theme.titlebar_close_button_normal = themes_path.."gruvbox/titlebar/close_normal.png"
+-- theme.titlebar_close_button_focus  = themes_path.."gruvbox/titlebar/close_focus.png"
+--
+-- theme.titlebar_minimize_button_normal = themes_path.."gruvbox/titlebar/minimize_normal.png"
+-- theme.titlebar_minimize_button_focus  = themes_path.."gruvbox/titlebar/minimize_focus.png"
+--
+-- theme.titlebar_ontop_button_normal_inactive = themes_path.."gruvbox/titlebar/ontop_normal_inactive.png"
+-- theme.titlebar_ontop_button_focus_inactive  = themes_path.."gruvbox/titlebar/ontop_focus_inactive.png"
+-- theme.titlebar_ontop_button_normal_active =   themes_path.."gruvbox/titlebar/ontop_normal_active.png"
+-- theme.titlebar_ontop_button_focus_active  =   themes_path.."gruvbox/titlebar/ontop_focus_active.png"
+--
+-- theme.titlebar_sticky_button_normal_inactive = themes_path.."gruvbox/titlebar/sticky_normal_inactive.png"
+-- theme.titlebar_sticky_button_focus_inactive  = themes_path.."gruvbox/titlebar/sticky_focus_inactive.png"
+-- theme.titlebar_sticky_button_normal_active =   themes_path.."gruvbox/titlebar/sticky_normal_active.png"
+-- theme.titlebar_sticky_button_focus_active  =   themes_path.."gruvbox/titlebar/sticky_focus_active.png"
+--
+-- theme.titlebar_floating_button_normal_inactive = themes_path.."gruvbox/titlebar/floating_normal_inactive.png"
+-- theme.titlebar_floating_button_focus_inactive  = themes_path.."gruvbox/titlebar/floating_focus_inactive.png"
+-- theme.titlebar_floating_button_normal_active =   themes_path.."gruvbox/titlebar/floating_normal_active.png"
+-- theme.titlebar_floating_button_focus_active  =   themes_path.."gruvbox/titlebar/floating_focus_active.png"
+--
+-- theme.titlebar_maximized_button_normal_inactive = themes_path.."gruvbox/titlebar/maximized_normal_inactive.png"
+-- theme.titlebar_maximized_button_focus_inactive  = themes_path.."gruvbox/titlebar/maximized_focus_inactive.png"
+-- theme.titlebar_maximized_button_normal_active =   themes_path.."gruvbox/titlebar/maximized_normal_active.png"
+-- theme.titlebar_maximized_button_focus_active  =   themes_path.."gruvbox/titlebar/maximized_focus_active.png"
 
-theme.titlebar_minimize_button_normal = themes_path.."default/titlebar/minimize_normal.png"
-theme.titlebar_minimize_button_focus  = themes_path.."default/titlebar/minimize_focus.png"
-
-theme.titlebar_ontop_button_normal_inactive = themes_path.."default/titlebar/ontop_normal_inactive.png"
-theme.titlebar_ontop_button_focus_inactive  = themes_path.."default/titlebar/ontop_focus_inactive.png"
-theme.titlebar_ontop_button_normal_active = themes_path.."default/titlebar/ontop_normal_active.png"
-theme.titlebar_ontop_button_focus_active  = themes_path.."default/titlebar/ontop_focus_active.png"
-
-theme.titlebar_sticky_button_normal_inactive = themes_path.."default/titlebar/sticky_normal_inactive.png"
-theme.titlebar_sticky_button_focus_inactive  = themes_path.."default/titlebar/sticky_focus_inactive.png"
-theme.titlebar_sticky_button_normal_active = themes_path.."default/titlebar/sticky_normal_active.png"
-theme.titlebar_sticky_button_focus_active  = themes_path.."default/titlebar/sticky_focus_active.png"
-
-theme.titlebar_floating_button_normal_inactive = themes_path.."default/titlebar/floating_normal_inactive.png"
-theme.titlebar_floating_button_focus_inactive  = themes_path.."default/titlebar/floating_focus_inactive.png"
-theme.titlebar_floating_button_normal_active = themes_path.."default/titlebar/floating_normal_active.png"
-theme.titlebar_floating_button_focus_active  = themes_path.."default/titlebar/floating_focus_active.png"
-
-theme.titlebar_maximized_button_normal_inactive = themes_path.."default/titlebar/maximized_normal_inactive.png"
-theme.titlebar_maximized_button_focus_inactive  = themes_path.."default/titlebar/maximized_focus_inactive.png"
-theme.titlebar_maximized_button_normal_active = themes_path.."default/titlebar/maximized_normal_active.png"
-theme.titlebar_maximized_button_focus_active  = themes_path.."default/titlebar/maximized_focus_active.png"
-
-theme.wallpaper = themes_path.."default/background.png"
+theme.wallpaper = themes_path.."gruvbox/background.png"
 
 -- You can use your own layout icons like this:
-theme.layout_fairh = themes_path.."default/layouts/fairhw.png"
-theme.layout_fairv = themes_path.."default/layouts/fairvw.png"
-theme.layout_floating  = themes_path.."default/layouts/floatingw.png"
-theme.layout_magnifier = themes_path.."default/layouts/magnifierw.png"
-theme.layout_max = themes_path.."default/layouts/maxw.png"
-theme.layout_fullscreen = themes_path.."default/layouts/fullscreenw.png"
-theme.layout_tilebottom = themes_path.."default/layouts/tilebottomw.png"
-theme.layout_tileleft   = themes_path.."default/layouts/tileleftw.png"
-theme.layout_tile = themes_path.."default/layouts/tilew.png"
-theme.layout_tiletop = themes_path.."default/layouts/tiletopw.png"
-theme.layout_spiral  = themes_path.."default/layouts/spiralw.png"
-theme.layout_dwindle = themes_path.."default/layouts/dwindlew.png"
-theme.layout_cornernw = themes_path.."default/layouts/cornernww.png"
-theme.layout_cornerne = themes_path.."default/layouts/cornernew.png"
-theme.layout_cornersw = themes_path.."default/layouts/cornersww.png"
-theme.layout_cornerse = themes_path.."default/layouts/cornersew.png"
+theme.layout_fairh =      gears.color.recolor_image(themes_path.."gruvbox/layouts/fairhw.png"     , "#928374")
+theme.layout_fairv =      gears.color.recolor_image(themes_path.."gruvbox/layouts/fairvw.png"     , "#928374")
+theme.layout_floating  =  gears.color.recolor_image(themes_path.."gruvbox/layouts/floatingw.png"  , "#928374")
+theme.layout_magnifier =  gears.color.recolor_image(themes_path.."gruvbox/layouts/magnifierw.png" , "#928374")
+theme.layout_max =        gears.color.recolor_image(themes_path.."gruvbox/layouts/maxw.png"       , "#928374")
+theme.layout_fullscreen = gears.color.recolor_image(themes_path.."gruvbox/layouts/fullscreenw.png", "#928374")
+theme.layout_tilebottom = gears.color.recolor_image(themes_path.."gruvbox/layouts/tilebottomw.png", "#928374")
+theme.layout_tileleft   = gears.color.recolor_image(themes_path.."gruvbox/layouts/tileleftw.png"  , "#928374")
+theme.layout_tile =       gears.color.recolor_image(themes_path.."gruvbox/layouts/tilew.png"      , "#928374")
+theme.layout_tiletop =    gears.color.recolor_image(themes_path.."gruvbox/layouts/tiletopw.png"   , "#928374")
+theme.layout_spiral  =    gears.color.recolor_image(themes_path.."gruvbox/layouts/spiralw.png"    , "#928374")
+theme.layout_dwindle =    gears.color.recolor_image(themes_path.."gruvbox/layouts/dwindlew.png"   , "#928374")
+theme.layout_cornernw =   gears.color.recolor_image(themes_path.."gruvbox/layouts/cornernww.png"  , "#928374")
+theme.layout_cornerne =   gears.color.recolor_image(themes_path.."gruvbox/layouts/cornernew.png"  , "#928374")
+theme.layout_cornersw =   gears.color.recolor_image(themes_path.."gruvbox/layouts/cornersww.png"  , "#928374")
+theme.layout_cornerse =   gears.color.recolor_image(themes_path.."gruvbox/layouts/cornersew.png"  , "#928374")
 
 -- Generate Awesome icon:
 theme.awesome_icon = theme_assets.awesome_icon(

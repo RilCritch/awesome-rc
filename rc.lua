@@ -274,7 +274,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
             awful.button({ }, 1, function () awful.layout.inc( 1) end),
             awful.button({ }, 3, function () awful.layout.inc(-1) end),
             awful.button({ }, 4, function () awful.layout.inc(-1) end),
-            awful.button({ }, 5, function () awful.layout.inc( 1) end),
+            awful.button({ }, 5, function () awful.layout.inc( 1) end)
         }
     }
 
@@ -283,7 +283,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
         screen  = s,
         filter  = awful.widget.taglist.filter.all,
         buttons = {
-            -- NOTE: <t> signifies the hovered tag in the taglist
             awful.button({ }, 1, function(t) t:view_only() end),
             awful.button({ modkey }, 1, function(t)
                                             if client.focus then
@@ -726,3 +725,9 @@ client.connect_signal("mouse::enter", function(c)
 end)
 
 -- Sloppy Focus end }}}
+
+-- Autostart {{{
+
+awful.spawn.with_shell("~/.config/awesome/scripts/autostart.sh")
+
+-- }}}
