@@ -24,13 +24,13 @@ theme.font          = "MononokiNerdFont 15"
 theme.bg_normal     = "#282828"
 theme.bg_focus      = "#665C54"
 theme.bg_urgent     = "#CC241D"
-theme.bg_minimize   = "#504945"
+theme.bg_minimize   = "#282828"
 theme.bg_systray    = theme.bg_normal
 
 theme.fg_normal     = "#BDAE93"
 theme.fg_focus      = "#FBF1C7"
 theme.fg_urgent     = "#EBDBB2"
-theme.fg_minimize   = "#BDAE93"
+theme.fg_minimize   = "#665c54"
 
 theme.useless_gap         = dpi(10)
 theme.border_width        = dpi(2)
@@ -47,6 +47,7 @@ theme.hotkeys_label_bg         = "#D5C4A1"
 theme.hotkeys_label_fg         = "#1D2021"
 theme.hotkeys_font             = "MononokiNerdFont 16"
 theme.hotkeys_description_font = "UbuntuNerdFont 14"
+
 
 -- There are other variable sets
 -- overriding the default one when
@@ -68,8 +69,11 @@ theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
 theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
     taglist_square_size, theme.fg_normal
 )
+theme.taglist_spacing = dpi(4)
 
-theme.taglist_spacing = dpi(2)
+-- Tasklist
+theme.tasklist_disable_icon = true
+
 
 -- Variables set for theming notifications:
 -- notification_font
