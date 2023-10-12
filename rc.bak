@@ -33,6 +33,31 @@ local menubar = require("menubar") -- XDG (application) menu implementation
 
 -- Imports end }}}
 
+-- Hotkeys popup {{{
+
+-- Popup widget that shows declared hotkeys w/ descriptions
+local hotkeys = require("awful.hotkeys_popup")
+
+local my_hotkeys_popup = hotkeys.widget.new({
+    width        = 1800,
+    height       = 1200,
+    group_margin = 36,
+})
+
+-- Setting group colors
+my_hotkeys_popup:add_group_rules("awesome",  { color = "#83A598" })
+my_hotkeys_popup:add_group_rules("client",   { color = "#D5C4A1" })
+my_hotkeys_popup:add_group_rules("launcher", { color = "#A89984" })
+my_hotkeys_popup:add_group_rules("layout",   { color = "#D5C4A1" })
+my_hotkeys_popup:add_group_rules("screen",   { color = "#A89984" })
+my_hotkeys_popup:add_group_rules("tag",      { color = "#D5C4A1" })
+
+-- Enable hotkeys help widget for VIM and other apps
+-- when client with a matching name is opened:
+-- require("awful.hotkeys_popup.keys")
+
+-- }}}
+
 -- Error Handling {{{
 
 -- Check if awesome encountered an error during startup and fell back to
@@ -51,38 +76,13 @@ end)
 
 -- Error Handling end }}}
 
--- Hotkeys popup {{{
-
--- Popup widget that shows declared hotkeys w/ descriptions
-local hotkeys = require("awful.hotkeys_popup")
-
-local my_hotkeys_popup = hotkeys.widget.new({
-    width        = 1800,
-    height       = 1200,
-    group_margin = 36,
-})
-
--- Setting group colors
-my_hotkeys_popup:add_group_rules("awesome",  { color = "#3F5865" })
-my_hotkeys_popup:add_group_rules("client",   { color = "#48584E" })
-my_hotkeys_popup:add_group_rules("launcher", { color = "#55544A" })
-my_hotkeys_popup:add_group_rules("layout",   { color = "#48584E" })
-my_hotkeys_popup:add_group_rules("screen",   { color = "#55544A" })
-my_hotkeys_popup:add_group_rules("tag",      { color = "#48584E" })
-
--- Enable hotkeys help widget for VIM and other apps
--- when client with a matching name is opened:
--- require("awful.hotkeys_popup.keys")
-
--- }}}
-
 -- Variable Definitions {{{
 
 -- Themes define colours, icons, font and wallpapers.
 -- default:
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 -- user:
-beautiful.init(gears.filesystem.get_xdg_config_home() .. "awesome/themes/everforest/theme.lua")
+beautiful.init(gears.filesystem.get_xdg_config_home() .. "awesome/themes/gruvbox/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 -- terminal = "xterm" -- default
@@ -315,6 +315,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
         }
     }
 
+    -- Create the wibox
     s.mywibox = awful.wibar {
         position = "top",
         screen   = s,
@@ -336,15 +337,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
             },
         }
     }
-
-    -- s.mywibox = awful.wibar {
-    --     position = "top",
-    --     -- margins = 5,
-    --     screen   = s,
-    --     widget   = {
-    --         layout = wibox.layout.align.horizontal,
-    --     }
-    -- }
 end)
 
 -- Wibar end }}}
