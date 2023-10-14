@@ -33,23 +33,22 @@ local menubar = require("menubar") -- XDG (application) menu implementation
 
 -- Imports end }}}
 
--- Error Handling {{{
+-- New Split configuration imports {{{
+-- Global namespace, created before requiring any modules
+RC = {}
 
--- Check if awesome encountered an error during startup and fell back to
--- another config (This code will only ever execute for the fallback config)
-naughty.connect_signal("request::display_error", function(message, startup)
-    naughty.notification {
-        urgency = "critical",
-        title   = "Oops, an error happened"..(startup and " during startup!" or "!"),
-        message = message
-    }
-end)
+-- Custom local libraries
+local main = {
+    layouts = require("main.layouts")
+}
 
--- For other error handling tips check out these links:
--- https://awesomewm.org/apidoc/documentation/05-awesomerc.md.html#Error_handling
--- https://awesomewm.org/apidoc/documentation/01-readme.md.html#Troubleshooting
+-- }}}
 
--- Error Handling end }}}
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+--[[ Error Handling ]]--
+
+require("main.errorhandling")
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 -- Hotkeys popup {{{
 
@@ -78,24 +77,20 @@ my_hotkeys_popup:add_group_rules("tag",      { color = "#48584E" })
 
 -- Variable Definitions {{{
 
+-- Retrieve user variables
+RC.vars = require("main.uservariables")
+
+-- Need to figure out what do with this for modular approach
 -- Themes define colours, icons, font and wallpapers.
 -- default:
 -- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 -- user:
 beautiful.init(gears.filesystem.get_xdg_config_home() .. "awesome/themes/everforest/theme.lua")
 
--- This is used later as the default terminal and editor to run.
--- terminal = "xterm" -- default
-terminal = "kitty" -- my preferred terminal
-editor = os.getenv("EDITOR") or "nano"
-editor_cmd = terminal .. " -e " .. editor
-
--- Default modkey.
--- If you do not like this or do not have such a key,
--- I suggest you to remap Mod4 to another key using xmodmap or other tools.
--- Typical key representation:
--- mod1: Alt; mod2: Num_Lock; mod3: ISO_Level5_Shift; mod4: Super; mod5: ISO_Level3_Shift
-modkey = "Mod4" -- super key (AKA logo key)
+-- Termporarily include these until I move keydindings to separate file
+local terminal = RC.vars.terminal
+local editor_cmd = RC.vars.editor_cmd
+local modkey = RC.vars.modkey
 
 -- Variable Definitions end }}}
 
@@ -123,31 +118,13 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 
 -- Menu end }}}
 
--- Tag Layout {{{
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+--[[ Tag Layouts ]]--
 
--- Table of layouts to cover with awful.layout.inc, order matters.
 tag.connect_signal("request::default_layouts", function()
-    awful.layout.append_default_layouts({
-        awful.layout.suit.tile,
-        awful.layout.suit.tile.left,
-        awful.layout.suit.tile.bottom,
-        awful.layout.suit.tile.top,
-        awful.layout.suit.fair,
-        awful.layout.suit.fair.horizontal,
-        awful.layout.suit.max,
-        awful.layout.suit.max.fullscreen,
-        awful.layout.suit.magnifier,
-        awful.layout.suit.floating,
-        -- awful.layout.suit.corner.nw,
-        -- awful.layout.suit.corner.ne,
-        -- awful.layout.suit.corner.sw,
-        -- awful.layout.suit.corner.se,
-        -- awful.layout.suit.spiral,
-        -- awful.layout.suit.spiral.dwindle,
-    })
+    awful.layout.append_default_layouts(main.layouts)
 end)
-
--- Tag Layout end }}}
+-- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
 -- Wallpaper {{{
 
@@ -199,7 +176,17 @@ awful.screen.connect_for_each_screen(function(s)
     local l = awful.layout.suit
     -- tag index -   t[1]    t[2]    t[3]    t[4]    t[5]    t[6]    t[7]    t[8]    t[9]
     local names =   { "1",    "2",    "3",    "4",    "5",    "6",    "7",    "8",    "9" }
-    local layouts = { l.tile, l.tile, l.tile, l.tile, l.tile, l.tile, l.tile, l.tile, l.tile }
+    local layouts = {
+        l.tile.left,
+        l.tile.left,
+        l.tile.left,
+        l.tile.left,
+        l.tile.left,
+        l.tile.left,
+        l.tile.left,
+        l.tile.left,
+        l.tile.left,
+    }
 
     -- tags
     awful.tag.add(names[1], {
