@@ -1,60 +1,53 @@
 -- vim:fileencoding=utf-8:shiftwidth=4:tabstop=4:foldmethod=marker
 -- awesome_mode: api-level=4:screen=on
 
--- LuaRocks {{{
-
+--[[ LuaRocks ]]--
 -- If LuaRocks is installed, make sure that packages installed through it are
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
--- LuaRocks end }}}
 
--- Imports {{{
-
--- Standard awesome library
+--[[ Awesome Modules ]]--
 local gears = require("gears") -- utilities such as color parsing and objects
 local awful = require("awful") -- everything related to window management
 
--- Handling of focus when focused window disappears
-require("awful.autofocus")
+require("awful.autofocus") -- Handling of focus when focused window disappears
 
--- Widget and layout library
-local wibox = require("wibox") -- awesome's generic widget framework
-
--- Theme handling library
+local wibox     = require("wibox") -- awesome's generic widget framework
 local beautiful = require("beautiful") -- awesome theme module
 
--- Notification library
-local naughty = require("naughty") -- notification handling
-
--- Declarative object management
-local ruled = require("ruled") -- define declarative rules on various rules
+local ruled   = require("ruled") -- define declarative rules on various rules
 local menubar = require("menubar") -- XDG (application) menu implementation
 
--- Imports end }}}
 
--- New Split configuration imports {{{
+--[[ Custom Modules ]]--
 -- Global namespace, created before requiring any modules
 RC = {}
+RC.vars = require("main.uservariables") -- ./main/uservariables.lua
 
 -- Custom local libraries
 local main = {
-    layouts = require("main.layouts")
+    layouts = require("main.layouts"), -- ./main/layouts.lua
+    tags    = require("main.tags"),    -- ./main/tags.lua
+    rules   = require("main.rules"),   -- ./main/rules.lua
 }
 
--- }}}
+local binding = {
+    globalbuttons = require("binding.globalbuttons"), -- ./binding/globalbuttons.lua
+    clientbuttons = require("binding.clientbuttons"), -- ./binding/clientbuttons.lua
+    globalkeys    = require("binding.globalkeys"),    -- ./binding/globalkeys.lua
+    bindtotags    = require("binding.bindtotags"),    -- ./binding/bindtotags.lua
+    clientkeys    = require("binding.clientkeys"),    -- ./binding/clientkeys.lua
+}
 
--- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+
 --[[ Error Handling ]]--
+require("main.errorhandling") -- ./main/errorhandling.lua
 
-require("main.errorhandling")
--- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- Hotkeys popup {{{
-
+--[[ Hotkeys popup ]]--
 -- Popup widget that shows declared hotkeys w/ descriptions
 local hotkeys = require("awful.hotkeys_popup")
-
 local my_hotkeys_popup = hotkeys.widget.new({
     width        = 1800,
     height       = 1200,
@@ -69,22 +62,10 @@ my_hotkeys_popup:add_group_rules("layout",   { color = "#48584E" })
 my_hotkeys_popup:add_group_rules("screen",   { color = "#55544A" })
 my_hotkeys_popup:add_group_rules("tag",      { color = "#48584E" })
 
--- Enable hotkeys help widget for VIM and other apps
--- when client with a matching name is opened:
--- require("awful.hotkeys_popup.keys")
 
--- }}}
-
--- Variable Definitions {{{
-
--- Retrieve user variables
-RC.vars = require("main.uservariables")
-
--- Need to figure out what do with this for modular approach
--- Themes define colours, icons, font and wallpapers.
--- default:
--- beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
--- user:
+--[[ Variables ]]--
+--  TODO: Need to figure out what do with this for modular approach
+-- initialize theme variables
 beautiful.init(gears.filesystem.get_xdg_config_home() .. "awesome/themes/everforest/theme.lua")
 
 -- Termporarily include these until I move keydindings to separate file
@@ -92,42 +73,19 @@ local terminal = RC.vars.terminal
 local editor_cmd = RC.vars.editor_cmd
 local modkey = RC.vars.modkey
 
--- Variable Definitions end }}}
 
--- Menu {{{
-
--- Create a launcher widget and a main menu
-myawesomemenu = {
-   { "hotkeys", function() my_hotkeys_popup.show_help(nil, awful.screen.focused()) end },
-   { "manual", terminal .. " -e man awesome" },
-   { "edit config", editor_cmd .. " " .. awesome.conffile },
-   { "restart", awesome.restart },
-   { "quit", function() awesome.quit() end },
-}
-
-mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
-                                  }
-                        })
-
-mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
-                                     menu = mymainmenu })
-
--- Menubar configuration
-menubar.utils.terminal = terminal -- Set the terminal for applications that require it
-
--- Menu end }}}
-
--- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 --[[ Tag Layouts ]]--
+RC.layouts = main.layouts()
 
-tag.connect_signal("request::default_layouts", function()
-    awful.layout.append_default_layouts(main.layouts)
+-- Set global layouts
+tag.connect_signal("request::default_layouts", function() -- maybe move this part to external
+    awful.layout.append_default_layouts(
+        RC.layouts -- ./main/layouts.lua
+    )
 end)
--- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
--- Wallpaper {{{
 
+--[[ Wallpaper ]]--
 -- NOTE: <s> is the screen on which to draw the wallpaper
 screen.connect_signal("request::wallpaper", function(s)
     awful.wallpaper {
@@ -147,91 +105,12 @@ screen.connect_signal("request::wallpaper", function(s)
     }
 end)
 
--- Wallpaper end }}}
 
--- Tags ~ Workspaces {{{
+--[[ Tags ~ Workspaces ]]--
+RC.tags = main.tags()
 
-awful.screen.connect_for_each_screen(function(s)
-    -- Adding tags template:
-    -- the values set in the template are the default value
-    -- awful.tag.add("<tag name>", {
-    --     icon                 = nil, string as path to icon, cairo, or librsvg, nil means no icon
-    --     layout               = awful.layout.layouts[1], - the default layout for the tag
-    --     layouts              = awful.layout.layouts, - change the list of layouts available on the tag
-    --     master_width_factor  = "beautiful.master_width_factor" - tag specific with factor; diff for each layout
-    --     master_fill_policy   = "beautiful.master_fill_policy", - can set to master_width_factor or expand
-    --                                                            - limist width of clients when they will be too big
-    --     master_count         = beautiful.master_count, - min: 1; number of master windows
-    --     column_count         = beautiful.column_count, - min: 1; number of columns ~ good for ultrawide?
-    --     gap_single_client    = beautiful.gap_single_client, - add gap when a single client is in the tag?
-    --     gap                  = beautiful.useless_gap, - margin for each client in this tab
-    --     screen               = awful.screen.focused(), - the screen the tag associated with
-    --     index                = list.len + 1, - the tag's index ~ set automatically as they are added
-    --     activated            = <true> or false, - True if tag is active and can be used
-    --     selected             = true or <false>, - is tag selected? - one tag must have this as true
-    --     volatile             = true or <false>, - remove tag when all clients removed; useful for throw away tags
-    -- })
 
-    -- variables
-    local l = awful.layout.suit
-    -- tag index -   t[1]    t[2]    t[3]    t[4]    t[5]    t[6]    t[7]    t[8]    t[9]
-    local names =   { "1",    "2",    "3",    "4",    "5",    "6",    "7",    "8",    "9" }
-    local layouts = {
-        l.tile.left,
-        l.tile.left,
-        l.tile.left,
-        l.tile.left,
-        l.tile.left,
-        l.tile.left,
-        l.tile.left,
-        l.tile.left,
-        l.tile.left,
-    }
-
-    -- tags
-    awful.tag.add(names[1], {
-        layout          = layouts[1],
-        screen          = s,
-        selected        = true, -- this tag is selected on startup
-    })
-    awful.tag.add(names[2], {
-        layout          = layouts[2],
-        screen          = s,
-    })
-    awful.tag.add(names[3], {
-        layout          = layouts[3],
-        screen          = s,
-    })
-    awful.tag.add(names[4], {
-        layout          = layouts[4],
-        screen          = s,
-    })
-    awful.tag.add(names[5], {
-        layout          = layouts[5],
-        screen          = s,
-    })
-    awful.tag.add(names[6], {
-        layout          = layouts[6],
-        screen          = s,
-    })
-    awful.tag.add(names[7], {
-        layout          = layouts[7],
-        screen          = s,
-    })
-    awful.tag.add(names[8], {
-        layout          = layouts[8],
-        screen          = s,
-    })
-    awful.tag.add(names[9], {
-        layout          = layouts[9],
-        screen          = s,
-    })
-end)
-
--- }}}
-
--- Wibar {{{
-
+--[[ Wibar ]]--
 -- Keyboard layout indicator and switcher
 mykeyboardlayout = awful.widget.keyboardlayout()
 
@@ -309,7 +188,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
             layout = wibox.layout.align.horizontal,
             { -- Left widgets
                 layout = wibox.layout.fixed.horizontal,
-                mylauncher,
                 s.mytaglist,
                 s.mypromptbox,
             },
@@ -334,26 +212,12 @@ screen.connect_signal("request::desktop_decoration", function(s)
     -- }
 end)
 
--- Wibar end }}}
 
--- Mouse Bindings {{{
+--[[ Global Mouse ]]--
+awful.mouse.append_global_mousebindings({binding.globalbuttons()})
 
--- mouse button number identifiers:
--- use xev command to see values
--- 1: left click; 2: middle click; 3: right click
--- 4: Scroll up; 5: Scroll down;
--- 6: Side scroll down; 7: Side scroll up
--- 8: Close side button; 9: Far side button
-awful.mouse.append_global_mousebindings({
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
-    awful.button({ }, 4, awful.tag.viewprev),
-    awful.button({ }, 5, awful.tag.viewnext),
-})
 
--- Mouse Bindings end }}}
-
--- Key bindings {{{
-
+--[[ Global Keys ]]--
 -- use xev to see button values for system
 -- General Awesome keys
 awful.keyboard.append_global_keybindings({
@@ -362,8 +226,6 @@ awful.keyboard.append_global_keybindings({
                   my_hotkeys_popup:show_help()
               end,
               {description="show help", group="awesome"}),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
-              {description = "show main menu", group = "awesome"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
@@ -529,22 +391,15 @@ awful.keyboard.append_global_keybindings({
     }
 })
 
--- client keys ~ only work when a client/window is focused
-client.connect_signal("request::default_mousebindings", function()
-    awful.mouse.append_client_mousebindings({
-        awful.button({ }, 1, function (c)
-            c:activate { context = "mouse_click" }
-        end),
-        awful.button({ modkey }, 1, function (c)
-            c:activate { context = "mouse_click", action = "mouse_move"  }
-        end),
-        awful.button({ modkey }, 3, function (c)
-            c:activate { context = "mouse_click", action = "mouse_resize"}
-        end),
-    })
+
+--[[ Client Mouse ]]--
+client.connect_signal("request::default_mousebindings", function() ---@diagnostic disable-line: undefined-global
+    awful.mouse.append_client_mousebindings({ binding.clientbuttons })
 end)
 
-client.connect_signal("request::default_keybindings", function()
+
+--[[ Client Keys ]]--
+client.connect_signal("request::default_keybindings", function() ---@diagnostic disable-line: undefined-global
     awful.keyboard.append_client_keybindings({
         awful.key({ modkey,           }, "f",
             function (c)
@@ -590,139 +445,16 @@ client.connect_signal("request::default_keybindings", function()
     })
 end)
 
--- Keybindings end }}}
 
--- Rules {{{
-
--- use xprop to find class name for a client
---      - look for WM_CLASS(STRING)
---      - str1: instance name; str2: class name
---      - NOTE: use the second str, e.g. class name
--- Rules to apply to new clients.
+--[[  Rules  ]]--
 ruled.client.connect_signal("request::rules", function()
-    -- All clients will match this rule.
-    ruled.client.append_rule {
-        id         = "global",
-        rule       = { },
-        properties = {
-            focus     = awful.client.focus.filter,
-            raise     = true,
-            screen    = awful.screen.preferred,
-            placement = awful.placement.no_overlap+awful.placement.no_offscreen
-        }
-    }
-
-    -- Floating clients.
-    ruled.client.append_rule {
-        id       = "floating",
-        rule_any = {
-            instance = { "copyq", "pinentry" },
-            class    = {
-                "Arandr", "Blueman-manager", "Gpick", "Kruler", "Sxiv",
-                "Tor Browser", "Wpa_gui", "veromix", "xtightvncviewer"
-            },
-            -- Note that the name property shown in xprop might be set slightly after creation of the client
-            -- and the name shown there might not match defined rules here.
-            name    = {
-                "Event Tester",  -- xev.
-            },
-            role    = {
-                "AlarmWindow",    -- Thunderbird's calendar.
-                "ConfigManager",  -- Thunderbird's about:config.
-                "pop-up",         -- e.g. Google Chrome's (detached) Developer Tools.
-            }
-        },
-        properties = { floating = true }
-    }
-
-    -- Add titlebars to normal clients and dialogs
-    -- ruled.client.append_rule {
-    --     id         = "titlebars",
-    --     rule_any   = { type = { "normal", "dialog" } },
-    --     properties = { titlebars_enabled = false     }
-    -- }
-
-    -- Set Firefox to always map on the tag named "2" on screen 1.
-    -- ruled.client.append_rule {
-    --     rule       = { class = "Firefox"     },
-    --     properties = { screen = 1, tag = "2" }
-    -- }
+    ruled.client.append_rules(main.rules())
 end)
 
--- Rules end }}}
 
--- Titlebars {{{
+--[[ Notifications ]]--
+require("main.signals")
 
--- Add a titlebar if titlebars_enabled is set to true in the rules.
--- client.connect_signal("request::titlebars", function(c)
---     -- buttons for the titlebar
---     local buttons = {
---         awful.button({ }, 1, function()
---             c:activate { context = "titlebar", action = "mouse_move"  }
---         end),
---         awful.button({ }, 3, function()
---             c:activate { context = "titlebar", action = "mouse_resize"}
---         end),
---     }
---
---     awful.titlebar(c).widget = {
---         { -- Left
---             awful.titlebar.widget.iconwidget(c),
---             buttons = buttons,
---             layout  = wibox.layout.fixed.horizontal
---         },
---         { -- Middle
---             { -- Title
---                 halign = "center",
---                 widget = awful.titlebar.widget.titlewidget(c)
---             },
---             buttons = buttons,
---             layout  = wibox.layout.flex.horizontal
---         },
---         { -- Right
---             awful.titlebar.widget.floatingbutton (c),
---             awful.titlebar.widget.maximizedbutton(c),
---             awful.titlebar.widget.stickybutton   (c),
---             awful.titlebar.widget.ontopbutton    (c),
---             awful.titlebar.widget.closebutton    (c),
---             layout = wibox.layout.fixed.horizontal()
---         },
---         layout = wibox.layout.align.horizontal
---     }
--- end)
 
--- Titlebars end }}}
-
--- Notifications {{{
-
-ruled.notification.connect_signal('request::rules', function()
-    -- All notifications will match this rule.
-    ruled.notification.append_rule {
-        rule       = { },
-        properties = {
-            screen           = awful.screen.preferred,
-            implicit_timeout = 5,
-        }
-    }
-end)
-
-naughty.connect_signal("request::display", function(n)
-    naughty.layout.box { notification = n }
-end)
-
--- Notifications end }}}
-
--- Sloppy Focus {{{
-
--- Enable sloppy focus, so that focus follows mouse.
-client.connect_signal("mouse::enter", function(c)
-    c:activate { context = "mouse_enter", raise = false }
-end)
-
--- Sloppy Focus end }}}
-
--- Autostart {{{
-
+--[[ Autostart ]]
 awful.spawn.with_shell("~/.config/awesome/scripts/autostart.sh")
-
--- }}}

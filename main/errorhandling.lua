@@ -1,6 +1,6 @@
------------------------------
--- Handling Awesome Errors --
------------------------------
+---------------------------------
+--[[ Handling Awesome Errors ]]--
+---------------------------------
 
 -- Imports
 local naughty = require("naughty") -- notification library

@@ -1,6 +1,6 @@
-------------------------
--- Defining Variables --
-------------------------
+----------------------------
+--[[ Defining Variables ]]--
+----------------------------
 
 -- home variables if needed
 -- local home = os.getenv("HOME")
