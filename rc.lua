@@ -214,7 +214,7 @@ end)
 
 
 --[[ Global Mouse ]]--
-awful.mouse.append_global_mousebindings({binding.globalbuttons()})
+awful.mouse.append_global_mousebindings( binding.globalbuttons() )
 
 
 --[[ Global Keys ]]--
@@ -394,7 +394,7 @@ awful.keyboard.append_global_keybindings({
 
 --[[ Client Mouse ]]--
 client.connect_signal("request::default_mousebindings", function() ---@diagnostic disable-line: undefined-global
-    awful.mouse.append_client_mousebindings({ binding.clientbuttons })
+    awful.mouse.append_client_mousebindings( binding.clientbuttons() )
 end)
 
 
@@ -448,7 +448,7 @@ end)
 
 --[[  Rules  ]]--
 ruled.client.connect_signal("request::rules", function()
-    ruled.client.append_rules(main.rules())
+    ruled.client.append_rules( main.rules() )
 end)
 
 
