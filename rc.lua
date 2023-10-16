@@ -55,6 +55,7 @@ local my_hotkeys_popup = hotkeys.widget.new({
     width        = 1800,
     height       = 1200,
     group_margin = 36,
+    shape    = gears.shape.rounded_rect,
 })
 
 -- Setting group colors
@@ -122,16 +123,6 @@ mytextclock = wibox.widget.textclock()
 
 -- NOTE: <s> signifies the screen the widgets will be added
 screen.connect_signal("request::desktop_decoration", function(s)
-    -- Each screen has its own tag table.
-    -- basic method:
-    -- awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
-    -- more indepth method:
-    -- local l = awful.layout.suit
-    -- local names =   { "1",    "2",    "3",    "4",    "5",    "6",    "7",    "8",    "9"    }
-    -- -- or local names = { "main", "note", "conf", "cust", "brow", "term", "strm", "tune", "chat" }
-    -- local layouts = { l.tile, l.tile, l.tile, l.tile, l.tile, l.tile, l.tile, l.tile, l.tile }
-    -- awful.tag(names, s, layouts)
-
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
 
@@ -207,7 +198,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
         }
     }
 
-    s.mywibox = awful.wibar {
+    s.mytopwibox = awful.wibar {
         position = "top",
         margins  = {
             top    = dpi(3),
@@ -215,7 +206,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
             right  = dpi(3),
             left   = dpi(3),
         },
-        height = dpi(38),
+        height = dpi(39),
         screen   = s,
         widget   = {
             layout = wibox.layout.align.horizontal,
@@ -235,12 +226,46 @@ screen.connect_signal("request::desktop_decoration", function(s)
         }
     }
 
-    -- s.mywibox = awful.wibar {
-    --     position = "top",
-    --     -- margins = 5,
+    -- s.myrightwibox = awful.wibar {
+    --     position     = "right",
+    --     stretch      = false,
+    --     -- border_width = dpi(1),
+    --     -- border_color = beautiful.bg_focus,
+    --     shape    = gears.shape.rounded_rect,
+    --     margins = {
+    --         top    = dpi(0),
+    --         bottom = dpi(0),
+    --         right  = dpi(12),
+    --         left   = dpi(0),
+    --     },
+    --     height   = dpi(1361),
+    --     width    = dpi(80),
     --     screen   = s,
-    --     widget   = {
-    --         layout = wibox.layout.align.horizontal,
+    --     widget   =
+    --     {
+    --         layout = wibox.layout.align.vertical,
+    --         { -- Top Widgets
+    --             layout = wibox.layout.fixed.horizontal,
+    --             {
+    --                 widget  = wibox.container.margin,
+    --                 top     = dpi(18),
+    --                 bottom  = dpi(18),
+    --                 left    = dpi(18),
+    --                 right   = dpi(18),
+    --                 {
+    --                     widget = wibox.container.background,
+    --                     bg     = beautiful.hotkeys_bg,
+    --                     {
+    --                         layout = wibox.layout.fixed.horizontal,
+    --                         s.mylayoutbox,
+    --                     },
+    --                 },
+    --             }
+    --         },
+    --         s.mytextclock,
+    --         {
+    --             layout = wibox.layout.fixed.horizontal,
+    --         },
     --     }
     -- }
 end)

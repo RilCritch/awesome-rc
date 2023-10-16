@@ -5,6 +5,7 @@
 -- Imports
 local awful = require("awful")
 local ruled = require("ruled")
+local gears = require("gears")
 -- local beautiful = require("beautiful")
 
 -- Metatable
@@ -27,7 +28,8 @@ function _M.get()
                 focus     = awful.client.focus.filter,
                 raise     = true,
                 screen    = awful.screen.preferred,
-                placement = awful.placement.no_overlap+awful.placement.no_offscreen
+                placement = awful.placement.no_overlap+awful.placement.no_offscreen,
+                shape     = gears.shape.rounded_rect
             }
         },
 
@@ -51,7 +53,10 @@ function _M.get()
                     "pop-up",         -- e.g. google chrome's (detached) developer tools.
                 }
             },
-            properties = { floating = true }
+            properties = { 
+                floating = true,
+                shape    = gears.shape.rounded_rect,
+            }
         },
 
         -- set firefox to always map on the tag named "2" on screen 1.
