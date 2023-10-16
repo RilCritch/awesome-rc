@@ -19,6 +19,9 @@ local beautiful = require("beautiful") -- awesome theme module
 local ruled   = require("ruled") -- define declarative rules on various rules
 local menubar = require("menubar") -- XDG (application) menu implementation
 
+local xresources = require("beautiful.xresources")
+local dpi = xresources.apply_dpi
+
 
 --[[ Custom Modules ]]--
 -- Global namespace, created before requiring any modules
@@ -163,6 +166,29 @@ screen.connect_signal("request::desktop_decoration", function(s)
                                         end),
             awful.button({ }, 4, function(t) awful.tag.viewprev(t.screen) end),
             awful.button({ }, 5, function(t) awful.tag.viewnext(t.screen) end),
+        },
+        widget_template = {
+            widget = wibox.container.margin,
+            left   = dpi(2),
+            right  = dpi(0),
+            top    = dpi(2),
+            bottom = dpi(2),
+            {
+                id           = "background_role",
+                widget       = wibox.container.background,
+                {
+                    widget = wibox.container.margin,
+                    left   = dpi(12),
+                    right  = dpi(12),
+                    {
+                        layout = wibox.layout.fixed.horizontal,
+                        {
+                            id = "text_role",
+                            widget = wibox.widget.textbox,
+                        },
+                    },
+                },
+            },
         }
     }
 
@@ -183,6 +209,13 @@ screen.connect_signal("request::desktop_decoration", function(s)
 
     s.mywibox = awful.wibar {
         position = "top",
+        margins  = {
+            top    = dpi(3),
+            bottom = dpi(0),
+            right  = dpi(3),
+            left   = dpi(3),
+        },
+        height = dpi(38),
         screen   = s,
         widget   = {
             layout = wibox.layout.align.horizontal,
@@ -194,7 +227,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
             s.mytasklist, -- Middle widget
             { -- Right widgets
                 layout = wibox.layout.fixed.horizontal,
-                mykeyboardlayout,
+                -- mykeyboardlayout,
                 wibox.widget.systray(),
                 mytextclock,
                 s.mylayoutbox,

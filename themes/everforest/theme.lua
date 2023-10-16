@@ -21,27 +21,27 @@ local theme = {}
 
 theme.font          = "MononokiNerdFont 15"
 
-theme.bg_normal     = "#272E33"
-theme.bg_focus      = "#555F66"
+theme.bg_normal     = "#232A2E"
+theme.bg_focus      = "#7A8478"
 theme.bg_urgent     = "#5C3F45"
-theme.bg_minimize   = "#272E33"
+theme.bg_minimize   = "#2D353B"
 theme.bg_systray    = theme.bg_normal
 
-theme.fg_normal     = "#D3C6AA"
-theme.fg_focus      = "#F3EAD3"
-theme.fg_urgent     = "#D3C6AA"
-theme.fg_minimize   = "#5D6B66"
+theme.fg_normal     = "#E5E6CF"
+theme.fg_focus      = "#232A2E"
+theme.fg_urgent     = "#E67E80"
+theme.fg_minimize   = "#4D585E"
 
-theme.useless_gap         = dpi(10)
-theme.border_width        = dpi(2)
-theme.border_color_normal = "#1E2326"
+theme.useless_gap         = dpi(6)
+theme.border_width        = dpi(3)
+theme.border_color_normal = "#232A2E"
 theme.border_color_active = "#A7C080"
-theme.border_color_marked = "#E69875"
+theme.border_color_marked = "#DBBC7F"
 
 theme.hotkeys_bg               = "#1E2326"
-theme.hotkeys_fg               = "#D3C6AA"
+theme.hotkeys_fg               = "#E5E6CF"
 theme.hotkeys_border_width     = dpi(2)
-theme.hotkeys_border_color     = "#D3C6AA"
+theme.hotkeys_border_color     = "#E5E6CF"
 theme.hotkeys_modifiers_fg     = "#A7C080"
 theme.hotkeys_label_bg         = "#48584E"
 theme.hotkeys_label_fg         = "#F3EAD3"
@@ -62,14 +62,19 @@ theme.hotkeys_description_font = "UbuntuNerdFont 14"
 --theme.taglist_bg_focus = "#ff0000"
 
 -- Generate taglist squares:
-local taglist_square_size = dpi(6)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
-    taglist_square_size, theme.fg_normal
+    0, theme.fg_normal
 )
-theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
-    taglist_square_size, theme.fg_normal
+theme.taglist_squares_unsel = theme_assets.taglist_squares_sel(
+    8, theme.bg_focus
 )
-theme.taglist_spacing = dpi(4)
+theme.taglist_shape_border_width_focus = dpi(2)
+theme.taglist_shape_border_color_focus = theme.border_color_active
+theme.taglist_fg_focus    = theme.border_color_active
+theme.taglist_bg_focus    = theme.bg_normal
+theme.taglist_fg_occupied = theme.bg_focus
+theme.taglist_fg_empty    = theme.fg_minimize
+-- theme.taglist_spacing = dpi(4)
 
 -- Tasklist
 theme.tasklist_disable_icon = true
@@ -125,25 +130,27 @@ theme.menu_width  = dpi(240)
 -- theme.titlebar_maximized_button_normal_active =   themes_path.."gruvbox/titlebar/maximized_normal_active.png"
 -- theme.titlebar_maximized_button_focus_active  =   themes_path.."gruvbox/titlebar/maximized_focus_active.png"
 
-theme.wallpaper = themes_path.."gruvbox/background.png"
+theme.wallpaper = themes_path.."everforest/wallpapers/DarkForestWithFog.png"
+
+local icon_color = "#A7C080"
 
 -- You can use your own layout icons like this:
-theme.layout_fairh =      gears.color.recolor_image(themes_path.."gruvbox/layouts/fairhw.png"     , "#859289")
-theme.layout_fairv =      gears.color.recolor_image(themes_path.."gruvbox/layouts/fairvw.png"     , "#859289")
-theme.layout_floating  =  gears.color.recolor_image(themes_path.."gruvbox/layouts/floatingw.png"  , "#859289")
-theme.layout_magnifier =  gears.color.recolor_image(themes_path.."gruvbox/layouts/magnifierw.png" , "#859289")
-theme.layout_max =        gears.color.recolor_image(themes_path.."gruvbox/layouts/maxw.png"       , "#859289")
-theme.layout_fullscreen = gears.color.recolor_image(themes_path.."gruvbox/layouts/fullscreenw.png", "#859289")
-theme.layout_tilebottom = gears.color.recolor_image(themes_path.."gruvbox/layouts/tilebottomw.png", "#859289")
-theme.layout_tileleft   = gears.color.recolor_image(themes_path.."gruvbox/layouts/tileleftw.png"  , "#859289")
-theme.layout_tile =       gears.color.recolor_image(themes_path.."gruvbox/layouts/tilew.png"      , "#859289")
-theme.layout_tiletop =    gears.color.recolor_image(themes_path.."gruvbox/layouts/tiletopw.png"   , "#859289")
-theme.layout_spiral  =    gears.color.recolor_image(themes_path.."gruvbox/layouts/spiralw.png"    , "#859289")
-theme.layout_dwindle =    gears.color.recolor_image(themes_path.."gruvbox/layouts/dwindlew.png"   , "#859289")
-theme.layout_cornernw =   gears.color.recolor_image(themes_path.."gruvbox/layouts/cornernww.png"  , "#859289")
-theme.layout_cornerne =   gears.color.recolor_image(themes_path.."gruvbox/layouts/cornernew.png"  , "#859289")
-theme.layout_cornersw =   gears.color.recolor_image(themes_path.."gruvbox/layouts/cornersww.png"  , "#859289")
-theme.layout_cornerse =   gears.color.recolor_image(themes_path.."gruvbox/layouts/cornersew.png"  , "#859289")
+theme.layout_fairh =      gears.color.recolor_image(themes_path.."gruvbox/layouts/fairhw.png"     , icon_color)
+theme.layout_fairv =      gears.color.recolor_image(themes_path.."gruvbox/layouts/fairvw.png"     , icon_color)
+theme.layout_floating  =  gears.color.recolor_image(themes_path.."gruvbox/layouts/floatingw.png"  , icon_color)
+theme.layout_magnifier =  gears.color.recolor_image(themes_path.."gruvbox/layouts/magnifierw.png" , icon_color)
+theme.layout_max =        gears.color.recolor_image(themes_path.."gruvbox/layouts/maxw.png"       , icon_color)
+theme.layout_fullscreen = gears.color.recolor_image(themes_path.."gruvbox/layouts/fullscreenw.png", icon_color)
+theme.layout_tilebottom = gears.color.recolor_image(themes_path.."gruvbox/layouts/tilebottomw.png", icon_color)
+theme.layout_tileleft   = gears.color.recolor_image(themes_path.."gruvbox/layouts/tileleftw.png"  , icon_color)
+theme.layout_tile =       gears.color.recolor_image(themes_path.."gruvbox/layouts/tilew.png"      , icon_color)
+theme.layout_tiletop =    gears.color.recolor_image(themes_path.."gruvbox/layouts/tiletopw.png"   , icon_color)
+theme.layout_spiral  =    gears.color.recolor_image(themes_path.."gruvbox/layouts/spiralw.png"    , icon_color)
+theme.layout_dwindle =    gears.color.recolor_image(themes_path.."gruvbox/layouts/dwindlew.png"   , icon_color)
+theme.layout_cornernw =   gears.color.recolor_image(themes_path.."gruvbox/layouts/cornernww.png"  , icon_color)
+theme.layout_cornerne =   gears.color.recolor_image(themes_path.."gruvbox/layouts/cornernew.png"  , icon_color)
+theme.layout_cornersw =   gears.color.recolor_image(themes_path.."gruvbox/layouts/cornersww.png"  , icon_color)
+theme.layout_cornerse =   gears.color.recolor_image(themes_path.."gruvbox/layouts/cornersew.png"  , icon_color)
 
 -- Generate Awesome icon:
 theme.awesome_icon = theme_assets.awesome_icon(
