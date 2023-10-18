@@ -332,7 +332,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
                                     layout = wibox.layout.stack,
                                     {
                                         widget = wibox.widget.textbox,
-                                        markup = "<span foreground='#232A2E'>00</span>",
+                                        markup = "<span foreground='#2D353B'>88</span>",
                                         font   = "Digital-7 Mono 36",
                                         halign = "center",
                                     },
@@ -363,7 +363,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
                                     layout = wibox.layout.stack,
                                     {
                                         widget = wibox.widget.textbox,
-                                        markup = "<span foreground='#232A2E'>00</span>",
+                                        markup = "<span foreground='#2D353B'>88</span>",
                                         font   = "Digital-7 Mono 36",
                                         halign = "center",
                                     },
