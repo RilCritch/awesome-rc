@@ -19,6 +19,10 @@ _M.editor_cmd = _M.terminal .. " -e " .. _M.editor
   -- Default modkey (Mod1: Alt; Mod2: Num_Lock; Mod3: ISO_Level5_Shift; Mod4: Super; Mod5: ISO_Level3_Shift)
 _M.modkey = "Mod4"
 
+_M.browser = "firefox"
+
+_M.launcher = "rofi -show drun"
+
 return _M
 
 -- vim:fileencoding=utf-8:shiftwidth=4:tabstop=4:foldmethod=marker

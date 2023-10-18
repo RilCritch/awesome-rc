@@ -29,7 +29,7 @@ function _M.get()
                 raise     = true,
                 screen    = awful.screen.preferred,
                 placement = awful.placement.no_overlap+awful.placement.no_offscreen,
-                shape     = gears.shape.rounded_rect
+                shape  = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 8) end,
             }
         },
 
@@ -55,8 +55,12 @@ function _M.get()
             },
             properties = { 
                 floating = true,
-                shape    = gears.shape.rounded_rect,
+                shape  = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 8) end,
             }
+        },
+        {
+            rule       = { class = "Ulauncher" },
+            properties = { border_width = 0, floating = true },
         },
 
         -- set firefox to always map on the tag named "2" on screen 1.

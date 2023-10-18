@@ -7,4 +7,7 @@ function run {
   fi
 }
 
+# System Management
 run xfce4-power-manager
+
+# Applications

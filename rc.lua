@@ -62,9 +62,10 @@ local my_hotkeys_popup = hotkeys.widget.new({
 my_hotkeys_popup:add_group_rules("awesome",  { color = "#3F5865" })
 my_hotkeys_popup:add_group_rules("client",   { color = "#48584E" })
 my_hotkeys_popup:add_group_rules("launcher", { color = "#55544A" })
-my_hotkeys_popup:add_group_rules("layout",   { color = "#48584E" })
+my_hotkeys_popup:add_group_rules("layout",   { color = "#3F5865" })
+my_hotkeys_popup:add_group_rules("programs", { color = "#48584E" })
 my_hotkeys_popup:add_group_rules("screen",   { color = "#55544A" })
-my_hotkeys_popup:add_group_rules("tag",      { color = "#48584E" })
+my_hotkeys_popup:add_group_rules("tag",      { color = "#3F5865" })
 
 
 --[[ Variables ]]--
@@ -76,6 +77,8 @@ beautiful.init(gears.filesystem.get_xdg_config_home() .. "awesome/themes/everfor
 local terminal = RC.vars.terminal
 local editor_cmd = RC.vars.editor_cmd
 local modkey = RC.vars.modkey
+local browser = RC.vars.browser
+local launcher = RC.vars.launcher
 
 
 --[[ Tag Layouts ]]--
@@ -221,53 +224,180 @@ screen.connect_signal("request::desktop_decoration", function(s)
                 -- mykeyboardlayout,
                 wibox.widget.systray(),
                 mytextclock,
-                s.mylayoutbox,
             },
         }
     }
 
-    -- s.myrightwibox = awful.wibar {
-    --     position     = "right",
-    --     stretch      = false,
-    --     -- border_width = dpi(1),
-    --     -- border_color = beautiful.bg_focus,
-    --     shape    = gears.shape.rounded_rect,
-    --     margins = {
-    --         top    = dpi(0),
-    --         bottom = dpi(0),
-    --         right  = dpi(12),
-    --         left   = dpi(0),
-    --     },
-    --     height   = dpi(1361),
-    --     width    = dpi(80),
-    --     screen   = s,
-    --     widget   =
-    --     {
-    --         layout = wibox.layout.align.vertical,
-    --         { -- Top Widgets
-    --             layout = wibox.layout.fixed.horizontal,
-    --             {
-    --                 widget  = wibox.container.margin,
-    --                 top     = dpi(18),
-    --                 bottom  = dpi(18),
-    --                 left    = dpi(18),
-    --                 right   = dpi(18),
-    --                 {
-    --                     widget = wibox.container.background,
-    --                     bg     = beautiful.hotkeys_bg,
-    --                     {
-    --                         layout = wibox.layout.fixed.horizontal,
-    --                         s.mylayoutbox,
-    --                     },
-    --                 },
-    --             }
-    --         },
-    --         s.mytextclock,
-    --         {
-    --             layout = wibox.layout.fixed.horizontal,
-    --         },
-    --     }
-    -- }
+    s.myrightwibox = awful.wibar {
+        position     = "right",
+        stretch      = false,
+        -- border_width = dpi(1),
+        -- border_color = beautiful.bg_focus,
+        shape   = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 8) end,
+        margins = {
+            top    = dpi(0),
+            bottom = dpi(0),
+            right  = dpi(12),
+            left   = dpi(0),
+        },
+        height   = dpi(1361),
+        width    = dpi(80),
+        screen   = s,
+        widget   = {
+            layout = wibox.layout.align.vertical,
+
+            { --[[ Top Widgets ]]-------------------------------------------------------------------
+                layout = wibox.layout.fixed.vertical,
+
+                --[[ Layout Box Widget ]]---------------------------------------
+                { -- Top Decoration
+                    widget = wibox.container.margin,
+                    top    = dpi(12),
+                    bottom = dpi(6),
+                    left   = dpi(16),
+                    right  = dpi(16),
+                    {
+                        widget        = wibox.container.background,
+                        bg     = "#DBBC7F",
+                        forced_height = dpi(2),
+                        shape         = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 4) end,
+                    },
+                },
+                { -- Layout Box
+                    widget = wibox.container.margin,
+                    top    = dpi(0),
+                    bottom = dpi(0),
+                    left   = dpi(12),
+                    right  = dpi(12),
+                    {
+                        widget = wibox.container.background,
+                        bg     = beautiful.border_color_active,
+                        shape  = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 4) end,
+                        {
+                            widget = wibox.container.margin,
+                            top    = dpi(4),
+                            bottom = dpi(4),
+                            left   = dpi(4),
+                            right  = dpi(4),
+                            {
+                                layout = wibox.layout.fixed.horizontal,
+                                s.mylayoutbox,
+                            },
+                        },
+                    },
+                },
+                { -- Bottom Decoration
+                    widget = wibox.container.margin,
+                    top    = dpi(6),
+                    bottom = dpi(0),
+                    left   = dpi(16),
+                    right  = dpi(16),
+                    {
+                        widget        = wibox.container.background,
+                        bg     = "#DBBC7F",
+                        forced_height = dpi(2),
+
+                    },
+                },
+
+                --[[ Time and Date Widget ]]------------------------------------
+                { -- Top Decoration
+                    widget = wibox.container.margin,
+                    top    = dpi(20),
+                    bottom = dpi(6),
+                    left   = dpi(16),
+                    right  = dpi(16),
+                    {
+                        widget        = wibox.container.background,
+                        bg     = "#343F44",
+                        forced_height = dpi(2),
+                        shape         = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 4) end,
+                    },
+                },
+                {
+                    widget = wibox.container.margin,
+                    left   = dpi(12),
+                    right  = dpi(12),
+                    { -- time & date
+                        widget = wibox.container.background,
+                        bg     = "#3D484D",
+                        fg     = beautiful.border_color_active,
+                        shape  = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 4) end,
+                        { -- time
+                            layout = wibox.layout.fixed.vertical,
+                            { -- hours
+                                widget = wibox.container.margin,
+                                top    = dpi(6),
+                                {
+                                    layout = wibox.layout.stack,
+                                    {
+                                        widget = wibox.widget.textbox,
+                                        markup = "<span foreground='#232A2E'>00</span>",
+                                        font   = "Digital-7 Mono 36",
+                                        halign = "center",
+                                    },
+                                    {
+                                        widget = wibox.widget.textclock,
+                                        format = "%I",
+                                        font   = "Digital-7 Mono 36",
+                                        halign = "center",
+                                    },
+                                },
+                            },
+                            {
+                                widget = wibox.container.margin,
+                                top    = dpi(-6),
+                                bottom = dpi(-0),
+                                {
+                                    widget = wibox.widget.textclock,
+                                    format = "%p",
+                                    font   = "MononokiNerdFont 12",
+                                    halign = "center",
+                                },
+                            },
+                            { -- minutes
+                                widget = wibox.container.margin,
+                                top    = dpi(0),
+                                bottom = dpi(0),
+                                {
+                                    layout = wibox.layout.stack,
+                                    {
+                                        widget = wibox.widget.textbox,
+                                        markup = "<span foreground='#232A2E'>00</span>",
+                                        font   = "Digital-7 Mono 36",
+                                        halign = "center",
+                                    },
+                                    {
+                                        widget = wibox.widget.textclock,
+                                        format = "%M",
+                                        font   = "Digital-7 Mono 36",
+                                        halign = "center",
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+                { -- Bottom Decoration
+                    widget = wibox.container.margin,
+                    top    = dpi(6),
+                    bottom = dpi(0),
+                    left   = dpi(16),
+                    right  = dpi(16),
+                    {
+                        widget        = wibox.container.background,
+                        bg     = "#343F44",
+                        forced_height = dpi(2),
+
+                    },
+                },
+            },
+            s.mytextclock,
+            {
+                layout = wibox.layout.fixed.vertical,
+            },
+        },
+    }
 end)
 
 
@@ -299,11 +429,17 @@ awful.keyboard.append_global_keybindings({
               end,
               {description = "lua execute prompt", group = "awesome"}),
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
-              {description = "open a terminal", group = "launcher"}),
-    awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
-              {description = "run prompt", group = "launcher"}),
-    awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"}),
+              {description = "open a terminal", group = "programs"}),
+    -- awful.key({ modkey, "Shift" },            "r",     function () awful.screen.focused().mypromptbox:run() end,
+    --           {description = "run prompt", group = "launcher"}),
+    -- awful.key({ modkey }, "p", function() menubar.show() end,
+    --           {description = "show the menubar", group = "launcher"}),
+
+    -- [[ My keybindings ]]--
+    awful.key({ modkey,         }, "b", function () awful.spawn(browser) end,
+              {description = "launch browser", group = "programs"}),
+    awful.key({ modkey,         }, "r", function () awful.spawn(launcher) end,
+              {description = "run application launcher", group = "launcher"}),
 })
 
 -- Tags related keybindings

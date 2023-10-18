@@ -132,7 +132,7 @@ theme.menu_width  = dpi(240)
 
 theme.wallpaper = themes_path.."everforest/wallpapers/DarkForestWithFog.png"
 
-local icon_color = "#A7C080"
+local icon_color = theme.bg_normal
 
 -- You can use your own layout icons like this:
 theme.layout_fairh =      gears.color.recolor_image(themes_path.."gruvbox/layouts/fairhw.png"     , icon_color)
