@@ -201,32 +201,32 @@ screen.connect_signal("request::desktop_decoration", function(s)
         }
     }
 
-    s.mytopwibox = awful.wibar {
-        position = "top",
-        margins  = {
-            top    = dpi(3),
-            bottom = dpi(0),
-            right  = dpi(3),
-            left   = dpi(3),
-        },
-        height = dpi(39),
-        screen   = s,
-        widget   = {
-            layout = wibox.layout.align.horizontal,
-            { -- Left widgets
-                layout = wibox.layout.fixed.horizontal,
-                s.mytaglist,
-                s.mypromptbox,
-            },
-            s.mytasklist, -- Middle widget
-            { -- Right widgets
-                layout = wibox.layout.fixed.horizontal,
-                -- mykeyboardlayout,
-                wibox.widget.systray(),
-                mytextclock,
-            },
-        }
-    }
+    -- s.mytopwibox = awful.wibar {
+    --     position = "top",
+    --     margins  = {
+    --         top    = dpi(3),
+    --         bottom = dpi(0),
+    --         right  = dpi(3),
+    --         left   = dpi(3),
+    --     },
+    --     height = dpi(39),
+    --     screen   = s,
+    --     widget   = {
+    --         layout = wibox.layout.align.horizontal,
+    --         { -- Left widgets
+    --             layout = wibox.layout.fixed.horizontal,
+    --             s.mytaglist,
+    --             s.mypromptbox,
+    --         },
+    --         s.mytasklist, -- Middle widget
+    --         { -- Right widgets
+    --             layout = wibox.layout.fixed.horizontal,
+    --             -- mykeyboardlayout,
+    --             wibox.widget.systray(),
+    --             mytextclock,
+    --         },
+    --     }
+    -- }
 
     s.myrightwibox = awful.wibar {
         position     = "right",
@@ -237,167 +237,228 @@ screen.connect_signal("request::desktop_decoration", function(s)
         margins = {
             top    = dpi(0),
             bottom = dpi(0),
-            right  = dpi(12),
+            right  = dpi(6),
             left   = dpi(0),
         },
-        height   = dpi(1361),
+        height   = dpi(1428),
         width    = dpi(80),
         screen   = s,
         widget   = {
-            layout = wibox.layout.align.vertical,
+            layout = wibox.layout.flex.vertical,
 
-            { --[[ Top Widgets ]]-------------------------------------------------------------------
+            { --[[-(  Top Widgets )-]]--
                 layout = wibox.layout.fixed.vertical,
 
-                --[[ Layout Box Widget ]]---------------------------------------
-                { -- Top Decoration
-                    widget = wibox.container.margin,
-                    top    = dpi(12),
-                    bottom = dpi(6),
-                    left   = dpi(16),
-                    right  = dpi(16),
-                    {
-                        widget        = wibox.container.background,
-                        bg     = "#DBBC7F",
-                        forced_height = dpi(2),
-                        shape         = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 4) end,
-                    },
-                },
-                { -- Layout Box
-                    widget = wibox.container.margin,
-                    top    = dpi(0),
-                    bottom = dpi(0),
-                    left   = dpi(12),
-                    right  = dpi(12),
-                    {
-                        widget = wibox.container.background,
-                        bg     = beautiful.border_color_active,
-                        shape  = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 4) end,
-                        {
-                            widget = wibox.container.margin,
-                            top    = dpi(4),
-                            bottom = dpi(4),
-                            left   = dpi(4),
-                            right  = dpi(4),
-                            {
-                                layout = wibox.layout.fixed.horizontal,
-                                s.mylayoutbox,
-                            },
-                        },
-                    },
-                },
-                { -- Bottom Decoration
-                    widget = wibox.container.margin,
-                    top    = dpi(6),
-                    bottom = dpi(0),
-                    left   = dpi(16),
-                    right  = dpi(16),
-                    {
-                        widget        = wibox.container.background,
-                        bg     = "#DBBC7F",
-                        forced_height = dpi(2),
-
-                    },
-                },
-
-                --[[ Time and Date Widget ]]------------------------------------
-                { -- Top Decoration
-                    widget = wibox.container.margin,
-                    top    = dpi(20),
-                    bottom = dpi(6),
-                    left   = dpi(16),
-                    right  = dpi(16),
-                    {
-                        widget        = wibox.container.background,
-                        bg     = "#343F44",
-                        forced_height = dpi(2),
-                        shape         = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 4) end,
-                    },
-                },
+                --[[ Time Widget ]]--
                 {
                     widget = wibox.container.margin,
-                    left   = dpi(12),
-                    right  = dpi(12),
-                    { -- time & date
+                    top    = dpi(8),
+                    left   = dpi(0),
+                    right  = dpi(0),
+                    {
                         widget = wibox.container.background,
-                        bg     = "#3D484D",
-                        fg     = beautiful.border_color_active,
-                        shape  = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 4) end,
-                        { -- time
+                        fg     = "#A7C080",
+                        {
                             layout = wibox.layout.fixed.vertical,
-                            { -- hours
+                            { -- ( Hours )
                                 widget = wibox.container.margin,
                                 top    = dpi(6),
                                 {
-                                    layout = wibox.layout.stack,
-                                    {
-                                        widget = wibox.widget.textbox,
-                                        markup = "<span foreground='#2D353B'>88</span>",
-                                        font   = "Digital-7 Mono 36",
-                                        halign = "center",
-                                    },
-                                    {
-                                        widget = wibox.widget.textclock,
-                                        format = "%I",
-                                        font   = "Digital-7 Mono 36",
-                                        halign = "center",
-                                    },
-                                },
-                            },
-                            {
-                                widget = wibox.container.margin,
-                                top    = dpi(-6),
-                                bottom = dpi(-0),
-                                {
                                     widget = wibox.widget.textclock,
-                                    format = "%p",
-                                    font   = "MononokiNerdFont 12",
+                                    format = "%I",
+                                    font   = "Varino 22",
                                     halign = "center",
                                 },
                             },
-                            { -- minutes
+                            { -- ( AM | PM )
+                                widget = wibox.container.background,
+                                fg     = "#859289",
+                                {
+                                    widget = wibox.container.margin,
+                                    top    = dpi(-1),
+                                    bottom = dpi(1),
+                                    {
+                                        widget = wibox.widget.textclock,
+                                        format = "%p",
+                                        font   = "Varino 10",
+                                        halign = "center",
+                                    },
+                                },
+                            },
+                            { -- ( Minutes )
                                 widget = wibox.container.margin,
                                 top    = dpi(0),
                                 bottom = dpi(0),
                                 {
-                                    layout = wibox.layout.stack,
-                                    {
-                                        widget = wibox.widget.textbox,
-                                        markup = "<span foreground='#2D353B'>88</span>",
-                                        font   = "Digital-7 Mono 36",
-                                        halign = "center",
-                                    },
+                                    widget = wibox.widget.textclock,
+                                    format = "%M",
+                                    font   = "Varino 22",
+                                    halign = "center",
+                                },
+                            },
+                        },
+                    },
+                },
+
+                --[[ Date Widget ]]--
+                {
+                    widget = wibox.container.margin,
+                    top    = dpi(2),
+                    left   = dpi(0),
+                    right  = dpi(0),
+                    {
+                        widget       = wibox.container.background,
+                        border_width = dpi(1),
+                        bg           = "#232A2E",
+                        border_color = "#232A2E",
+                        shape        = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 2) end,
+                        {
+                            layout = wibox.layout.fixed.vertical,
+                            {
+                                widget = wibox.container.margin,
+                                top    = dpi(12),
+                                bottom = dpi(0),
+                                left   = dpi(0),
+                                right  = dpi(0),
+                                {
+                                    widget = wibox.container.background,
+                                    fg     = "#7FBBB3",
                                     {
                                         widget = wibox.widget.textclock,
-                                        format = "%M",
-                                        font   = "Digital-7 Mono 36",
+                                        format = "%a",
+                                        font   = "Varino 12",
                                         halign = "center",
+                                    },
+                                },
+                            },
+                            {
+                                widget = wibox.container.margin,
+                                top    = dpi(4),
+                                bottom = dpi(8),
+                                left   = dpi(0),
+                                right  = dpi(0),
+                                {
+                                    widget = wibox.container.background,
+                                    fg     = "#859289",
+                                    {
+                                        widget = wibox.widget.textclock,
+                                        format = "%m-%d",
+                                        font   = "Varino 10",
+                                        halign = "center",
+                                    },
+                                }
+                            },
+                        },
+                    },
+                },
+            },
+
+            { --[[-(  Middle Widgets )-]]--
+                widget = wibox.container.place,
+                valign = "center",
+                {
+                    widget = wibox.container.margin,
+                    left   = dpi(16),
+                    right  = dpi(16),
+                    {
+                        widget = awful.widget.layoutlist {
+                            screen = s,
+                            base_layout = wibox.widget {
+                                layout  = wibox.layout.flex.vertical,
+                                spacing = dpi(24),
+                            },
+                            widget_template = {
+                                id     = 'background_role',
+                                widget = wibox.container.background,
+                                {
+                                    id     = 'icon_role',
+                                    widget = wibox.widget.imagebox,
+                                }
+                            }
+                        },
+                    },
+                },
+            },
+            { --[[-( Bottom Widgets )-]]--
+                layout = wibox.layout.fixed.vertical,
+            },
+        },
+    }
+
+    s.myleftwibox = awful.wibar {
+        position     = "left",
+        stretch      = false,
+        -- border_width = dpi(1),
+        -- border_color = beautiful.bg_focus,
+        shape   = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 8) end,
+        margins = {
+            top    = dpi(0),
+            bottom = dpi(0),
+            right  = dpi(0),
+            left   = dpi(6),
+        },
+        height   = dpi(1428),
+        width    = dpi(80),
+        screen   = s,
+        widget   = {
+            widget = wibox.container.place,
+            valign = "center",
+            { --[[-( Middle Widgets )-]]--
+                widget = wibox.container.place,
+                valign = "center",
+                {
+                    widget = wibox.container.margin,
+                    left   = dpi(0),
+                    right  = dpi(0),
+                    {
+                        widget = awful.widget.taglist {
+                            screen = s,
+                            filter  = awful.widget.taglist.filter.all,
+                            buttons = {
+                                awful.button({ }, 1, function(t) t:view_only() end),
+                                awful.button({ modkey }, 1, function(t)
+                                                                if client.focus then ---@diagnostic disable-line: undefined-global
+                                                                    client.focus:move_to_tag(t) ---@diagnostic disable-line: undefined-global
+                                                                end
+                                                            end),
+                                awful.button({ }, 3, awful.tag.viewtoggle),
+                                awful.button({ modkey }, 3, function(t)
+                                                                if client.focus then ---@diagnostic disable-line: undefined-global
+                                                                    client.focus:toggle_tag(t) ---@diagnostic disable-line: undefined-global
+                                                                end
+                                                            end),
+                                awful.button({ }, 4, function(t) awful.tag.viewprev(t.screen) end),
+                                awful.button({ }, 5, function(t) awful.tag.viewnext(t.screen) end),
+                            },
+                            base_layout = wibox.widget {
+                                layout  = wibox.layout.flex.vertical,
+                                spacing = dpi(24),
+                            },
+                            widget_template = {
+                                id     = 'background_role',
+                                widget = wibox.container.background,
+                                forced_height = dpi(48),
+                                forced_width  = dpi(48),
+                                {
+                                    widget = wibox.container.margin,
+                                    top = dpi(7),
+                                    {
+                                        layout = wibox.layout.flex.horizontal,
+                                        {
+                                            id     = 'text_role',
+                                            widget = wibox.widget.textbox,
+                                            halign = "center",
+                                        },
                                     },
                                 },
                             },
                         },
                     },
                 },
-                { -- Bottom Decoration
-                    widget = wibox.container.margin,
-                    top    = dpi(6),
-                    bottom = dpi(0),
-                    left   = dpi(16),
-                    right  = dpi(16),
-                    {
-                        widget        = wibox.container.background,
-                        bg     = "#343F44",
-                        forced_height = dpi(2),
-
-                    },
-                },
-            },
-            s.mytextclock,
-            {
-                layout = wibox.layout.fixed.vertical,
             },
         },
     }
+
 end)
 
 

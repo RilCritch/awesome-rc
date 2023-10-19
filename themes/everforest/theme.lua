@@ -66,15 +66,26 @@ theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
     0, theme.fg_normal
 )
 theme.taglist_squares_unsel = theme_assets.taglist_squares_sel(
-    8, theme.bg_focus
+    0, theme.bg_focus
 )
-theme.taglist_shape_border_width_focus = dpi(2)
-theme.taglist_shape_border_color_focus = theme.border_color_active
-theme.taglist_fg_focus    = theme.border_color_active
-theme.taglist_bg_focus    = theme.bg_normal
-theme.taglist_fg_occupied = theme.bg_focus
-theme.taglist_fg_empty    = theme.fg_minimize
+theme.taglist_shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 4) end
+theme.taglist_shape_empty = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 20) end
+theme.taglist_shape_border_width_empty = dpi(3)
+theme.taglist_shape_border_width_focus = dpi(3)
+theme.taglist_shape_border_color_empty = '#3D484D'
+theme.taglist_shape_border_color_focus = '#A7C080'
+theme.taglist_fg_focus    = "#48584E"
+theme.taglist_fg_occupied = "#48584E"
+theme.taglist_fg_empty    = "#232A2E"
+theme.taglist_bg_focus    = theme.taglist_fg_focus
+theme.taglist_bg_occupied = theme.taglist_fg_occupied
+theme.taglist_bg_empty    = theme.taglist_fg_empty
 -- theme.taglist_spacing = dpi(4)
+-- theme.taglist_font        = "CuteNotes 36"
+-- theme.taglist_font        = "Where My Keys 32"
+-- theme.taglist_font        = "Leaf1 40"
+-- theme.taglist_font        = "Leaflets 48"
+theme.taglist_font        = "MononokiNerdFont Mono 16"
 
 -- Tasklist
 theme.tasklist_disable_icon = true
@@ -151,6 +162,19 @@ theme.layout_cornernw =   gears.color.recolor_image(themes_path.."gruvbox/layout
 theme.layout_cornerne =   gears.color.recolor_image(themes_path.."gruvbox/layouts/cornernew.png"  , icon_color)
 theme.layout_cornersw =   gears.color.recolor_image(themes_path.."gruvbox/layouts/cornersww.png"  , icon_color)
 theme.layout_cornerse =   gears.color.recolor_image(themes_path.."gruvbox/layouts/cornersew.png"  , icon_color)
+
+-- Layout list theme
+theme.layoutlist_bg_normal   = "#3D484D"
+theme.layoutlist_bg_selected = "#A7C080"
+
+theme.layoutlist_disable_name = true
+
+theme.layoutlist_shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 2) end
+theme.layoutlist_shape_selected = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 2) end
+theme.layoutlist_shape_border_width = dpi(3)
+theme.layoutlist_shape_border_color = "#3D484D"
+theme.layoutlist_shape_border_width_selected = dpi(3)
+theme.layoutlist_shape_border_color_selected = "#A7C080"
 
 -- Generate Awesome icon:
 theme.awesome_icon = theme_assets.awesome_icon(
