@@ -9,5 +9,5 @@ function run {
 
 # System Management
 run xfce4-power-manager
-run picom --experimental-backends --config /home/rc/Repos/awesome-ril/scripts/picom.conf
+run picom --config /home/rc/Repos/awesome-ril/scripts/picom.conf
 

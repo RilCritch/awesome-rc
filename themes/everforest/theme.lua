@@ -21,7 +21,7 @@ local theme = {}
 
 theme.font          = "MononokiNerdFont 15"
 
-theme.bg_normal     = "#232A2E"
+theme.bg_normal     = "#232A2EDD"
 theme.bg_focus      = "#7A8478"
 theme.bg_urgent     = "#5C3F45"
 theme.bg_minimize   = "#2D353B"
@@ -35,17 +35,17 @@ theme.fg_minimize   = "#4D585E"
 theme.useless_gap         = dpi(6)
 theme.border_width        = dpi(3)
 theme.border_color_normal = "#232A2E"
-theme.border_color_active = "#A7C080"
+theme.border_color_active = "#83C092"
 theme.border_color_marked = "#DBBC7F"
 
-theme.hotkeys_bg               = "#1E2326"
+theme.hotkeys_bg               = "#232A2EF8"
 theme.hotkeys_fg               = "#E5E6CF"
 theme.hotkeys_border_width     = dpi(2)
-theme.hotkeys_border_color     = "#E5E6CF"
-theme.hotkeys_modifiers_fg     = "#A7C080"
+theme.hotkeys_border_color     = "#DBBC7F"
+theme.hotkeys_modifiers_fg     = "#9DA9A0BD"
 theme.hotkeys_label_bg         = "#48584E"
-theme.hotkeys_label_fg         = "#F3EAD3"
-theme.hotkeys_font             = "MononokiNerdFont 16"
+theme.hotkeys_label_fg         = "#83C092"
+theme.hotkeys_font             = "Varino 14"
 theme.hotkeys_description_font = "UbuntuNerdFont 14"
 
 
@@ -69,23 +69,22 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_sel(
     0, theme.bg_focus
 )
 theme.taglist_shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 4) end
-theme.taglist_shape_empty = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 20) end
-theme.taglist_shape_border_width_empty = dpi(3)
-theme.taglist_shape_border_width_focus = dpi(3)
-theme.taglist_shape_border_color_empty = '#3D484D'
-theme.taglist_shape_border_color_focus = '#A7C080'
-theme.taglist_fg_focus    = "#48584E"
-theme.taglist_fg_occupied = "#48584E"
-theme.taglist_fg_empty    = "#232A2E"
-theme.taglist_bg_focus    = theme.taglist_fg_focus
-theme.taglist_bg_occupied = theme.taglist_fg_occupied
-theme.taglist_bg_empty    = theme.taglist_fg_empty
+theme.taglist_shape_empty = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 4) end
+theme.taglist_shape_border_width_empty = dpi(2)
+theme.taglist_shape_border_width_focus = dpi(0)
+theme.taglist_shape_border_color_empty = '#83C09233'
+theme.taglist_fg_focus    = "#232A2E"
+theme.taglist_fg_occupied = "#232A2E"
+theme.taglist_fg_empty    = "#83C09233"
+theme.taglist_bg_focus    = "#83C092"
+theme.taglist_bg_occupied = "#83C09255"
+theme.taglist_bg_empty    = "#232A2E00"
 -- theme.taglist_spacing = dpi(4)
 -- theme.taglist_font        = "CuteNotes 36"
 -- theme.taglist_font        = "Where My Keys 32"
 -- theme.taglist_font        = "Leaf1 40"
 -- theme.taglist_font        = "Leaflets 48"
-theme.taglist_font        = "MononokiNerdFont Mono 16"
+theme.taglist_font        = "MononokiNerdFont Mono 46"
 
 -- Tasklist
 theme.tasklist_disable_icon = true
@@ -143,7 +142,7 @@ theme.menu_width  = dpi(240)
 
 theme.wallpaper = themes_path.."everforest/wallpapers/DarkForestWithFog.png"
 
-local icon_color = theme.bg_normal
+local icon_color = "#232A2E"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh =      gears.color.recolor_image(themes_path.."gruvbox/layouts/fairhw.png"     , icon_color)
@@ -164,17 +163,17 @@ theme.layout_cornersw =   gears.color.recolor_image(themes_path.."gruvbox/layout
 theme.layout_cornerse =   gears.color.recolor_image(themes_path.."gruvbox/layouts/cornersew.png"  , icon_color)
 
 -- Layout list theme
-theme.layoutlist_bg_normal   = "#3D484D"
-theme.layoutlist_bg_selected = "#A7C080"
+theme.layoutlist_bg_normal   = "#83C09233"
+theme.layoutlist_bg_selected = "#83C092"
 
 theme.layoutlist_disable_name = true
 
 theme.layoutlist_shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 2) end
 theme.layoutlist_shape_selected = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 2) end
 theme.layoutlist_shape_border_width = dpi(3)
-theme.layoutlist_shape_border_color = "#3D484D"
+theme.layoutlist_shape_border_color = "#83C09233"
 theme.layoutlist_shape_border_width_selected = dpi(3)
-theme.layoutlist_shape_border_color_selected = "#A7C080"
+theme.layoutlist_shape_border_color_selected = "#83C092"
 
 -- Generate Awesome icon:
 theme.awesome_icon = theme_assets.awesome_icon(

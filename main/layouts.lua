@@ -18,11 +18,11 @@ function _M.get ()
         -- awful.layout.suit.tile.top,
 
         -- fair layouts
-        awful.layout.suit.fair.horizontal,
+        -- awful.layout.suit.fair.horizontal,
         -- awful.layout.suit.fair,
 
         -- corner layouts
-        awful.layout.suit.corner.ne,
+        -- awful.layout.suit.corner.ne,
         -- awful.layout.suit.corner.nw,
         -- awful.layout.suit.corner.sw,
         -- awful.layout.suit.corner.se,
@@ -37,7 +37,7 @@ function _M.get ()
         -- awful.layout.suit.spiral.dwindle,
 
         -- floating
-        -- awful.layout.suit.floating,
+        awful.layout.suit.floating,
     }
 
     return layouts

@@ -52,20 +52,20 @@ require("main.errorhandling") -- ./main/errorhandling.lua
 -- Popup widget that shows declared hotkeys w/ descriptions
 local hotkeys = require("awful.hotkeys_popup")
 local my_hotkeys_popup = hotkeys.widget.new({
-    width        = 1800,
+    width        = 1600,
     height       = 1200,
-    group_margin = 36,
+    group_margin = 80,
     shape    = gears.shape.rounded_rect,
 })
 
 -- Setting group colors
-my_hotkeys_popup:add_group_rules("awesome",  { color = "#3F5865" })
-my_hotkeys_popup:add_group_rules("client",   { color = "#48584E" })
-my_hotkeys_popup:add_group_rules("launcher", { color = "#55544A" })
-my_hotkeys_popup:add_group_rules("layout",   { color = "#3F5865" })
-my_hotkeys_popup:add_group_rules("programs", { color = "#48584E" })
-my_hotkeys_popup:add_group_rules("screen",   { color = "#55544A" })
-my_hotkeys_popup:add_group_rules("tag",      { color = "#3F5865" })
+my_hotkeys_popup:add_group_rules("awesome",  { color = "#7FBBB31F" })
+my_hotkeys_popup:add_group_rules("client",   { color = "#7FBBB31F" })
+my_hotkeys_popup:add_group_rules("launcher", { color = "#7FBBB31F" })
+my_hotkeys_popup:add_group_rules("layout",   { color = "#7FBBB31F" })
+my_hotkeys_popup:add_group_rules("programs", { color = "#7FBBB31F" })
+my_hotkeys_popup:add_group_rules("screen",   { color = "#7FBBB31F" })
+my_hotkeys_popup:add_group_rules("tag",      { color = "#7FBBB31F" })
 
 
 --[[ Variables ]]--
@@ -237,10 +237,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
         margins = {
             top    = dpi(0),
             bottom = dpi(0),
-            right  = dpi(6),
+            right  = dpi(3),
             left   = dpi(0),
         },
-        height   = dpi(1428),
+        height   = dpi(1434),
         width    = dpi(80),
         screen   = s,
         widget   = {
@@ -257,7 +257,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
                     right  = dpi(0),
                     {
                         widget = wibox.container.background,
-                        fg     = "#A7C080",
+                        fg     = "#83C092",
                         {
                             layout = wibox.layout.fixed.vertical,
                             { -- ( Hours )
@@ -272,7 +272,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
                             },
                             { -- ( AM | PM )
                                 widget = wibox.container.background,
-                                fg     = "#859289",
+                                fg     = "#83C09265",
                                 {
                                     widget = wibox.container.margin,
                                     top    = dpi(-1),
@@ -308,9 +308,6 @@ screen.connect_signal("request::desktop_decoration", function(s)
                     right  = dpi(0),
                     {
                         widget       = wibox.container.background,
-                        border_width = dpi(1),
-                        bg           = "#232A2E",
-                        border_color = "#232A2E",
                         shape        = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 2) end,
                         {
                             layout = wibox.layout.fixed.vertical,
@@ -339,7 +336,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
                                 right  = dpi(0),
                                 {
                                     widget = wibox.container.background,
-                                    fg     = "#859289",
+                                    fg     = "#83C09265",
                                     {
                                         widget = wibox.widget.textclock,
                                         format = "%m-%d",
@@ -395,9 +392,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
             top    = dpi(0),
             bottom = dpi(0),
             right  = dpi(0),
-            left   = dpi(6),
+            left   = dpi(3),
         },
-        height   = dpi(1428),
+        height   = dpi(1434),
         width    = dpi(80),
         screen   = s,
         widget   = {
@@ -437,11 +434,12 @@ screen.connect_signal("request::desktop_decoration", function(s)
                             widget_template = {
                                 id     = 'background_role',
                                 widget = wibox.container.background,
-                                forced_height = dpi(48),
-                                forced_width  = dpi(48),
+                                forced_height = dpi(51),
+                                forced_width  = dpi(51),
                                 {
                                     widget = wibox.container.margin,
-                                    top = dpi(7),
+                                    top = dpi(0),
+                                    left = dpi(-1),
                                     {
                                         layout = wibox.layout.flex.horizontal,
                                         {
@@ -632,18 +630,18 @@ awful.keyboard.append_global_keybindings({
             end
         end,
     },
-    awful.key {
-        modifiers   = { modkey },
-        keygroup    = "numpad",
-        description = "select layout directly",
-        group       = "layout",
-        on_press    = function (index)
-            local t = awful.screen.focused().selected_tag
-            if t then
-                t.layout = t.layouts[index] or t.layout
-            end
-        end,
-    }
+    -- awful.key {
+    --     modifiers   = { modkey },
+    --     keygroup    = "numpad",
+    --     description = "select layout directly",
+    --     group       = "layout",
+    --     on_press    = function (index)
+    --         local t = awful.screen.focused().selected_tag
+    --         if t then
+    --             t.layout = t.layouts[index] or t.layout
+    --         end
+    --     end,
+    -- }
 })
 
 
