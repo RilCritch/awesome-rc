@@ -442,16 +442,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
 
             { --[[-( Top Widgets )-]]--
                 layout = wibox.layout.fixed.vertical,
-                {
-                    widget = wibox.container.margin,
-                    top    = dpi(12),
-                    {
-                        widget = wibox.widget.textbox,
-                        markup = "<span foreground='#7FBBB3'>Tag</span>",
-                        halign = "center",
-                        font   = "Varino 18",
-                    },
-                },
+                -- {
+                --
+                -- },
                 -- {
                 --     widget = wibox.container.background,
                 --
