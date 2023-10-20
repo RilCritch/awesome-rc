@@ -119,10 +119,25 @@ RC.tags = main.tags()
 
 --[[ Wibar ]]--
 -- Keyboard layout indicator and switcher
-mykeyboardlayout = awful.widget.keyboardlayout()
+-- mykeyboardlayout = awful.widget.keyboardlayout()
 
 -- Create a textclock widget
-mytextclock = wibox.widget.textclock()
+-- mytextclock = wibox.widget.textclock()
+
+-- Tag index widget
+local mycurtagindex = wibox.widget {
+    widget = wibox.container.background,
+    {
+        widget = wibox.container.margin,
+        top    = dpi(12),
+        {
+            widget = wibox.widget.textbox,
+            markup = "<span foreground='#83C092'>" .. "1" .. "</span>",
+            halign = "center",
+            font   = "Varino 18",
+        },
+    },
+}
 
 -- NOTE: <s> signifies the screen the widgets will be added
 screen.connect_signal("request::desktop_decoration", function(s)
@@ -367,6 +382,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
                             widget_template = {
                                 id     = 'background_role',
                                 widget = wibox.container.background,
+                                shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 2) end,
                                 {
                                     id     = 'icon_role',
                                     widget = wibox.widget.imagebox,
@@ -376,11 +392,35 @@ screen.connect_signal("request::desktop_decoration", function(s)
                     },
                 },
             },
+
             { --[[-( Bottom Widgets )-]]--
-                layout = wibox.layout.fixed.vertical,
+                widget = wibox.container.place,
+                valign = "bottom",
+                halign = "center",
+                {
+                    widget = wibox.container.margin,
+                    top    = dpi(0),
+                    bottom = dpi(16),
+                    left   = dpi(16),
+                    right  = dpi(16),
+                    {
+                        widget = wibox.container.background,
+                        border_width = 2,
+                        border_color = beautiful.hotkeys_border_color,
+                        bg           = "#00000000",
+                        shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 3) end,
+                        {
+                            widget = wibox.widget.imagebox,
+                            image  = beautiful.awesome_icon,
+                            resize = true,
+                        },
+                    },
+                },
             },
         },
     }
+
+    -- RC.vars.curtag = s.selected_tag.index
 
     s.myleftwibox = awful.wibar {
         position     = "left",
@@ -398,54 +438,87 @@ screen.connect_signal("request::desktop_decoration", function(s)
         width    = dpi(80),
         screen   = s,
         widget   = {
-            widget = wibox.container.place,
-            valign = "center",
+            layout = wibox.layout.align.vertical,
+
+            { --[[-( Top Widgets )-]]--
+                layout = wibox.layout.fixed.vertical,
+                {
+                    widget = wibox.container.margin,
+                    top    = dpi(12),
+                    {
+                        widget = wibox.widget.textbox,
+                        markup = "<span foreground='#7FBBB3'>Tag</span>",
+                        halign = "center",
+                        font   = "Varino 18",
+                    },
+                },
+                -- {
+                --     widget = wibox.container.background,
+                --
+                --     {
+                --         widget = wibox.container.margin,
+                --         top    = dpi(12),
+                --         {
+                --             id     = "curtag",
+                --             widget = wibox.widget.textbox,
+                --             markup = "<span foreground='#83C092'>" .. RC.vars.curtag .. "</span>",
+                --             halign = "center",
+                --             font   = "Varino 18",
+                --         },
+                --     },
+                -- },
+            },
+
             { --[[-( Middle Widgets )-]]--
                 widget = wibox.container.place,
                 valign = "center",
                 {
-                    widget = wibox.container.margin,
-                    left   = dpi(0),
-                    right  = dpi(0),
+                    widget = wibox.container.place,
+                    valign = "center",
                     {
-                        widget = awful.widget.taglist {
-                            screen = s,
-                            filter  = awful.widget.taglist.filter.all,
-                            buttons = {
-                                awful.button({ }, 1, function(t) t:view_only() end),
-                                awful.button({ modkey }, 1, function(t)
-                                                                if client.focus then ---@diagnostic disable-line: undefined-global
-                                                                    client.focus:move_to_tag(t) ---@diagnostic disable-line: undefined-global
-                                                                end
-                                                            end),
-                                awful.button({ }, 3, awful.tag.viewtoggle),
-                                awful.button({ modkey }, 3, function(t)
-                                                                if client.focus then ---@diagnostic disable-line: undefined-global
-                                                                    client.focus:toggle_tag(t) ---@diagnostic disable-line: undefined-global
-                                                                end
-                                                            end),
-                                awful.button({ }, 4, function(t) awful.tag.viewprev(t.screen) end),
-                                awful.button({ }, 5, function(t) awful.tag.viewnext(t.screen) end),
-                            },
-                            base_layout = wibox.widget {
-                                layout  = wibox.layout.flex.vertical,
-                                spacing = dpi(24),
-                            },
-                            widget_template = {
-                                id     = 'background_role',
-                                widget = wibox.container.background,
-                                forced_height = dpi(51),
-                                forced_width  = dpi(51),
-                                {
-                                    widget = wibox.container.margin,
-                                    top = dpi(0),
-                                    left = dpi(-1),
+                        widget = wibox.container.margin,
+                        left   = dpi(0),
+                        right  = dpi(0),
+                        {
+                            widget = awful.widget.taglist {
+                                screen  = s,
+                                filter  = awful.widget.taglist.filter.all,
+                                buttons = {
+                                    awful.button({ }, 1, function(t) t:view_only() end),
+                                    awful.button({ modkey }, 1, function(t)
+                                                                    if client.focus then ---@diagnostic disable-line: undefined-global
+                                                                        client.focus:move_to_tag(t) ---@diagnostic disable-line: undefined-global
+                                                                    end
+                                                                end),
+                                    awful.button({ }, 3, awful.tag.viewtoggle),
+                                    awful.button({ modkey }, 3, function(t)
+                                                                    if client.focus then ---@diagnostic disable-line: undefined-global
+                                                                        client.focus:toggle_tag(t) ---@diagnostic disable-line: undefined-global
+                                                                    end
+                                                                end),
+                                    awful.button({ }, 4, function(t) awful.tag.viewprev(t.screen) end),
+                                    awful.button({ }, 5, function(t) awful.tag.viewnext(t.screen) end),
+                                },
+                                base_layout = wibox.widget {
+                                    layout  = wibox.layout.flex.vertical,
+                                    spacing = dpi(24),
+                                },
+                                widget_template = {
+                                    id            = 'background_role',
+                                    widget        = wibox.container.background,
+                                    forced_height = dpi(51),
+                                    forced_width  = dpi(51),
                                     {
-                                        layout = wibox.layout.flex.horizontal,
+                                        widget = wibox.container.margin,
+                                        top  = dpi(0),
+                                        left = dpi(-1),
                                         {
-                                            id     = 'text_role',
-                                            widget = wibox.widget.textbox,
-                                            halign = "center",
+                                            layout = wibox.layout.flex.horizontal,
+                                            {
+                                                id     = 'text_role',
+                                                widget = wibox.widget.textbox,
+                                                halign = "center",
+                                            },
                                         },
                                     },
                                 },
@@ -453,6 +526,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
                         },
                     },
                 },
+            },
+
+            {
+                widget = wibox.container.place,
             },
         },
     }
@@ -487,18 +564,28 @@ awful.keyboard.append_global_keybindings({
                   }
               end,
               {description = "lua execute prompt", group = "awesome"}),
-    awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
-              {description = "open a terminal", group = "programs"}),
     -- awful.key({ modkey, "Shift" },            "r",     function () awful.screen.focused().mypromptbox:run() end,
     --           {description = "run prompt", group = "launcher"}),
     -- awful.key({ modkey }, "p", function() menubar.show() end,
     --           {description = "show the menubar", group = "launcher"}),
 
     -- [[ My keybindings ]]--
-    awful.key({ modkey,         }, "b", function () awful.spawn(browser) end,
-              {description = "launch browser", group = "programs"}),
-    awful.key({ modkey,         }, "r", function () awful.spawn(launcher) end,
-              {description = "run application launcher", group = "launcher"}),
+    awful.key({ modkey,         }, "b",
+        function () awful.spawn(browser) end,
+        { description = "open browser", group = "programs" }
+    ),
+    awful.key({ modkey,         }, "Return",
+        function () awful.spawn(terminal) end,
+        { description = "open a terminal", group = "programs" }
+    ),
+    awful.key({ modkey,         }, "v",
+        function () awful.spawn(editor_cmd) end,
+        { description = "open vim", group = "programs" }
+    ),
+    awful.key({ modkey,         }, "r",
+        function () awful.spawn(launcher) end,
+        { description = "run application launcher", group = "launcher" }
+    ),
 })
 
 -- Tags related keybindings

@@ -53,16 +53,11 @@ function _M.get()
                     "pop-up",         -- e.g. google chrome's (detached) developer tools.
                 }
             },
-            properties = { 
+            properties = {
                 floating = true,
                 shape  = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 8) end,
             }
         },
-        {
-            rule       = { class = "Ulauncher" },
-            properties = { border_width = 0, floating = true },
-        },
-
         -- set firefox to always map on the tag named "2" on screen 1.
         -- {
         --     rule       = { class = "firefox"     },

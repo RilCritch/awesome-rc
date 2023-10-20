@@ -41,7 +41,7 @@ theme.border_color_marked = "#DBBC7F"
 theme.hotkeys_bg               = "#232A2EF8"
 theme.hotkeys_fg               = "#E5E6CF"
 theme.hotkeys_border_width     = dpi(2)
-theme.hotkeys_border_color     = "#DBBC7F"
+theme.hotkeys_border_color     = "#7FBBB3"
 theme.hotkeys_modifiers_fg     = "#9DA9A0BD"
 theme.hotkeys_label_bg         = "#48584E"
 theme.hotkeys_label_fg         = "#83C092"
@@ -177,7 +177,9 @@ theme.layoutlist_shape_border_color_selected = "#83C092"
 
 -- Generate Awesome icon:
 theme.awesome_icon = theme_assets.awesome_icon(
-    theme.menu_height, theme.bg_focus, theme.fg_focus
+    dpi(100),
+    "#00000000",
+    theme.hotkeys_border_color
 )
 
 -- Define the icon theme for application icons. If not set then the icons
