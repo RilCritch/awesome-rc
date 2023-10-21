@@ -16,6 +16,7 @@ local gears = require("gears") -- utilities such as color parsing and objects
 
 local gfs = require("gears.filesystem")
 local themes_path = gfs.get_xdg_config_home() .. "awesome/themes/"
+local bling_path =  gfs.get_xdg_config_home() .. "awesome/bling/"
 
 local theme = {}
 
@@ -40,7 +41,6 @@ theme.border_color_marked = "#DBBC7F"
 
 theme.hotkeys_bg               = "#232A2EF8"
 theme.hotkeys_fg               = "#E5E6CF"
-theme.hotkeys_border_width     = dpi(2)
 theme.hotkeys_border_color     = "#7FBBB3"
 theme.hotkeys_modifiers_fg     = "#9DA9A0BD"
 theme.hotkeys_label_bg         = "#48584E"
@@ -48,6 +48,31 @@ theme.hotkeys_label_fg         = "#83C092"
 theme.hotkeys_font             = "Varino 14"
 theme.hotkeys_description_font = "UbuntuNerdFont 14"
 
+--[[ Bling ]]--
+-- flash focus
+theme.flash_focus_start_opacity = 0.6
+theme.flash_focus_step          = 0.000001
+
+-- Window Switcher
+theme.window_switcher_widget_bg = "#232A2EF8"
+theme.window_switcher_widget_border_width = 3
+theme.window_switcher_widget_border_radius = 8
+theme.window_switcher_widget_border_color = "#7FBBB3"
+theme.window_switcher_clients_spacing = 20
+theme.window_switcher_client_icon_horizontal_spacing = 0
+theme.window_switcher_client_width = 400
+theme.window_switcher_client_height = 250
+theme.window_switcher_client_margins = 10
+theme.window_switcher_thumbnail_margins = 8
+theme.thumbnail_scale = true
+theme.window_switcher_name_margins = 16
+theme.window_switcher_name_valign = "top"
+theme.window_switcher_name_forced_width = 400
+theme.window_switcher_name_font = "UbuntuNerdFont 14"
+theme.window_switcher_name_normal_color = theme.fg_normal
+theme.window_switcher_name_focus_color = theme.border_color_active
+theme.window_switcher_icon_valign = "center"
+theme.window_switcher_icon_width = 0
 
 -- There are other variable sets
 -- overriding the default one when
@@ -108,43 +133,12 @@ theme.menu_submenu_icon = gears.color.recolor_image(
 theme.menu_height = dpi(32)
 theme.menu_width  = dpi(240)
 
--- You can add as many variables as
--- you wish and access them by using
--- beautiful.variable in your rc.lua
---theme.bg_widget = "#cc0000"
-
--- Define the image to load
--- theme.titlebar_close_button_normal = themes_path.."gruvbox/titlebar/close_normal.png"
--- theme.titlebar_close_button_focus  = themes_path.."gruvbox/titlebar/close_focus.png"
---
--- theme.titlebar_minimize_button_normal = themes_path.."gruvbox/titlebar/minimize_normal.png"
--- theme.titlebar_minimize_button_focus  = themes_path.."gruvbox/titlebar/minimize_focus.png"
---
--- theme.titlebar_ontop_button_normal_inactive = themes_path.."gruvbox/titlebar/ontop_normal_inactive.png"
--- theme.titlebar_ontop_button_focus_inactive  = themes_path.."gruvbox/titlebar/ontop_focus_inactive.png"
--- theme.titlebar_ontop_button_normal_active =   themes_path.."gruvbox/titlebar/ontop_normal_active.png"
--- theme.titlebar_ontop_button_focus_active  =   themes_path.."gruvbox/titlebar/ontop_focus_active.png"
---
--- theme.titlebar_sticky_button_normal_inactive = themes_path.."gruvbox/titlebar/sticky_normal_inactive.png"
--- theme.titlebar_sticky_button_focus_inactive  = themes_path.."gruvbox/titlebar/sticky_focus_inactive.png"
--- theme.titlebar_sticky_button_normal_active =   themes_path.."gruvbox/titlebar/sticky_normal_active.png"
--- theme.titlebar_sticky_button_focus_active  =   themes_path.."gruvbox/titlebar/sticky_focus_active.png"
---
--- theme.titlebar_floating_button_normal_inactive = themes_path.."gruvbox/titlebar/floating_normal_inactive.png"
--- theme.titlebar_floating_button_focus_inactive  = themes_path.."gruvbox/titlebar/floating_focus_inactive.png"
--- theme.titlebar_floating_button_normal_active =   themes_path.."gruvbox/titlebar/floating_normal_active.png"
--- theme.titlebar_floating_button_focus_active  =   themes_path.."gruvbox/titlebar/floating_focus_active.png"
---
--- theme.titlebar_maximized_button_normal_inactive = themes_path.."gruvbox/titlebar/maximized_normal_inactive.png"
--- theme.titlebar_maximized_button_focus_inactive  = themes_path.."gruvbox/titlebar/maximized_focus_inactive.png"
--- theme.titlebar_maximized_button_normal_active =   themes_path.."gruvbox/titlebar/maximized_normal_active.png"
--- theme.titlebar_maximized_button_focus_active  =   themes_path.."gruvbox/titlebar/maximized_focus_active.png"
-
 theme.wallpaper = themes_path.."everforest/wallpapers/DarkForestWithFog.png"
 
 local icon_color = "#232A2E"
 
 -- You can use your own layout icons like this:
+-- awesome builtin layouts
 theme.layout_fairh =      gears.color.recolor_image(themes_path.."gruvbox/layouts/fairhw.png"     , icon_color)
 theme.layout_fairv =      gears.color.recolor_image(themes_path.."gruvbox/layouts/fairvw.png"     , icon_color)
 theme.layout_floating  =  gears.color.recolor_image(themes_path.."gruvbox/layouts/floatingw.png"  , icon_color)
@@ -162,6 +156,14 @@ theme.layout_cornerne =   gears.color.recolor_image(themes_path.."gruvbox/layout
 theme.layout_cornersw =   gears.color.recolor_image(themes_path.."gruvbox/layouts/cornersww.png"  , icon_color)
 theme.layout_cornerse =   gears.color.recolor_image(themes_path.."gruvbox/layouts/cornersew.png"  , icon_color)
 
+-- bling layouts
+theme.layout_mstab =      gears.color.recolor_image(bling_path .."icons/layouts/mstab.png"        , icon_color)
+theme.layout_centered =   gears.color.recolor_image(bling_path .."icons/layouts/centered.png"     , icon_color)
+theme.layout_vertical =   gears.color.recolor_image(bling_path .."icons/layouts/vertical.png"     , icon_color)
+theme.layout_horizontal = gears.color.recolor_image(bling_path .."icons/layouts/horizontal.png"   , icon_color)
+theme.layout_equalarea =  gears.color.recolor_image(bling_path .."icons/layouts/equalarea.png"    , icon_color)
+theme.layout_deck =       gears.color.recolor_image(bling_path .."icons/layouts/deck.png"         , icon_color)
+
 -- Layout list theme
 theme.layoutlist_bg_normal   = "#83C09233"
 theme.layoutlist_bg_selected = "#83C092"
@@ -170,9 +172,9 @@ theme.layoutlist_disable_name = true
 
 theme.layoutlist_shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 2) end
 theme.layoutlist_shape_selected = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 2) end
-theme.layoutlist_shape_border_width = dpi(3)
+theme.layoutlist_shape_border_width = dpi(2)
 theme.layoutlist_shape_border_color = "#83C09233"
-theme.layoutlist_shape_border_width_selected = dpi(3)
+theme.layoutlist_shape_border_width_selected = dpi(2)
 theme.layoutlist_shape_border_color_selected = "#83C092"
 
 -- Generate Awesome icon:

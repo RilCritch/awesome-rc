@@ -4,6 +4,7 @@
 
 -- Imports
 local awful = require("awful")
+local bling = require("bling")
 
 -- Metatable
 local _M = {}
@@ -11,30 +12,14 @@ local _M = {}
 -- Defining layouts
 function _M.get ()
     local layouts = {
-        -- tile layouts
-        awful.layout.suit.tile.left,
-        awful.layout.suit.tile.bottom,
-        -- awful.layout.suit.tile.right,
-        -- awful.layout.suit.tile.top,
-
-        -- fair layouts
-        -- awful.layout.suit.fair.horizontal,
-        -- awful.layout.suit.fair,
-
-        -- corner layouts
-        -- awful.layout.suit.corner.ne,
-        -- awful.layout.suit.corner.nw,
-        -- awful.layout.suit.corner.sw,
-        -- awful.layout.suit.corner.se,
+        -- bling layouts
+        bling.layout.centered,
+        bling.layout.mstab,
+        bling.layout.equalarea,
 
         -- max layouts
         awful.layout.suit.max,
         awful.layout.suit.magnifier,
-        -- awful.layout.suit.max.fullscreen,
-
-        -- spiral layouts
-        -- awful.layout.suit.spiral,
-        -- awful.layout.suit.spiral.dwindle,
 
         -- floating
         awful.layout.suit.floating,

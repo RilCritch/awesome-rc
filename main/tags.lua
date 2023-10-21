@@ -36,16 +36,8 @@ function _M.get ()
         RC.layouts, RC.layouts, RC.layouts,
         RC.layouts, RC.layouts, RC.layouts,
     }
-    taginfo.master_width_factor = {
-        0.5, 0.5, 0.5,
-        0.5, 0.5, 0.5,
-        0.5, 0.5, 0.5,
-    }
-    taginfo.master_fill_policy = {
-        "master_width_factor", "master_width_factor", "master_width_factor",
-        "master_width_factor", "master_width_factor", "master_width_factor",
-        "master_width_factor", "master_width_factor", "master_width_factor",
-    }
+    taginfo.master_width_factor = 0.45
+    taginfo.master_fill_policy = "master_width_factor"
     taginfo.master_count = {
         1, 1, 1,
         1, 1, 1,
@@ -69,8 +61,8 @@ function _M.get ()
                 icon                = taginfo.icons[i],
                 layout              = taginfo.layout[i],
                 layouts             = taginfo.layouts[i],
-                master_width_facter = taginfo.master_width_factor[i],
-                master_fill_policy  = taginfo.master_fill_policy[i],
+                master_width_facter = taginfo.master_width_factor,
+                master_fill_policy  = taginfo.master_fill_policy,
                 master_count        = taginfo.master_count[i],
                 column_count        = taginfo.column_count[i],
                 gap_single_client   = true,
