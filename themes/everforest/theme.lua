@@ -50,8 +50,8 @@ theme.hotkeys_description_font = "UbuntuNerdFont 14"
 
 --[[ Bling ]]--
 -- flash focus
-theme.flash_focus_start_opacity = 0.6
-theme.flash_focus_step          = 0.000001
+theme.flash_focus_start_opacity = 0.4
+theme.flash_focus_step          = 0.02
 
 -- Window Switcher
 theme.window_switcher_widget_bg = "#232A2EF8"

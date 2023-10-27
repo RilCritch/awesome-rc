@@ -67,8 +67,8 @@ bling.widget.window_switcher.enable {
     cycle_key =                "d",
     previous_key =             "Left",
     next_key =                 "Right",
-    vim_previous_key =         "h",
-    vim_next_key =             "l",
+    vim_previous_key =         "l",
+    vim_next_key =             "h",
 }
 
 
@@ -477,7 +477,7 @@ awful.keyboard.append_global_keybindings({
         {description = "- move client focus right", group = "focus"}
     ),
 
-    awful.key({ modkey }, "d",
+    awful.key({ modkey }, "w",
         function()
             awesome.emit_signal("bling::window_switcher::turn_on")
         end,
