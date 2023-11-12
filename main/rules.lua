@@ -40,7 +40,8 @@ function _M.get()
                 instance = { "copyq", "pinentry" },
                 class    = {
                     "arandr", "blueman-manager", "gpick", "kruler", "sxiv",
-                    "tor browser", "wpa_gui", "veromix", "xtightvncviewer"
+                    "tor browser", "wpa_gui", "veromix", "xtightvncviewer",
+                    "Pavucontrol"
                 },
                 -- note that the name property shown in xprop might be set slightly after creation of the client
                 -- and the name shown there might not match defined rules here.

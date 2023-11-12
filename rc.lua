@@ -659,4 +659,4 @@ require("main.signals")
 
 
 --[[ Autostart ]]
-awful.spawn.with_shell("~/.config/awesome/scripts/autostart.sh")
+awful.spawn.with_shell(os.getenv("HOME") .. "/Repos/awesome-ril/scripts/autostart.sh")
