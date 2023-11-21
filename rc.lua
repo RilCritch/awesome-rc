@@ -52,24 +52,24 @@ beautiful.init(gears.filesystem.get_xdg_config_home() .. "awesome/themes/everfor
 
 
 --[[ Third Party Modules ]]--
-local bling = require("bling")
+-- local bling = require("bling")
 
 
 --[[ Bling Modules ]]--
 -- bling.module.flash_focus.enable()
-bling.widget.window_switcher.enable {
-    type = "thumbnail",
-
-    hide_window_switcher_key = "Escape",
-    minimize_key =             "n",
-    unminimize_key =           "N",
-    kill_client_key =          "q",
-    cycle_key =                "d",
-    previous_key =             "Left",
-    next_key =                 "Right",
-    vim_previous_key =         "l",
-    vim_next_key =             "h",
-}
+-- bling.widget.window_switcher.enable {
+--     type = "thumbnail",
+--
+--     hide_window_switcher_key = "Escape",
+--     minimize_key =             "n",
+--     unminimize_key =           "N",
+--     kill_client_key =          "q",
+--     cycle_key =                "d",
+--     previous_key =             "Left",
+--     next_key =                 "Right",
+--     vim_previous_key =         "l",
+--     vim_next_key =             "h",
+-- }
 
 
 --[[ Hotkeys popup ]]--
@@ -78,7 +78,7 @@ local hotkeys = require("awful.hotkeys_popup")
 local my_hotkeys_popup = hotkeys.widget.new({
     width        = 1600,
     height       = 1200,
-    border_width = 2,
+    border_width = 3,
     group_margin = 80,
     shape    = gears.shape.rounded_rect,
 })
@@ -451,28 +451,28 @@ awful.keyboard.append_global_keybindings({
     awful.key({ modkey }, "j",
         function()
             awful.client.focus.bydirection("down")
-            bling.module.flash_focus.flashfocus(client.focus)
+            -- bling.module.flash_focus.flashfocus(client.focus)
         end,
         {description = "- move client focus down", group = "focus"}
     ),
     awful.key({ modkey }, "k",
         function()
             awful.client.focus.bydirection("up")
-            bling.module.flash_focus.flashfocus(client.focus)
+            -- bling.module.flash_focus.flashfocus(client.focus)
         end,
         {description = "- move client focus up", group = "focus"}
     ),
     awful.key({ modkey }, "h",
         function()
             awful.client.focus.bydirection("left")
-            bling.module.flash_focus.flashfocus(client.focus)
+            -- bling.module.flash_focus.flashfocus(client.focus)
         end,
         {description = "- move client focus left", group = "focus"}
     ),
     awful.key({ modkey }, "l",
         function()
             awful.client.focus.bydirection("right")
-            bling.module.flash_focus.flashfocus(client.focus)
+            -- bling.module.flash_focus.flashfocus(client.focus)
         end,
         {description = "- move client focus right", group = "focus"}
     ),
@@ -659,4 +659,4 @@ require("main.signals")
 
 
 --[[ Autostart ]]
-awful.spawn.with_shell(os.getenv("HOME") .. "/Repos/awesome-ril/scripts/autostart.sh")
+awful.spawn.with_shell(os.getenv("HOME") .. "/Repos/awesome-rc/scripts/autostart.sh")

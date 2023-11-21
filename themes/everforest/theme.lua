@@ -124,11 +124,11 @@ theme.tasklist_disable_icon = true
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
-theme.menu_submenu_icon = themes_path.."icons/submenu.svg"
-theme.menu_submenu_icon = gears.color.recolor_image(
-    theme.menu_submenu_icon,
-    theme.fg_focus
-)
+-- theme.menu_submenu_icon = themes_path.."icons/submenu.svg"
+-- theme.menu_submenu_icon = gears.color.recolor_image(
+--     theme.menu_submenu_icon,
+--     theme.fg_focus
+-- )
 
 theme.menu_height = dpi(32)
 theme.menu_width  = dpi(240)
@@ -163,6 +163,16 @@ theme.layout_vertical =   gears.color.recolor_image(bling_path .."icons/layouts/
 theme.layout_horizontal = gears.color.recolor_image(bling_path .."icons/layouts/horizontal.png"   , icon_color)
 theme.layout_equalarea =  gears.color.recolor_image(bling_path .."icons/layouts/equalarea.png"    , icon_color)
 theme.layout_deck =       gears.color.recolor_image(bling_path .."icons/layouts/deck.png"         , icon_color)
+
+-- lain layouts
+theme.lain_icons         = os.getenv("HOME") ..
+                           "/.config/awesome/lain/icons/layout/default/"
+theme.layout_termfair    = theme.lain_icons .. "termfair.png"
+theme.layout_centerfair  = theme.lain_icons .. "centerfair.png"  -- termfair.center
+theme.layout_cascade     = theme.lain_icons .. "cascade.png"
+theme.layout_cascadetile = theme.lain_icons .. "cascadetile.png" -- cascade.tile
+theme.layout_centerwork  = gears.color.recolor_image(bling_path .."icons/layouts/centered.png"     , icon_color)
+theme.layout_centerworkh = theme.lain_icons .. "centerworkh.png" -- centerwork.horizontal
 
 -- Layout list theme
 theme.layoutlist_bg_normal   = "#83C09233"

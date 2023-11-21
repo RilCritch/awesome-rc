@@ -9,6 +9,5 @@ function run {
 
 # System Management
 run xfce4-power-manager &
-run picom --config /home/rc/Repos/awesome-ril/scripts/picom.conf &
-run /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-
+picom --config /home/rc/Repos/awesome-rc/scripts/picom.conf &
+run /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &
