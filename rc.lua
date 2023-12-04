@@ -52,6 +52,8 @@ beautiful.init(gears.filesystem.get_xdg_config_home() .. "awesome/themes/everfor
 
 
 --[[ Third Party Modules ]]--
+local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
+
 -- local bling = require("bling")
 
 
@@ -314,25 +316,22 @@ screen.connect_signal("request::desktop_decoration", function(s)
             layout = wibox.layout.align.vertical,
 
             { --[[-( Top Widgets )-]]-- {{{{
-                layout = wibox.layout.fixed.vertical,
-                -- {
-                --
-                -- },
-                -- {
-                --     widget = wibox.container.background,
-                --
-                --     {
-                --         widget = wibox.container.margin,
-                --         top    = dpi(12),
-                --         {
-                --             id     = "curtag",
-                --             widget = wibox.widget.textbox,
-                --             markup = "<span foreground='#83C092'>" .. RC.vars.curtag .. "</span>",
-                --             halign = "center",
-                --             font   = "Varino 18",
-                --         },
-                --     },
-                -- },
+                widget = wibox.container.margin,
+                top    = dpi(12),
+                bottom = dpi(12),
+                left   = dpi(12),
+                right  = dpi(12),
+                {
+                    layout = wibox.layout.fixed.vertical,
+                    volume_widget {
+                        widget_type = "arc",
+                        thickness   = 6,
+                        size        = 59,
+                        bg_color    = "#1E232680",
+                        main_color  = "#83C092",
+                        mute_color  = "#83C09288",
+                    },
+                },
             }, -- }}}}
 
             { --[[-( Middle Widgets )-]]-- {{{{
@@ -395,7 +394,83 @@ screen.connect_signal("request::desktop_decoration", function(s)
             }, -- }}}}
 
             { --[[-( Bottom Widgets )-]]-- {{{{
-                widget = wibox.container.place,
+                -- widget = wibox.container.place,
+                layout = wibox.layout.fixed.vertical,
+                -- widget = wibox.container.place,
+                -- valign = "top",
+                -- halign = "center",
+                -- {
+                --     widget = wibox.container.margin,
+                --     top    = dpi(0),
+                --     bottom = dpi(0),
+                --     left   = dpi(15),
+                --     right  = dpi(15),
+                --     {
+                --         widget        = wibox.container.background,
+                --         border_width  = 0,
+                --         border_color  = beautiful.border_color_active,
+                --         bg            = "#00000000",
+                --         shape         = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 3) end,
+                --         forced_width  = dpi(52),
+                --         {
+                --             widget = wibox.container.place,
+                --             halign = "center",
+                --             {
+                --                 widget = wibox.widget.textbox,
+                --                 markup = "<span foreground='#83C09265'></span>",
+                --                 font   = "Mononoki Nerd Font Mono 30",
+                --             },
+                --         },
+                --     },
+                -- },
+                {
+                    widget = wibox.container.margin,
+                    top    = -50,
+                    bottom = dpi(12),
+                    left   = dpi(12),
+                    right  = dpi(12),
+                    {
+                        widget        = wibox.container.background,
+                        border_width  = 0,
+                        border_color  = beautiful.hotkeys_border_color,
+                        bg            = "#00000000",
+                        -- bg            = beautiful.hotkeys_border_color,
+                        shape         = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 3) end,
+                        -- forced_width  = dpi(52),
+                        -- forced_height = dpi(52),
+                        {
+                            widget = wibox.container.margin,
+                            top    = dpi(6),
+                            {
+                                widget = wibox.container.place,
+                                halign = "center",
+                                -- valign = "center",
+                                {
+                                    widget = wibox.widget.textbox,
+                                    markup = "<span foreground='#7FBBB3'>RC</span>",
+                                    -- markup = "<span foreground='#232A2E'>RC</span>",
+                                    font   = "Varino 24",
+                                },
+                            },
+                        },
+                    },
+                },
+                {
+                    widget = wibox.container.margin,
+                    top    = -8,
+                    bottom = dpi(6),
+                    left   = dpi(0),
+                    right  = dpi(0),
+                    {
+                        widget = wibox.container.place,
+                        halign = "center",
+                        {
+                            widget = wibox.widget.textbox,
+                            markup = "<span foreground='#83C092AA'>DEBIAN</span>",
+                            font   = "Varino 10",
+                        }
+                    }
+                },
             }, -- }}}}
         },
     } -- }}}
@@ -476,14 +551,6 @@ awful.keyboard.append_global_keybindings({
         end,
         {description = "- move client focus right", group = "focus"}
     ),
-
-    awful.key({ modkey }, "w",
-        function()
-            awesome.emit_signal("bling::window_switcher::turn_on")
-        end,
-        {description = "- open window switcher", group = "focus"}
-    ),
-
     awful.key({ modkey, "Control" }, "n",
         function()
             local c = awful.client.restore()
