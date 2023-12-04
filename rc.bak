@@ -316,54 +316,21 @@ screen.connect_signal("request::desktop_decoration", function(s)
             layout = wibox.layout.align.vertical,
 
             { --[[-( Top Widgets )-]]-- {{{{
-                layout = wibox.layout.fixed.vertical,
+                widget = wibox.container.margin,
+                top    = dpi(12),
+                bottom = dpi(12),
+                left   = dpi(12),
+                right  = dpi(12),
                 {
-                    widget = wibox.container.margin,
-                    top    = dpi(8),
-                    bottom = dpi(12),
-                    left   = dpi(12),
-                    right  = dpi(12),
-                    {
-                        widget        = wibox.container.background,
-                        border_width  = 0,
-                        border_color  = beautiful.hotkeys_border_color,
-                        bg            = "#00000000",
-                        -- bg            = beautiful.hotkeys_border_color,
-                        shape         = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 3) end,
-                        -- forced_width  = dpi(52),
-                        -- forced_height = dpi(52),
-                        {
-                            widget = wibox.container.margin,
-                            top    = dpi(6),
-                            {
-                                widget = wibox.container.place,
-                                halign = "center",
-                                -- valign = "center",
-                                {
-                                    widget = wibox.widget.textbox,
-                                    markup = "<span foreground='#7FBBB3'>RC</span>",
-                                    -- markup = "<span foreground='#232A2E'>RC</span>",
-                                    font   = "Varino 24",
-                                },
-                            },
-                        },
+                    layout = wibox.layout.fixed.vertical,
+                    volume_widget {
+                        widget_type = "arc",
+                        thickness   = 6,
+                        size        = 59,
+                        bg_color    = "#1E232680",
+                        main_color  = "#83C092",
+                        mute_color  = "#83C09288",
                     },
-                },
-                {
-                    widget = wibox.container.margin,
-                    top    = -8,
-                    bottom = dpi(6),
-                    left   = dpi(0),
-                    right  = dpi(0),
-                    {
-                        widget = wibox.container.place,
-                        halign = "center",
-                        {
-                            widget = wibox.widget.textbox,
-                            markup = "<span foreground='#83C092AA'>DEBIAN</span>",
-                            font   = "Varino 10",
-                        }
-                    }
                 },
             }, -- }}}}
 
@@ -458,21 +425,51 @@ screen.connect_signal("request::desktop_decoration", function(s)
                 -- },
                 {
                     widget = wibox.container.margin,
-                    top    = dpi(6),
+                    top    = -50,
                     bottom = dpi(12),
                     left   = dpi(12),
                     right  = dpi(12),
                     {
-                        layout = wibox.layout.fixed.vertical,
-                        volume_widget {
-                            widget_type = "arc",
-                            thickness   = 3,
-                            size        = 60,
-                            bg_color    = "#1E232600",
-                            main_color  = "#83C092",
-                            mute_color  = "#83C09288",
+                        widget        = wibox.container.background,
+                        border_width  = 0,
+                        border_color  = beautiful.hotkeys_border_color,
+                        bg            = "#00000000",
+                        -- bg            = beautiful.hotkeys_border_color,
+                        shape         = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 3) end,
+                        -- forced_width  = dpi(52),
+                        -- forced_height = dpi(52),
+                        {
+                            widget = wibox.container.margin,
+                            top    = dpi(6),
+                            {
+                                widget = wibox.container.place,
+                                halign = "center",
+                                -- valign = "center",
+                                {
+                                    widget = wibox.widget.textbox,
+                                    markup = "<span foreground='#7FBBB3'>RC</span>",
+                                    -- markup = "<span foreground='#232A2E'>RC</span>",
+                                    font   = "Varino 24",
+                                },
+                            },
                         },
                     },
+                },
+                {
+                    widget = wibox.container.margin,
+                    top    = -8,
+                    bottom = dpi(6),
+                    left   = dpi(0),
+                    right  = dpi(0),
+                    {
+                        widget = wibox.container.place,
+                        halign = "center",
+                        {
+                            widget = wibox.widget.textbox,
+                            markup = "<span foreground='#83C092AA'>DEBIAN</span>",
+                            font   = "Varino 10",
+                        }
+                    }
                 },
             }, -- }}}}
         },
