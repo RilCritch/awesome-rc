@@ -15,21 +15,21 @@ function _M.get ()
     local layouts = {
         -- ultrawide
         lain.centerwork, -- master_width_policy
-        -- bling.vertical, -- master_width_policy; master_count
+        bling.vertical, -- master_width_policy; master_count
 
         -- corner
-        -- awful.layout.suit.corner.ne,
+        awful.layout.suit.corner.ne,
 
         -- stack
-        -- awful.layout.suit.tile.left,
-        -- awful.layout.suit.tile.bottom,
+        awful.layout.suit.tile.left,
+        awful.layout.suit.tile.bottom,
 
         -- max
-        -- awful.layout.suit.max,
+        awful.layout.suit.max,
         -- awful.layout.suit.max.fullscreen,
 
         -- floating
-        -- awful.layout.suit.floating,
+        awful.layout.suit.floating,
     }
 
     return layouts

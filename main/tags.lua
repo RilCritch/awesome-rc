@@ -44,11 +44,11 @@ function _M.get ()
         0.39, 0.39, 0.39,
         0.39, 0.39, 0.39,
     }
-    taginfo.master_fill_policy = {
-        0.2, 0.2, 0.2,
-        0.2, 0.2, 0.2,
-        0.2, 0.2, 0.2,
-    }
+    -- taginfo.master_fill_policy = {
+    --     0.2, 0.2, 0.2,
+    --     0.2, 0.2, 0.2,
+    --     0.2, 0.2, 0.2,
+    -- }
     taginfo.master_count = {
         1, 1, 1,
         1, 1, 1,
@@ -78,7 +78,7 @@ function _M.get ()
                 layout              = taginfo.layout[i],
                 layouts             = taginfo.layouts[i],
                 master_width_factor = taginfo.master_width_factor[i],
-                master_fill_policy  = taginfo.master_fill_policy[i],
+                master_fill_policy  = taginfo.master_width_factor[i],
                 master_count        = taginfo.master_count[i],
                 column_count        = taginfo.column_count[i],
                 gap_single_client   = taginfo.gap_single_client[i],

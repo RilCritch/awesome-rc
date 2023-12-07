@@ -46,13 +46,13 @@ local binding = {
     clientkeys    = require("binding.clientkeys"),    -- ./binding/clientkeys.lua
 }
 
-local utils = {
-    win = require("util.windows")
-}
+-- local utils = {
+--     win = require("util.windows")
+-- }
 
 -- test
-local x01 = utils.win.align_x(0.5, 1000)
-print(x01)
+-- local x01 = utils.win.align_x(0.5, 1000)
+-- print(x01)
 
 --  TODO: Need to figure out what do with this for modular approach
 -- initialize theme variables
