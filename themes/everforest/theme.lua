@@ -22,24 +22,26 @@ local theme = {}
 
 theme.font          = "MononokiNerdFont 15"
 
-theme.bg_normal     = "#232A2EDD"
+-- theme.bg_normal     = "#232A2EDD"
+-- theme.bg_normal     = "#1E2326DD"
+theme.bg_normal     = "#1E2326F0"
 theme.bg_focus      = "#7A8478"
 theme.bg_urgent     = "#5C3F45"
 theme.bg_minimize   = "#2D353B"
 theme.bg_systray    = theme.bg_normal
 
 theme.fg_normal     = "#E5E6CF"
-theme.fg_focus      = "#232A2E"
+theme.fg_focus      = "#1E2326"
 theme.fg_urgent     = "#E67E80"
 theme.fg_minimize   = "#4D585E"
 
 theme.useless_gap         = dpi(6)
 theme.border_width        = dpi(3)
-theme.border_color_normal = "#232A2E"
+theme.border_color_normal = "#1E2326"
 theme.border_color_active = "#83C092"
 theme.border_color_marked = "#DBBC7F"
 
-theme.hotkeys_bg               = "#232A2EF8"
+theme.hotkeys_bg               = "#1E2326f5"
 theme.hotkeys_fg               = "#E5E6CF"
 theme.hotkeys_border_color     = "#7FBBB3"
 theme.hotkeys_modifiers_fg     = "#9DA9A0BD"
@@ -98,12 +100,12 @@ theme.taglist_shape_empty = function(cr, w, h) gears.shape.rounded_rect(cr, w, h
 theme.taglist_shape_border_width_empty = dpi(3)
 theme.taglist_shape_border_width_focus = dpi(0)
 theme.taglist_shape_border_color_empty = '#83C09233'
-theme.taglist_fg_focus    = "#232A2E"
-theme.taglist_fg_occupied = "#232A2E"
+theme.taglist_fg_focus    = "#1E2326"
+theme.taglist_fg_occupied = "#1E2326"
 theme.taglist_fg_empty    = "#83C09233"
 theme.taglist_bg_focus    = "#83C092"
 theme.taglist_bg_occupied = "#83C09255"
-theme.taglist_bg_empty    = "#232A2E00"
+theme.taglist_bg_empty    = "#1E232600"
 -- theme.taglist_spacing = dpi(4)
 -- theme.taglist_font        = "CuteNotes 36"
 -- theme.taglist_font        = "Where My Keys 32"
@@ -135,7 +137,7 @@ theme.menu_width  = dpi(240)
 
 theme.wallpaper = themes_path.."everforest/wallpapers/DarkForestWithFog.png"
 
-local icon_color = "#232A2E"
+local icon_color = "#1E2326"
 
 -- You can use your own layout icons like this:
 -- awesome builtin layouts

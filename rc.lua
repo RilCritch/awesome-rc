@@ -12,6 +12,7 @@ pcall(require, "luarocks.loader")
 --[[ Awesome Modules ]]--
 local gears = require("gears") -- utilities such as color parsing and objects
 local awful = require("awful") -- everything related to window management
+require("awful.remote")
 
 require("awful.autofocus") -- Handling of focus when focused window disappears
 
@@ -152,9 +153,12 @@ RC.tags = main.tags()
 --[[ Wibar ]]--
 screen.connect_signal("request::desktop_decoration", function(s)
     s.myrightwibox = awful.wibar { -- {{{
-        position     = "right",
-        stretch      = true,
+        position = "right",
+        stretch  = true,
         width    = dpi(80),
+        opacity  = 0.95,
+        -- border_width = dpi(1),
+        -- border_color = "#000000",
         screen   = s,
         widget   = {
             layout = wibox.layout.align.vertical,
@@ -317,9 +321,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
     } -- }}}
 
     s.myleftwibox = awful.wibar { -- {{{
-        position     = "left",
-        stretch      = true,
+        position = "left",
+        stretch  = true,
         width    = dpi(80),
+        opacity  = 0.95,
         screen   = s,
         widget   = {
             layout = wibox.layout.align.vertical,
