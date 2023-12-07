@@ -11,7 +11,7 @@ local _M = {}
 _M.terminal = "kitty"
 
   -- terminal based editor
-_M.editor = os.getenv("EDITOR") or "nano"
+_M.editor = os.getenv("EDITOR") or "nvim" or "nano"
 
   -- command for running editor
 _M.editor_cmd = _M.terminal .. " -e " .. _M.editor

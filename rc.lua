@@ -479,7 +479,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     } -- }}}
 end)
 
---{{{--[[ Bindings ]]--
+--{{{ --[[ Bindings ]]--
 --[[ Global Mouse ]]--
 awful.mouse.append_global_mousebindings( binding.globalbuttons() )
 
@@ -498,6 +498,7 @@ awful.keyboard.append_global_keybindings({
     ),
 
     --[[ My keybindings ]]--
+    -- TODO: add more common applications
     awful.key({ modkey,         }, "b",
         function() awful.spawn(browser) end,
         { description = "- open browser", group = "programs" }
@@ -728,5 +729,11 @@ end)
 require("main.signals")
 
 
---[[ Autostart ]]
+--[[ Autostart ]]--
 awful.spawn.with_shell(os.getenv("HOME") .. "/Repos/awesome-rc/scripts/autostart.sh")
+
+--[[ Start Applications ]]--
+awful.spawn.once("firefox", { tag = screen[1].tags[5] })
+awful.spawn.once("kitty",   { tag = screen[1].tags[6] })
+awful.spawn.once("firefox youtube.com", { tag = screen[1].tags[7] })
+-- awful.spawn.once("discord", { tag = screen[1].tags[9] })
