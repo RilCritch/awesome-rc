@@ -59,6 +59,21 @@ function _M.get()
                 shape  = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 8) end,
             }
         },
+
+        -- scratchpad rules
+        -- {
+        --     id         = "scratches",
+        --     rule       = {
+        --         instance = "spad",
+        --     },
+        --     properties = {
+        --         focus     = awful.client.focus.filter,
+        --         raise     = true,
+        --         screen    = awful.screen.preferred,
+        --         placement = awful.placement.no_overlap+awful.placement.no_offscreen,
+        --         shape  = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 8) end,
+        --     }
+        -- },
         -- set firefox to always map on the tag named "2" on screen 1.
         -- {
         --     rule       = { class = "firefox"     },

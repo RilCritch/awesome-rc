@@ -16,10 +16,13 @@ function _M.get ()
     -- Info for tags
     local taginfo = {}
 
+    -- 1: 󰟒 󱁍   󰻺 󰴕  󱗜 ; 2: 󰛿    󰎞 󱞁 ;
+    -- 5: 󰈹 ; 6:   ;
+    -- 9:   ;
     taginfo.names = {
-        "󰢱", "", "",
-        "", "󰈹", "",
-        "󰑈", "", "",
+        "󰴕", "󱓧", "",
+        "󱩼", "", "󰂮",
+        "", "󱇣", "󰔍",
     }
     taginfo.icons = {
         nil, nil, nil,
@@ -36,8 +39,16 @@ function _M.get ()
         RC.layouts, RC.layouts, RC.layouts,
         RC.layouts, RC.layouts, RC.layouts,
     }
-    taginfo.master_width_factor = 0.45
-    taginfo.master_fill_policy = "master_width_factor"
+    taginfo.master_width_factor = {
+        0.39, 0.39, 0.39,
+        0.39, 0.39, 0.39,
+        0.39, 0.39, 0.39,
+    }
+    taginfo.master_fill_policy = {
+        0.2, 0.2, 0.2,
+        0.2, 0.2, 0.2,
+        0.2, 0.2, 0.2,
+    }
     taginfo.master_count = {
         1, 1, 1,
         1, 1, 1,
@@ -47,6 +58,11 @@ function _M.get ()
         1, 1, 1,
         1, 1, 1,
         1, 1, 1,
+    }
+    taginfo.gap_single_client = {
+        true, true, true,
+        true, true, true,
+        true, true, true,
     }
     taginfo.selected = {
         true,  false, false,
@@ -61,11 +77,11 @@ function _M.get ()
                 icon                = taginfo.icons[i],
                 layout              = taginfo.layout[i],
                 layouts             = taginfo.layouts[i],
-                master_width_facter = taginfo.master_width_factor,
-                master_fill_policy  = taginfo.master_fill_policy,
+                master_width_factor = taginfo.master_width_factor[i],
+                master_fill_policy  = taginfo.master_fill_policy[i],
                 master_count        = taginfo.master_count[i],
                 column_count        = taginfo.column_count[i],
-                gap_single_client   = true,
+                gap_single_client   = taginfo.gap_single_client[i],
                 gap                 = beautiful.useless_gap,
                 screen              = s,
                 selected            = taginfo.selected[i],

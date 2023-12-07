@@ -95,7 +95,7 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_sel(
 )
 theme.taglist_shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 4) end
 theme.taglist_shape_empty = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 4) end
-theme.taglist_shape_border_width_empty = dpi(2)
+theme.taglist_shape_border_width_empty = dpi(3)
 theme.taglist_shape_border_width_focus = dpi(0)
 theme.taglist_shape_border_color_empty = '#83C09233'
 theme.taglist_fg_focus    = "#232A2E"

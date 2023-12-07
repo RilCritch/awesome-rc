@@ -46,6 +46,14 @@ local binding = {
     clientkeys    = require("binding.clientkeys"),    -- ./binding/clientkeys.lua
 }
 
+local utils = {
+    win = require("util.windows")
+}
+
+-- test
+local x01 = utils.win.align_x(0.5, 1000)
+print(x01)
+
 --  TODO: Need to figure out what do with this for modular approach
 -- initialize theme variables
 beautiful.init(gears.filesystem.get_xdg_config_home() .. "awesome/themes/everforest/theme.lua")
@@ -54,25 +62,25 @@ beautiful.init(gears.filesystem.get_xdg_config_home() .. "awesome/themes/everfor
 --[[ Third Party Modules ]]--
 local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
 
--- local bling = require("bling")
+local bling_module = require("bling.module")
+
+local rubato = require ("rubato")
 
 
 --[[ Bling Modules ]]--
--- bling.module.flash_focus.enable()
--- bling.widget.window_switcher.enable {
---     type = "thumbnail",
---
---     hide_window_switcher_key = "Escape",
---     minimize_key =             "n",
---     unminimize_key =           "N",
---     kill_client_key =          "q",
---     cycle_key =                "d",
---     previous_key =             "Left",
---     next_key =                 "Right",
---     vim_previous_key =         "l",
---     vim_next_key =             "h",
--- }
-
+-- Scratchpads
+local term_scratch = bling_module.scratchpad {
+    command = "kitty --class spad",
+    rule = { instance = "spad" },
+    sticky = true,
+    above = true,
+    autoclose = false,
+    floating = true,
+    geometry = {x=360, y=90, height=900, width=1200},
+    reapply = true,
+    dont_focus_before_close  = true,
+    -- rubato = {x = anim_x, y = anim_y}
+}
 
 --[[ Hotkeys popup ]]--
 -- Popup widget that shows declared hotkeys w/ descriptions
@@ -86,13 +94,14 @@ local my_hotkeys_popup = hotkeys.widget.new({
 })
 
 -- Setting group colors
-my_hotkeys_popup:add_group_rules("awesome",  { color = "#7FBBB301" })
-my_hotkeys_popup:add_group_rules("client",   { color = "#7FBBB301" })
-my_hotkeys_popup:add_group_rules("focus",    { color = "#7FBBB301" })
-my_hotkeys_popup:add_group_rules("launcher", { color = "#7FBBB301" })
-my_hotkeys_popup:add_group_rules("layout",   { color = "#7FBBB301" })
-my_hotkeys_popup:add_group_rules("programs", { color = "#7FBBB301" })
-my_hotkeys_popup:add_group_rules("tag",      { color = "#7FBBB301" })
+my_hotkeys_popup:add_group_rules("awesome",   { color = "#7FBBB301" })
+my_hotkeys_popup:add_group_rules("client",    { color = "#7FBBB301" })
+my_hotkeys_popup:add_group_rules("focus",     { color = "#7FBBB301" })
+my_hotkeys_popup:add_group_rules("launcher",  { color = "#7FBBB301" })
+my_hotkeys_popup:add_group_rules("layout",    { color = "#7FBBB301" })
+my_hotkeys_popup:add_group_rules("programs",  { color = "#7FBBB301" })
+my_hotkeys_popup:add_group_rules("sratchpad", { color = "#7FBBB301" })
+my_hotkeys_popup:add_group_rules("tag",       { color = "#7FBBB301" })
 
 
 --[[ Variables ]]--
@@ -479,7 +488,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
     } -- }}}
 end)
 
---{{{ --[[ Bindings ]]--
+--{{{ --[[ Bindings ]]-
 --[[ Global Mouse ]]--
 awful.mouse.append_global_mousebindings( binding.globalbuttons() )
 
@@ -495,6 +504,10 @@ awful.keyboard.append_global_keybindings({
     awful.key({ modkey, "Control" }, "r",
         awesome.restart,
         {description = "- reload awesome", group = "awesome"}
+    ),
+    awful.key({ modkey, "Shift", "Control" }, "q",
+        awesome.quit,
+        {description = "- logout of awesome", group = "awesome"}
     ),
 
     --[[ My keybindings ]]--
@@ -514,6 +527,12 @@ awful.keyboard.append_global_keybindings({
     awful.key({ modkey,         }, "r",
         function() awful.spawn(launcher) end,
         { description = "- run application launcher", group = "launcher" }
+    ),
+
+    --[[ Scratchpads ]]--
+    awful.key({ modkey, "Shift" }, "t",
+        function() term_scratch:toggle() end,
+        { description = "- toggle terminal scratchpad", group = "sratchpad" }
     ),
 })
 
@@ -733,7 +752,17 @@ require("main.signals")
 awful.spawn.with_shell(os.getenv("HOME") .. "/Repos/awesome-rc/scripts/autostart.sh")
 
 --[[ Start Applications ]]--
-awful.spawn.once("firefox", { tag = screen[1].tags[5] })
-awful.spawn.once("kitty",   { tag = screen[1].tags[6] })
-awful.spawn.once("firefox youtube.com", { tag = screen[1].tags[7] })
+-- Tag 1 -- AwesomeWM
+-- Tag 2 -- Configuration
+-- Tag 3 -- Configuration
+-- Tag 4 -- Notes
+-- Tag 5 -- Browser
+-- awful.spawn.once("firefox https://chat.openai.com/", { tag = screen[1].tags[5] })
+-- awful.spawn.once("firefox", { tag = screen[1].tags[5] })
+-- Tag 6 -- Terminal
+-- awful.spawn.once("kitty",   { tag = screen[1].tags[6] })
+-- Tag 7
+-- awful.spawn.once("firefox https://www.youtube.com/", { tag = screen[1].tags[7] })
+-- Tag 8
+-- Tag 9
 -- awful.spawn.once("discord", { tag = screen[1].tags[9] })
