@@ -13,12 +13,14 @@ function _M.get ()
     -- table to return
     local tags = {}
 
+    -- commonly used values
+    local width = 40
+    local fav_lay = RC.layouts[1]
+    local sec_lay = RC.layouts[2]
+
     -- Info for tags
     local taginfo = {}
 
-    -- 1: 󰟒 󱁍   󰻺 󰴕  󱗜 ; 2: 󰛿    󰎞 󱞁 ;
-    -- 5: 󰈹 ; 6:   ;
-    -- 9:   ;
     taginfo.names = {
         "󰴕", "󱓧", "",
         "󱩼", "", "󰂮",
@@ -30,9 +32,9 @@ function _M.get ()
         nil, nil, nil,
     }
     taginfo.layout = {
-        RC.layouts[1], RC.layouts[1], RC.layouts[1],
-        RC.layouts[1], RC.layouts[1], RC.layouts[1],
-        RC.layouts[1], RC.layouts[1], RC.layouts[1],
+        fav_lay, fav_lay, fav_lay,
+        fav_lay, sec_lay, fav_lay,
+        fav_lay, sec_lay, sec_lay,
     }
     taginfo.layouts = {
         RC.layouts, RC.layouts, RC.layouts,
@@ -40,15 +42,10 @@ function _M.get ()
         RC.layouts, RC.layouts, RC.layouts,
     }
     taginfo.master_width_factor = {
-        0.39, 0.39, 0.39,
-        0.39, 0.39, 0.39,
-        0.39, 0.39, 0.39,
+        width, width, width,
+        width, width, width,
+        width, 0.66, width,
     }
-    -- taginfo.master_fill_policy = {
-    --     0.2, 0.2, 0.2,
-    --     0.2, 0.2, 0.2,
-    --     0.2, 0.2, 0.2,
-    -- }
     taginfo.master_count = {
         1, 1, 1,
         1, 1, 1,

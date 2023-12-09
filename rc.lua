@@ -757,17 +757,18 @@ require("main.signals")
 awful.spawn.with_shell(os.getenv("HOME") .. "/Repos/awesome-rc/scripts/autostart.sh")
 
 --[[ Start Applications ]]--
--- Tag 1 -- AwesomeWM
--- Tag 2 -- Configuration
--- Tag 3 -- Configuration
--- Tag 4 -- Notes
--- Tag 5 -- Browser
+-- Tag 1 -- Home(Misc)|AwesomeWM
+-- awful.spawn.once("kitty",   { tag = screen[1].tags[1] })
+-- awful.spawn.once("firefox", { tag = screen[1].tags[1] })
+
+-- Tag 2 -- Notes|Programming
+-- Tag 3 -- Settings|Configs (System)
+-- Tag 4 -- Configs|Settings (Terminal)
+-- Tag 5 -- Browser|Research
+-- Tag 6 -- Configs|Settings (Applications)
+-- Tag 7 -- Files|Planning
+-- Tag 8 -- Editing|Configs (Misc)
+-- Tag 9 -- Streaming|Chatting
 -- awful.spawn.once("firefox https://chat.openai.com/", { tag = screen[1].tags[5] })
--- awful.spawn.once("firefox", { tag = screen[1].tags[5] })
--- Tag 6 -- Terminal
--- awful.spawn.once("kitty",   { tag = screen[1].tags[6] })
--- Tag 7
 -- awful.spawn.once("firefox https://www.youtube.com/", { tag = screen[1].tags[7] })
--- Tag 8
--- Tag 9
 -- awful.spawn.once("discord", { tag = screen[1].tags[9] })
