@@ -8,6 +8,7 @@
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
+local os = require("os")
 
 --[[ Awesome Modules ]]--
 local gears = require("gears") -- utilities such as color parsing and objects
@@ -75,9 +76,22 @@ local term_scratch = bling_module.scratchpad {
     rule = { instance = "spad" },
     sticky = true,
     above = true,
-    autoclose = false,
+    autoclose = true,
     floating = true,
-    geometry = {x=360, y=90, height=900, width=1200},
+    geometry = { x=1660, y=90, height=1200, width=1800 },
+    reapply = true,
+    dont_focus_before_close  = true,
+    -- rubato = {x = anim_x, y = anim_y}
+}
+
+local clip_scratch = bling_module.scratchpad {
+    command = "kitty --class spad -e '/home/rc/Repos/scripts-ril/menus/fzf-clip.sh'",
+    rule = { instance = "spad" },
+    sticky = true,
+    above = true,
+    autoclose = true,
+    floating = true,
+    geometry = { x=1910, y=90, height=1200, width=1300 },
     reapply = true,
     dont_focus_before_close  = true,
     -- rubato = {x = anim_x, y = anim_y}
@@ -529,15 +543,27 @@ awful.keyboard.append_global_keybindings({
         function() awful.spawn(editor_cmd) end,
         { description = "- open vim", group = "programs" }
     ),
+    awful.key({ modkey,         }, "w",
+        function()
+            awful.spawn(terminal)
+            awful.spawn(terminal)
+            awful.spawn(browser)
+        end,
+        { description = "- open common work set up", group = "programs" }
+    ),
     awful.key({ modkey,         }, "r",
         function() awful.spawn(launcher) end,
         { description = "- run application launcher", group = "launcher" }
     ),
 
     --[[ Scratchpads ]]--
-    awful.key({ modkey, "Shift" }, "t",
+    awful.key({ modkey, "Shift" }, "Return",
         function() term_scratch:toggle() end,
         { description = "- toggle terminal scratchpad", group = "sratchpad" }
+    ),
+    awful.key({ modkey, "Control" } , "c",
+        function() clip_scratch:toggle() end,
+        { description = "- toggle clipboard", group = "launcher" }
     ),
 })
 
@@ -757,18 +783,13 @@ require("main.signals")
 awful.spawn.with_shell(os.getenv("HOME") .. "/Repos/awesome-rc/scripts/autostart.sh")
 
 --[[ Start Applications ]]--
--- Tag 1 -- Home(Misc)|AwesomeWM
--- awful.spawn.once("kitty",   { tag = screen[1].tags[1] })
--- awful.spawn.once("firefox", { tag = screen[1].tags[1] })
+-- Tag 1 --- Home | Misc | Awesome Config ---
+-- Tag 2 --- Notes | Programming | Script ---
+-- Tag 3 --- Sys Settings | Configuration ---
+-- Tag 4 --- Configuration | CLI Settings ---
+-- Tag 5 --- Browser | Research | ChatGPT ---
+-- Tag 6 --- Configuration | App Settings ---
+-- Tag 7 --- File | Git | Repo Management ---
+-- Tag 8 --- Media Editing | Misc Configs ---
+-- Tag 9 --- Music | Streaming | Chatting ---
 
--- Tag 2 -- Notes|Programming
--- Tag 3 -- Settings|Configs (System)
--- Tag 4 -- Configs|Settings (Terminal)
--- Tag 5 -- Browser|Research
--- Tag 6 -- Configs|Settings (Applications)
--- Tag 7 -- Files|Planning
--- Tag 8 -- Editing|Configs (Misc)
--- Tag 9 -- Streaming|Chatting
--- awful.spawn.once("firefox https://chat.openai.com/", { tag = screen[1].tags[5] })
--- awful.spawn.once("firefox https://www.youtube.com/", { tag = screen[1].tags[7] })
--- awful.spawn.once("discord", { tag = screen[1].tags[9] })

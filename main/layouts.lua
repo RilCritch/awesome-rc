@@ -5,7 +5,6 @@
 -- Imports
 local awful = require("awful")
 local lain = require("lain.layout")
-local bling = require("bling.layout")
 
 -- Metatable
 local _M = {}
@@ -13,14 +12,13 @@ local _M = {}
 -- Defining layouts
 function _M.get ()
     local layouts = {
-        -- ultrawide
+        -- Favorite
+        awful.layout.suit.tile.right,
+
+        -- Center
         lain.centerwork, -- master_width_policy
-        bling.vertical, -- master_width_policy; master_count
 
-        -- corner
-        awful.layout.suit.corner.ne,
-
-        -- stack
+        -- stack 
         awful.layout.suit.tile.left,
         awful.layout.suit.tile.bottom,
 

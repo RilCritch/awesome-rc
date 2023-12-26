@@ -2,6 +2,37 @@
 --[[ Tags (aka Workspaces) ]]--
 -------------------------------
 
+-- == == == == == Typical Tag Usage == == == == == --
+--[[ Tag 1 ]]--- Home | Misc | Awesome Config ---
+     -- 1 Browser (Misc)
+     -- 2 Terminals
+--[[ Tag 2 ]]--- Notes | Programming | Script ---
+     -- 1 Browser (ChatGPT)
+    -- 2 Terminals
+--[[ Tag 3 ]]--- Sys Settings | Configuration ---
+     -- 1 Browser (Search)
+     -- 2 Terminals
+--[[ Tag 4 ]]--- Configuration | CLI Settings ---
+     -- 1 Browser (Search)
+     -- 2 Terminals
+--[[ Tag 5 ]]--- Browser | Research | ChatGPT ---
+     -- 3 Browsers (Search, ChatGPT, Search)
+--[[ Tag 6 ]]--- Configuration | App Settings ---
+     -- 1 Browser
+     -- 2 Terminals
+--[[ Tag 7 ]]--- File | Git | Repo Management ---
+     -- 1 Browser (Github)
+     -- 1 File manager (Thunar)
+     -- 1 Terminal
+--[[ Tag 8 ]]--- Media Editing | Misc Configs ---
+     -- 1 Browser (Search)
+     -- 1 Terminal
+     -- Also load gimp or inkscape
+--[[ Tag 9 ]]--- Music | Streaming | Chatting ---
+     -- 1 Spotify
+     -- 1 Browser (Youtube)
+     -- 1 Discord
+
 -- Imports
 local awful = require("awful")
 local beautiful = require("beautiful")
@@ -14,7 +45,7 @@ function _M.get ()
     local tags = {}
 
     -- commonly used values
-    local width = 40
+    local width = 0.40
     local fav_lay = RC.layouts[1]
     local sec_lay = RC.layouts[2]
 
@@ -25,46 +56,55 @@ function _M.get ()
         "󰴕", "󱓧", "",
         "󱩼", "", "󰂮",
         "", "󱇣", "󰔍",
+        "",
     }
     taginfo.icons = {
         nil, nil, nil,
         nil, nil, nil,
         nil, nil, nil,
+        nil,
     }
     taginfo.layout = {
         fav_lay, fav_lay, fav_lay,
         fav_lay, sec_lay, fav_lay,
-        fav_lay, sec_lay, sec_lay,
+        sec_lay, fav_lay, sec_lay,
+        fav_lay,
     }
     taginfo.layouts = {
         RC.layouts, RC.layouts, RC.layouts,
         RC.layouts, RC.layouts, RC.layouts,
         RC.layouts, RC.layouts, RC.layouts,
+        RC.layouts,
     }
     taginfo.master_width_factor = {
         width, width, width,
         width, width, width,
-        width, 0.66, width,
+        width, width, 0.54,
+        0.50,
     }
     taginfo.master_count = {
         1, 1, 1,
         1, 1, 1,
         1, 1, 1,
+        1,
     }
     taginfo.column_count = {
-        1, 1, 1,
-        1, 1, 1,
-        1, 1, 1,
+        2, 2, 2,
+        2, 1, 2,
+        1, 2, 1,
+        1,
     }
     taginfo.gap_single_client = {
         true, true, true,
         true, true, true,
         true, true, true,
+        true,
     }
     taginfo.selected = {
         true,  false, false,
         false, false, false,
         false, false, false,
+        false,
     }
 
     -- creating tags
@@ -75,7 +115,7 @@ function _M.get ()
                 layout              = taginfo.layout[i],
                 layouts             = taginfo.layouts[i],
                 master_width_factor = taginfo.master_width_factor[i],
-                master_fill_policy  = taginfo.master_width_factor[i],
+                master_fill_policy  = "master_width_factor",
                 master_count        = taginfo.master_count[i],
                 column_count        = taginfo.column_count[i],
                 gap_single_client   = taginfo.gap_single_client[i],
