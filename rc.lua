@@ -9,6 +9,7 @@
 pcall(require, "luarocks.loader")
 
 local os = require("os")
+local ipairs = ipairs
 
 --[[ Awesome Modules ]]--
 local gears = require("gears") -- utilities such as color parsing and objects
@@ -72,8 +73,21 @@ local rubato = require ("rubato")
 --[[ Bling Modules ]]--
 -- Scratchpads
 local term_scratch = bling_module.scratchpad {
-    command = "kitty --class spad",
-    rule = { instance = "spad" },
+    command = "kitty --class spadone",
+    rule = { instance = "spadone" },
+    sticky = true,
+    above = true,
+    autoclose = true,
+    floating = true,
+    geometry = { x=1660, y=90, height=1200, width=1800 },
+    reapply = true,
+    dont_focus_before_close  = true,
+    -- rubato = {x = anim_x, y = anim_y}
+}
+
+local term_scratch_two = bling_module.scratchpad {
+    command = "kitty --class spadtwo",
+    rule = { instance = "spadtwo" },
     sticky = true,
     above = true,
     autoclose = true,
@@ -85,8 +99,8 @@ local term_scratch = bling_module.scratchpad {
 }
 
 local clip_scratch = bling_module.scratchpad {
-    command = "kitty --class spad -e '/home/rc/Repos/scripts-ril/menus/fzf-clip.sh'",
-    rule = { instance = "spad" },
+    command = "kitty --class spadthree -e '/home/rc/Repos/scripts-ril/menus/fzf-clip.sh'",
+    rule = { instance = "spadthree" },
     sticky = true,
     above = true,
     autoclose = true,
@@ -101,22 +115,22 @@ local clip_scratch = bling_module.scratchpad {
 -- Popup widget that shows declared hotkeys w/ descriptions
 local hotkeys = require("awful.hotkeys_popup")
 local my_hotkeys_popup = hotkeys.widget.new({
-    width        = 1600,
-    height       = 1200,
+    width        = 2560,
+    height       = 573,
     border_width = 3,
-    group_margin = 80,
+    group_margin = 65,
     shape    = gears.shape.rounded_rect,
 })
 
 -- Setting group colors
-my_hotkeys_popup:add_group_rules("awesome",   { color = "#7FBBB301" })
-my_hotkeys_popup:add_group_rules("client",    { color = "#7FBBB301" })
-my_hotkeys_popup:add_group_rules("focus",     { color = "#7FBBB301" })
-my_hotkeys_popup:add_group_rules("launcher",  { color = "#7FBBB301" })
-my_hotkeys_popup:add_group_rules("layout",    { color = "#7FBBB301" })
-my_hotkeys_popup:add_group_rules("programs",  { color = "#7FBBB301" })
-my_hotkeys_popup:add_group_rules("sratchpad", { color = "#7FBBB301" })
-my_hotkeys_popup:add_group_rules("tag",       { color = "#7FBBB301" })
+my_hotkeys_popup:add_group_rules("󱃻  Client Actions",    { color = "#83C092" })
+my_hotkeys_popup:add_group_rules("󰂮  Client Editing",    { color = "#7FBBB3" })
+my_hotkeys_popup:add_group_rules("󰲋  Client Navigation", { color = "#83C092" })
+my_hotkeys_popup:add_group_rules("󰌧  Launch Programs",   { color = "#7FBBB3" })
+my_hotkeys_popup:add_group_rules("󰽏  Open Popups",       { color = "#83C092" })
+my_hotkeys_popup:add_group_rules("󱢒  Tag Editing",       { color = "#7FBBB3" })
+my_hotkeys_popup:add_group_rules("󱤈  Tag Navigation",    { color = "#83C092" })
+my_hotkeys_popup:add_group_rules("  Window Manager",    { color = "#859289" })
 
 
 --[[ Variables ]]--
@@ -518,52 +532,48 @@ awful.mouse.append_global_mousebindings( binding.globalbuttons() )
 awful.keyboard.append_global_keybindings({
     awful.key({ modkey }, "s",
         function() my_hotkeys_popup:show_help() end,
-        {description="- show help", group="awesome"}
+        {description="-   Keys", group="󰽏  Open Popups"}
     ),
-    awful.key({ modkey, "Control" }, "r",
+    awful.key({ modkey, "Shift", "Control" }, "r",
         awesome.restart,
-        {description = "- reload awesome", group = "awesome"}
+        {description = "-   Reload", group = "  Window Manager"}
     ),
     awful.key({ modkey, "Shift", "Control" }, "q",
         awesome.quit,
-        {description = "- logout of awesome", group = "awesome"}
+        {description = "-   Logout", group = "  Window Manager"}
     ),
 
     --[[ My keybindings ]]--
     -- TODO: add more common applications
     awful.key({ modkey,         }, "b",
         function() awful.spawn(browser) end,
-        { description = "- open browser", group = "programs" }
+        { description = "-   Browser", group = "󰌧  Launch Programs" }
     ),
     awful.key({ modkey,         }, "Return",
         function() awful.spawn(terminal) end,
-        { description = "- open a terminal", group = "programs" }
+        { description = "-   Terminal", group = "󰌧  Launch Programs" }
     ),
     awful.key({ modkey,         }, "v",
         function() awful.spawn(editor_cmd) end,
-        { description = "- open vim", group = "programs" }
-    ),
-    awful.key({ modkey,         }, "w",
-        function()
-            awful.spawn(terminal)
-            awful.spawn(terminal)
-            awful.spawn(browser)
-        end,
-        { description = "- open common work set up", group = "programs" }
+        { description = "-   Neovim", group = "󰌧  Launch Programs" }
     ),
     awful.key({ modkey,         }, "r",
         function() awful.spawn(launcher) end,
-        { description = "- run application launcher", group = "launcher" }
+        { description = "-   Rofi", group = "󰌧  Launch Programs" }
     ),
 
     --[[ Scratchpads ]]--
-    awful.key({ modkey, "Shift" }, "Return",
+    awful.key({ modkey }, "t",
         function() term_scratch:toggle() end,
-        { description = "- toggle terminal scratchpad", group = "sratchpad" }
+        { description = "-   Terminal 1", group = "󰽏  Open Popups" }
+    ),
+    awful.key({ modkey }, "y",
+        function() term_scratch_two:toggle() end,
+        { description = "-   Terminal 2", group = "󰽏  Open Popups" }
     ),
     awful.key({ modkey, "Control" } , "c",
         function() clip_scratch:toggle() end,
-        { description = "- toggle clipboard", group = "launcher" }
+        { description = "-   Clipboard", group = "󰽏  Open Popups" }
     ),
 })
 
@@ -571,7 +581,7 @@ awful.keyboard.append_global_keybindings({
 awful.keyboard.append_global_keybindings({
     awful.key({ modkey,           }, "Escape",
         awful.tag.history.restore,
-        {description = "- go to previous tag", group = "tag"}
+        {description = "-   Previous tag", group = "󱤈  Tag Navigation"}
     ),
 })
 
@@ -582,38 +592,38 @@ awful.keyboard.append_global_keybindings({
             awful.client.focus.bydirection("down")
             -- bling.module.flash_focus.flashfocus(client.focus)
         end,
-        {description = "- move client focus down", group = "focus"}
+        {description = "-   Focus down", group = "󰲋  Client Navigation"}
     ),
     awful.key({ modkey }, "k",
         function()
             awful.client.focus.bydirection("up")
             -- bling.module.flash_focus.flashfocus(client.focus)
         end,
-        {description = "- move client focus up", group = "focus"}
+        {description = "-   Focus up", group = "󰲋  Client Navigation"}
     ),
     awful.key({ modkey }, "h",
         function()
             awful.client.focus.bydirection("left")
             -- bling.module.flash_focus.flashfocus(client.focus)
         end,
-        {description = "- move client focus left", group = "focus"}
+        {description = "-   Focus left", group = "󰲋  Client Navigation"}
     ),
     awful.key({ modkey }, "l",
         function()
             awful.client.focus.bydirection("right")
             -- bling.module.flash_focus.flashfocus(client.focus)
         end,
-        {description = "- move client focus right", group = "focus"}
+        {description = "-   Focus right", group = "󰲋  Client Navigation"}
     ),
-    awful.key({ modkey, "Control" }, "n",
+    awful.key({ modkey, "Shift" }, "Up",
         function()
             local c = awful.client.restore()
             -- Focus restored client
             if c then
-            c:activate { raise = true, context = "key.unminimize" }
+                c:activate { raise = true, context = "key.unminimize" }
             end
         end,
-        {description = "- restore minimized", group = "client"}
+        {description = "-   Restore minimized", group = "󱃻  Client Actions"}
     ),
 })
 
@@ -621,65 +631,64 @@ awful.keyboard.append_global_keybindings({
 awful.keyboard.append_global_keybindings({
     awful.key({ modkey, "Shift" }, "j",
         function() awful.client.swap.bydirection("down") end,
-        {description = "- swap with client below", group = "client"}
+        {description = "-   Swap down", group = "󰂮  Client Editing"}
     ),
     awful.key({ modkey, "Shift" }, "k",
         function() awful.client.swap.bydirection("up") end,
-        {description = "- swap with client above", group = "client"}
+        {description = "-   Swap up", group = "󰂮  Client Editing"}
     ),
     awful.key({ modkey, "Shift" }, "h",
         function() awful.client.swap.bydirection("left") end,
-        {description = "- swap with client on left", group = "client"}
+        {description = "-   Swap left", group = "󰂮  Client Editing"}
     ),
     awful.key({ modkey, "Shift" }, "l",
         function() awful.client.swap.bydirection("right") end,
-        {description = "- swap with client on right", group = "client"}
+        {description = "-   Swap right", group = "󰂮  Client Editing"}
     ),
 
-    awful.key({ modkey }, "e",
-        function() awful.tag.incmwfact(0.05)  end,
-        {description = "- increase master width factor", group = "layout"}
-    ),
     awful.key({ modkey, "Shift" }, "e",
-        function () awful.tag.incmwfact(-0.05) end,
-        {description = "- decrease master width factor", group = "layout"}
+        function() awful.tag.incmwfact(0.01)  end,
+        {description = "-   Inc master width", group = "󱢒  Tag Editing"}
+    ),
+    awful.key({ modkey, "Shift" }, "d",
+        function () awful.tag.incmwfact(-0.01) end,
+        {description = "-   Dec master width", group = "󱢒  Tag Editing"}
     ),
 
-    awful.key({ modkey }, "q",
+    awful.key({ modkey }, "]",
         function () awful.tag.incnmaster( 1, nil, true) end,
-        {description = "- increase the number of master clients", group = "layout"}
+        {description = "-   Inc master clients", group = "󱢒  Tag Editing"}
     ),
-    awful.key({ modkey, "Shift" }, "q",
+    awful.key({ modkey }, "[",
         function () awful.tag.incnmaster(-1, nil, true) end,
-        {description = "- decrease the number of master clients", group = "layout"}
+        {description = "-   Dec master clients", group = "󱢒  Tag Editing"}
     ),
 
-    awful.key({ modkey }, "p",
+    awful.key({ modkey, "Control" }, "e",
         function () awful.tag.incncol(1, nil, true) end,
-        {description = "- increase the number of columns", group = "layout"}
+        {description = "-   Inc columns", group = "󱢒  Tag Editing"}
     ),
-    awful.key({ modkey, "Shift" }, "p",
+    awful.key({ modkey, "Control" }, "d",
         function () awful.tag.incncol(-1, nil, true) end,
-        {description = "- decrease the number of columns", group = "layout"}
+        {description = "-   Dec columns", group = "󱢒  Tag Editing"}
     ),
 
-    awful.key({ modkey }, "space",
+    awful.key({ modkey, "Shift", "Control" }, "period",
         function () awful.layout.inc(1) end,
-        {description = "- select next", group = "layout"}
+        {description = "-   Next layout", group = "󱢒  Tag Editing"}
     ),
-    awful.key({ modkey, "Shift"}, "space",
+    awful.key({ modkey, "Shift", "Control" }, "comma",
         function () awful.layout.inc(-1) end,
-        {description = "- select previous", group = "layout"}
+        {description = "-   Prev layout", group = "󱢒  Tag Editing"}
     ),
 })
-
 
 awful.keyboard.append_global_keybindings({
     awful.key {
         modifiers   = { modkey },
         keygroup    = "numrow",
-        description = "- view only tag",
-        group       = "tag",
+        description = "-   View tag",
+        group       = "󱤈  Tag Navigation",
         on_press    = function (index)
             local screen = awful.screen.focused()
             local tag = screen.tags[index]
@@ -688,11 +697,24 @@ awful.keyboard.append_global_keybindings({
             end
         end,
     },
+    -- awful.key { -- How do add more tag key mappings
+    --     modifiers   = { modkey },
+    --     key         = "F1",
+    --     description = "-   View tag",
+    --     group       = "󱤈  Tag Navigation",
+    --     on_press    = function ()
+    --         local screen = awful.screen.focused()
+    --         local tag = screen.tags[11]
+    --         if tag then
+    --             tag:view_only()
+    --         end
+    --     end,
+    -- },
     awful.key {
         modifiers   = { modkey, "Control" },
         keygroup    = "numrow",
-        description = "- toggle tag",
-        group       = "tag",
+        description = "-   Toggle tag",
+        group       = "󱤈  Tag Navigation",
         on_press    = function (index)
             local screen = awful.screen.focused()
             local tag = screen.tags[index]
@@ -704,8 +726,8 @@ awful.keyboard.append_global_keybindings({
     awful.key {
         modifiers   = { modkey, "Shift" },
         keygroup    = "numrow",
-        description = "- move focused client to tag",
-        group       = "tag",
+        description = "-   Client to tag",
+        group       = "󱤈  Tag Navigation",
         on_press    = function (index)
             if client.focus then
                 local tag = client.focus.screen.tags[index]
@@ -727,43 +749,41 @@ end)
 --[[ Client Keys ]]--
 client.connect_signal("request::default_keybindings", function() ---@diagnostic disable-line: undefined-global
     awful.keyboard.append_client_keybindings({
-        awful.key({ modkey }, "f",
+        awful.key({ modkey, "Shift" }, "Right",
             function(c)
                 c.fullscreen = not c.fullscreen
                 c:raise()
             end,
-            {description = "- toggle fullscreen", group = "client"}
+            {description = "-   Fullscreen toggle", group = "󱃻  Client Actions"}
         ),
         -- TODO: change this
-        awful.key({ modkey, "Control" }, "space",
+        awful.key({ modkey, "Shift" }, "Left",
             awful.client.floating.toggle,
-            {description = "- toggle floating", group = "client"}
+            {description = "-   Floating toggle", group = "󱃻  Client Actions"}
         ),
 
         awful.key({ modkey, "Shift" }, "c",
             function(c) c:kill() end,
-                {description = "- close window", group = "client"}
+                {description = "-   Close window", group = "󱃻  Client Actions"}
         ),
 
-        awful.key({ modkey, "Control" }, "Return",
-            function(c) c:swap(awful.client.getmaster()) end,
-            {description = "- move to master", group = "client"}
-        ),
+        -- awful.key({ modkey, "Control" }, "Return",
+        --     function(c) c:swap(awful.client.getmaster()) end,
+        --     {description = "- move to master", group = "CLIENT"}
+        -- ),
 
-        awful.key({ modkey }, "n",
+        awful.key({ modkey, "Shift" }, "Down",
             function(c)
-                -- The client currently has the input focus, so it cannot be
-                -- minimized, since minimized clients can't have the focus.
                 c.minimized = true
-            end ,
-            {description = "- minimize", group = "client"}
+            end,
+            {description = "-   Minimize", group = "󱃻  Client Actions"}
         ),
-        awful.key({ modkey }, "m",
+        awful.key({ modkey, "Shift" }, "m",
             function(c)
                 c.maximized = not c.maximized
                 c:raise()
-            end ,
-            {description = "- (un)maximize", group = "client"}
+            end,
+            {description = "-   Maximize toggle", group = "󱃻  Client Actions"}
         ),
     })
 end)

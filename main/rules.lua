@@ -47,6 +47,7 @@ function _M.get()
                 -- and the name shown there might not match defined rules here.
                 name    = {
                     "event tester",  -- xev.
+                    "Swatch"
                 },
                 role    = {
                     "alarmwindow",    -- thunderbird's calendar.
@@ -57,6 +58,7 @@ function _M.get()
             properties = {
                 floating = true,
                 shape  = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 8) end,
+                placement = awful.placement.cenetered
             }
         },
 

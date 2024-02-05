@@ -46,8 +46,10 @@ theme.hotkeys_fg               = "#E5E6CF"
 theme.hotkeys_border_color     = "#7FBBB3"
 theme.hotkeys_modifiers_fg     = "#9DA9A0BD"
 theme.hotkeys_label_bg         = "#48584E"
-theme.hotkeys_label_fg         = "#83C092"
-theme.hotkeys_font             = "Varino 14"
+-- theme.hotkeys_label_fg         = "#83C092"
+theme.hotkeys_label_fg         = "#1E2326"
+-- theme.hotkeys_font             = "Varino 14"
+theme.hotkeys_font             = "SauceCodePro Nerd Font Bold 16"
 theme.hotkeys_description_font = "UbuntuNerdFont 14"
 
 --[[ Bling ]]--

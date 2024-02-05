@@ -3,32 +3,38 @@
 -------------------------------
 
 -- == == == == == Typical Tag Usage == == == == == --
---[[ Tag 1 ]]--- Home | Misc | Awesome Config ---
-     -- 1 Browser (Misc)
-     -- 2 Terminals
---[[ Tag 2 ]]--- Notes | Programming | Script ---
-     -- 1 Browser (ChatGPT)
-    -- 2 Terminals
---[[ Tag 3 ]]--- Sys Settings | Configuration ---
+--[[ Tag 1 ]]--- Home | Sys settings | Awesome Config ---
+     -- 1 Browser (Help with system settings or misc)
+     -- 2 Terminals (Config files)
+--[[ Tag 2 ]]--- Planning, Tasks, Calendar | Notes ---
+     -- 1 Browser (Google Calendar)
+     -- 2 Terminals (Tasks | Notes)
+--[[ Tag 3 ]]--- Files | Git, Github | Builds ---
+     -- 1 Browser (Github)
+     -- 1 File Manager (Thunar)
+     -- 2 Terminals (Repos | Builds )
+--[[ Tag 4 ]]--- Browser | Research | Notes ---
+     -- 2 Browsers (Search | ChatGPT)
+     -- 1 Terminal (Notes)
+
+--[[ Tag 5 ]]--- Programming, Scripting | Config ---
      -- 1 Browser (Search)
      -- 2 Terminals
---[[ Tag 4 ]]--- Configuration | CLI Settings ---
-     -- 1 Browser (Search)
-     -- 2 Terminals
---[[ Tag 5 ]]--- Browser | Research | ChatGPT ---
-     -- 3 Browsers (Search, ChatGPT, Search)
---[[ Tag 6 ]]--- Configuration | App Settings ---
+--[[ Tag 6 ]]--- Programming, Scripting | Config ---
      -- 1 Browser
      -- 2 Terminals
---[[ Tag 7 ]]--- File | Git | Repo Management ---
-     -- 1 Browser (Github)
-     -- 1 File manager (Thunar)
-     -- 1 Terminal
---[[ Tag 8 ]]--- Media Editing | Misc Configs ---
+--[[ Tag 7 ]]--- App, Hardware Settings | Config ---
      -- 1 Browser (Search)
-     -- 1 Terminal
-     -- Also load gimp or inkscape
---[[ Tag 9 ]]--- Music | Streaming | Chatting ---
+     -- 2 Terminal
+--[[ Tag 8 ]]--- App, Hardware Settings | Config ---
+     -- 1 Browser (Search)
+     -- 2 Terminal
+--[[ Tag 9 ]]--- Media Editing | Misc Configs ---
+     -- 1 Browser (Search)
+     -- 1 Terminal (Config files) or
+     -- 1 Media Editor (Inkscape | Photopea)
+
+--[[ Tag 10 ]]--- Music | Streaming | Chatting ---
      -- 1 Spotify
      -- 1 Browser (Youtube)
      -- 1 Discord
@@ -53,9 +59,9 @@ function _M.get ()
     local taginfo = {}
 
     taginfo.names = {
-        "󰴕", "󱓧", "",
-        "󱩼", "", "󰂮",
-        "", "󱇣", "󰔍",
+        "󰴕", "󰥪", "󰉋",
+        "", "󱩼", "󱩽",
+        "󰂮", "󰘙", "󱇣",
         "",
     }
     taginfo.icons = {
@@ -65,10 +71,10 @@ function _M.get ()
         nil,
     }
     taginfo.layout = {
-        fav_lay, fav_lay, fav_lay,
-        fav_lay, sec_lay, fav_lay,
+        fav_lay, fav_lay, sec_lay,
         sec_lay, fav_lay, sec_lay,
-        fav_lay,
+        fav_lay, sec_lay, sec_lay,
+        sec_lay,
     }
     taginfo.layouts = {
         RC.layouts, RC.layouts, RC.layouts,
@@ -80,7 +86,7 @@ function _M.get ()
         width, width, width,
         width, width, width,
         width, width, 0.54,
-        0.50,
+        width,
     }
     taginfo.master_count = {
         1, 1, 1,
@@ -90,9 +96,9 @@ function _M.get ()
     }
     taginfo.column_count = {
         2, 2, 2,
-        2, 1, 2,
-        1, 2, 1,
-        1,
+        2, 2, 2,
+        2, 2, 2,
+        2,
     }
     taginfo.gap_single_client = {
         true, true, true,
