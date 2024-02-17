@@ -71,9 +71,11 @@ local rubato = require ("rubato")
 
 
 --[[ Bling Modules ]]--
+-- variables
+local spad_term = "kitty -c '/home/rc/Repos/configs-ril/kitty/specialconfigs/scratchpad.conf'"
 -- Scratchpads
 local term_scratch = bling_module.scratchpad {
-    command = "kitty --class spadone",
+    command = spad_term .. " --class spadone",
     rule = { instance = "spadone" },
     sticky = true,
     above = true,
@@ -86,7 +88,7 @@ local term_scratch = bling_module.scratchpad {
 }
 
 local term_scratch_two = bling_module.scratchpad {
-    command = "kitty --class spadtwo",
+    command = spad_term .. " --class spadtwo",
     rule = { instance = "spadtwo" },
     sticky = true,
     above = true,
@@ -99,24 +101,38 @@ local term_scratch_two = bling_module.scratchpad {
 }
 
 local clip_scratch = bling_module.scratchpad {
-    command = "kitty --class spadthree -e '/home/rc/Repos/scripts-ril/menus/fzf-clip.sh'",
+    command = spad_term .. " --class spadthree -e '/home/rc/Repos/scripts-ril/menus/fzf-clip.sh'",
     rule = { instance = "spadthree" },
     sticky = true,
     above = true,
     autoclose = true,
     floating = true,
-    geometry = { x=1910, y=90, height=1200, width=1300 },
+    geometry = { x=1860, y=90, height=1200, width=1400 },
     reapply = true,
     dont_focus_before_close  = true,
     -- rubato = {x = anim_x, y = anim_y}
 }
 
+-- local repos_scratch = bling_module.scratchpad { -- TODO: Figure out why not working
+--     command = spad_term .. " --class spadfour -e '/home/rc/Repos/scripts-ril/menus/fzf-manage-repos.sh'",
+--     rule = { instance = "spadfour" },
+--     sticky = true,
+--     above = true,
+--     autoclose = true,
+--     floating = true,
+--     geometry = { x=2060, y=90, height=600, width=1000 },
+--     reapply = true,
+--     dont_focus_before_close  = true,
+--     -- rubato = {x = anim_x, y = anim_y}
+-- }
+
 --[[ Hotkeys popup ]]--
 -- Popup widget that shows declared hotkeys w/ descriptions
 local hotkeys = require("awful.hotkeys_popup")
 local my_hotkeys_popup = hotkeys.widget.new({
+    -- width        = 2560,
     width        = 2560,
-    height       = 573,
+    height       = 550,
     border_width = 3,
     group_margin = 65,
     shape    = gears.shape.rounded_rect,
@@ -126,10 +142,11 @@ local my_hotkeys_popup = hotkeys.widget.new({
 my_hotkeys_popup:add_group_rules("󱃻  Client Actions",    { color = "#83C092" })
 my_hotkeys_popup:add_group_rules("󰂮  Client Editing",    { color = "#7FBBB3" })
 my_hotkeys_popup:add_group_rules("󰲋  Client Navigation", { color = "#83C092" })
-my_hotkeys_popup:add_group_rules("󰌧  Launch Programs",   { color = "#7FBBB3" })
-my_hotkeys_popup:add_group_rules("󰽏  Open Popups",       { color = "#83C092" })
-my_hotkeys_popup:add_group_rules("󱢒  Tag Editing",       { color = "#7FBBB3" })
-my_hotkeys_popup:add_group_rules("󱤈  Tag Navigation",    { color = "#83C092" })
+my_hotkeys_popup:add_group_rules("󰌨  Layout Actions",    { color = "#7FBBB3" })
+my_hotkeys_popup:add_group_rules("󱢒  Layout Editing",    { color = "#83C092" })
+my_hotkeys_popup:add_group_rules("󰽏  Open Popups",       { color = "#7FBBB3" })
+my_hotkeys_popup:add_group_rules("󰌧  Run Programs",      { color = "#83C092" })
+my_hotkeys_popup:add_group_rules("󱤈  Tag Navigation",    { color = "#7FBBB3" })
 my_hotkeys_popup:add_group_rules("  Window Manager",    { color = "#859289" })
 
 
@@ -547,19 +564,19 @@ awful.keyboard.append_global_keybindings({
     -- TODO: add more common applications
     awful.key({ modkey,         }, "b",
         function() awful.spawn(browser) end,
-        { description = "-   Browser", group = "󰌧  Launch Programs" }
+        { description = "-   Browser", group = "󰌧  Run Programs" }
     ),
     awful.key({ modkey,         }, "Return",
         function() awful.spawn(terminal) end,
-        { description = "-   Terminal", group = "󰌧  Launch Programs" }
+        { description = "-   Terminal", group = "󰌧  Run Programs" }
     ),
     awful.key({ modkey,         }, "v",
         function() awful.spawn(editor_cmd) end,
-        { description = "-   Neovim", group = "󰌧  Launch Programs" }
+        { description = "-   Neovim", group = "󰌧  Run Programs" }
     ),
     awful.key({ modkey,         }, "r",
         function() awful.spawn(launcher) end,
-        { description = "-   Rofi", group = "󰌧  Launch Programs" }
+        { description = "-   Rofi", group = "󰌧  Run Programs" }
     ),
 
     --[[ Scratchpads ]]--
@@ -575,6 +592,10 @@ awful.keyboard.append_global_keybindings({
         function() clip_scratch:toggle() end,
         { description = "-   Clipboard", group = "󰽏  Open Popups" }
     ),
+    -- awful.key({ modkey, "Control" } , "r",
+    --     function() repos_scratch:toggle() end,
+    --     { description = "-   Mange Repos", group = "󰽏  Open Popups" }
+    -- ),
 })
 
 -- Tags related keybindings
@@ -648,38 +669,38 @@ awful.keyboard.append_global_keybindings({
 
     awful.key({ modkey, "Shift" }, "e",
         function() awful.tag.incmwfact(0.01)  end,
-        {description = "-   Inc master width", group = "󱢒  Tag Editing"}
+        {description = "-   Inc master width", group = "󱢒  Layout Editing"}
     ),
     awful.key({ modkey, "Shift" }, "d",
         function () awful.tag.incmwfact(-0.01) end,
-        {description = "-   Dec master width", group = "󱢒  Tag Editing"}
+        {description = "-   Dec master width", group = "󱢒  Layout Editing"}
     ),
 
     awful.key({ modkey }, "]",
         function () awful.tag.incnmaster( 1, nil, true) end,
-        {description = "-   Inc master clients", group = "󱢒  Tag Editing"}
+        {description = "-   Inc master clients", group = "󱢒  Layout Editing"}
     ),
     awful.key({ modkey }, "[",
         function () awful.tag.incnmaster(-1, nil, true) end,
-        {description = "-   Dec master clients", group = "󱢒  Tag Editing"}
+        {description = "-   Dec master clients", group = "󱢒  Layout Editing"}
     ),
 
     awful.key({ modkey, "Control" }, "e",
         function () awful.tag.incncol(1, nil, true) end,
-        {description = "-   Inc columns", group = "󱢒  Tag Editing"}
+        {description = "-   Inc columns", group = "󱢒  Layout Editing"}
     ),
     awful.key({ modkey, "Control" }, "d",
         function () awful.tag.incncol(-1, nil, true) end,
-        {description = "-   Dec columns", group = "󱢒  Tag Editing"}
+        {description = "-   Dec columns", group = "󱢒  Layout Editing"}
     ),
 
     awful.key({ modkey, "Shift", "Control" }, "period",
         function () awful.layout.inc(1) end,
-        {description = "-   Next layout", group = "󱢒  Tag Editing"}
+        {description = "-   Next layout", group = "󰌨  Layout Actions"}
     ),
     awful.key({ modkey, "Shift", "Control" }, "comma",
         function () awful.layout.inc(-1) end,
-        {description = "-   Prev layout", group = "󱢒  Tag Editing"}
+        {description = "-   Prev layout", group = "󰌨  Layout Actions"}
     ),
 })
 
