@@ -101,7 +101,8 @@ local term_scratch_two = bling_module.scratchpad {
 }
 
 local clip_scratch = bling_module.scratchpad {
-    command = spad_term .. " --class spadthree -e '/home/rc/Repos/scripts-ril/menus/fzf-clip.sh'",
+    command = spad_term .. " --class spadthree bash -i '/home/rc/Repos/scripts-ril/menus/fzf-clip.sh'",
+    -- command = spad_term .. " -o shell_integration=disabled --class spadthree " ..  "clipcat-menu",
     rule = { instance = "spadthree" },
     sticky = true,
     above = true,
@@ -113,18 +114,31 @@ local clip_scratch = bling_module.scratchpad {
     -- rubato = {x = anim_x, y = anim_y}
 }
 
--- local repos_scratch = bling_module.scratchpad { -- TODO: Figure out why not working
---     command = spad_term .. " --class spadfour -e '/home/rc/Repos/scripts-ril/menus/fzf-manage-repos.sh'",
---     rule = { instance = "spadfour" },
---     sticky = true,
---     above = true,
---     autoclose = true,
---     floating = true,
---     geometry = { x=2060, y=90, height=600, width=1000 },
---     reapply = true,
---     dont_focus_before_close  = true,
---     -- rubato = {x = anim_x, y = anim_y}
--- }
+local repos_scratch = bling_module.scratchpad {
+    command = spad_term .. " --class spadfour '/home/rc/Repos/scripts-ril/menus/fzf-manage-repos.sh'",
+    rule = { instance = "spadfour" },
+    sticky = true,
+    above = true,
+    autoclose = true,
+    floating = true,
+    geometry = { x=2060, y=30, height=1370, width=1000 },
+    reapply = true,
+    dont_focus_before_close  = true,
+    -- rubato = {x = anim_x, y = anim_y}
+}
+
+local calc_scratch = bling_module.scratchpad {
+    command = spad_term .. " --class spadfive kalker",
+    rule = { instance = "spadfive" },
+    sticky = true,
+    above = true,
+    autoclose = true,
+    floating = true,
+    geometry = { x=1860, y=30, height=1370, width=1400 },
+    reapply = true,
+    dont_focus_before_close  = true,
+    -- rubato = {x = anim_x, y = anim_y}
+}
 
 --[[ Hotkeys popup ]]--
 -- Popup widget that shows declared hotkeys w/ descriptions
@@ -539,14 +553,15 @@ screen.connect_signal("request::desktop_decoration", function(s)
 end)
 
 --{{{ --[[ Bindings ]]-
---[[ Global Mouse ]]--
+--[[ Global Mouse ]]-- {{{{
 awful.mouse.append_global_mousebindings( binding.globalbuttons() )
+-- }}}}
 
 
 --[[ Global Keys ]]--
 -- use xev to see button values for system
--- General Awesome keys
 awful.keyboard.append_global_keybindings({
+    -- General Awesome keys -- {{{{
     awful.key({ modkey }, "s",
         function() my_hotkeys_popup:show_help() end,
         {description="-   Keys", group="󰽏  Open Popups"}
@@ -559,8 +574,10 @@ awful.keyboard.append_global_keybindings({
         awesome.quit,
         {description = "-   Logout", group = "  Window Manager"}
     ),
+    -- }}}}
 
     --[[ My keybindings ]]--
+    -- Launching Programs -- {{{{
     -- TODO: add more common applications
     awful.key({ modkey,         }, "b",
         function() awful.spawn(browser) end,
@@ -578,8 +595,9 @@ awful.keyboard.append_global_keybindings({
         function() awful.spawn(launcher) end,
         { description = "-   Rofi", group = "󰌧  Run Programs" }
     ),
+    -- }}}}
 
-    --[[ Scratchpads ]]--
+    -- Scratchpads -- {{{{
     awful.key({ modkey }, "t",
         function() term_scratch:toggle() end,
         { description = "-   Terminal 1", group = "󰽏  Open Popups" }
@@ -592,21 +610,27 @@ awful.keyboard.append_global_keybindings({
         function() clip_scratch:toggle() end,
         { description = "-   Clipboard", group = "󰽏  Open Popups" }
     ),
-    -- awful.key({ modkey, "Control" } , "r",
-    --     function() repos_scratch:toggle() end,
-    --     { description = "-   Mange Repos", group = "󰽏  Open Popups" }
-    -- ),
+    awful.key({ modkey, "Control" } , "r",
+        function() repos_scratch:toggle() end,
+        { description = "-   Mange Repos", group = "󰽏  Open Popups" }
+    ),
+    awful.key({ modkey, "Control" } , "k",
+        function() calc_scratch:toggle() end,
+        { description = "-   Kalculator", group = "󰽏  Open Popups" }
+    ),
 })
+-- }}}}
 
--- Tags related keybindings
+-- Tags related keybindings -- {{{{
 awful.keyboard.append_global_keybindings({
     awful.key({ modkey,           }, "Escape",
         awful.tag.history.restore,
         {description = "-   Previous tag", group = "󱤈  Tag Navigation"}
     ),
 })
+-- }}}}
 
--- Focus related keybindings
+-- Focus related keybindings -- {{{{
 awful.keyboard.append_global_keybindings({
     awful.key({ modkey }, "j",
         function()
@@ -647,8 +671,9 @@ awful.keyboard.append_global_keybindings({
         {description = "-   Restore minimized", group = "󱃻  Client Actions"}
     ),
 })
+-- }}}}
 
--- Layout related keybindings
+-- Layout related keybindings -- {{{{
 awful.keyboard.append_global_keybindings({
     awful.key({ modkey, "Shift" }, "j",
         function() awful.client.swap.bydirection("down") end,
@@ -703,7 +728,9 @@ awful.keyboard.append_global_keybindings({
         {description = "-   Prev layout", group = "󰌨  Layout Actions"}
     ),
 })
+-- }}}}
 
+-- [[ Tag Keymaps ]] -- {{{{
 awful.keyboard.append_global_keybindings({
     awful.key {
         modifiers   = { modkey },
@@ -759,15 +786,17 @@ awful.keyboard.append_global_keybindings({
         end,
     },
 })
+-- }}}}
 
 
---[[ Client Mouse ]]--
+--[[ Client Mouse ]]-- {{{{
 client.connect_signal("request::default_mousebindings", function() ---@diagnostic disable-line: undefined-global
     awful.mouse.append_client_mousebindings( binding.clientbuttons() )
 end)
+-- }}}}
 
 
---[[ Client Keys ]]--
+--[[ Client Keys ]]-- {{{{
 client.connect_signal("request::default_keybindings", function() ---@diagnostic disable-line: undefined-global
     awful.keyboard.append_client_keybindings({
         awful.key({ modkey, "Shift" }, "Right",
@@ -808,6 +837,7 @@ client.connect_signal("request::default_keybindings", function() ---@diagnostic 
         ),
     })
 end)
+-- }}}}
 -- }}}
 
 --[[  Rules  ]]--
