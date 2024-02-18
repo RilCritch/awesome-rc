@@ -121,7 +121,7 @@ local repos_scratch = bling_module.scratchpad {
     above = true,
     autoclose = true,
     floating = true,
-    geometry = { x=2060, y=30, height=1370, width=1000 },
+    geometry = { x=1860, y=30, height=1370, width=1400 },
     reapply = true,
     dont_focus_before_close  = true,
     -- rubato = {x = anim_x, y = anim_y}
