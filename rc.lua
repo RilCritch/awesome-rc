@@ -595,6 +595,10 @@ awful.keyboard.append_global_keybindings({
         function() awful.spawn(launcher) end,
         { description = "-   Rofi", group = "󰌧  Run Programs" }
     ),
+    awful.key({ modkey,         }, "p",
+        function() awful.spawn("flatpak run org.kde.kcolorchooser") end,
+        { description = "-   Color Picker", group = "󰌧  Run Programs" }
+    ),
     -- }}}}
 
     -- Scratchpads -- {{{{
