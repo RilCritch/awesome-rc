@@ -3,7 +3,7 @@
 -------------------------------
 
 -- == == == == == Typical Tag Usage == == == == == --
---[[ Tag 1 ]]--- Home | Sys settings | Awesome Config ---
+--[[ Tag 1 ]]--- Home | Main Focus | Awesome Config ---
      -- 1 Browser (Help with system settings or misc)
      -- 2 Terminals (Config files)
 --[[ Tag 2 ]]--- Planning, Tasks, Calendar | Notes ---
@@ -16,7 +16,6 @@
 --[[ Tag 4 ]]--- Browser | Research | Notes ---
      -- 2 Browsers (Search | ChatGPT)
      -- 1 Terminal (Notes)
-
 --[[ Tag 5 ]]--- Programming, Scripting | Config ---
      -- 1 Browser (Search)
      -- 2 Terminals
@@ -33,7 +32,6 @@
      -- 1 Browser (Search)
      -- 1 Terminal (Config files) or
      -- 1 Media Editor (Inkscape | Photopea)
-
 --[[ Tag 10 ]]--- Music | Streaming | Chatting ---
      -- 1 Spotify
      -- 1 Browser (Youtube)
@@ -58,10 +56,11 @@ function _M.get ()
     -- Info for tags
     local taginfo = {}
 
+    -- 󰥪    󰉋
     taginfo.names = {
-        "󰴕", "󰥪", "󰉋",
-        "", "󱩼", "󱩽",
-        "󰂮", "󰘙", "󱇣",
+        "󰴕", "󰎞", "󰉋",
+        "󰾔", "󱩼", "󱩽",
+        "󰂮", "󰘙", "󰣕",
         "",
     }
     taginfo.icons = {

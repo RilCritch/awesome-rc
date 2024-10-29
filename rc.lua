@@ -1,19 +1,22 @@
 -- vim:fileencoding=utf-8:shiftwidth=4:tabstop=4:foldmethod=marker
 -- awesome_mode: api-level=4:screen=on
 
--- annoying warnings
-
---[[ LuaRocks ]]--
+--[[ LuaRocks ]]-- {{{
 -- If LuaRocks is installed, make sure that packages installed through it are
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
+-- }}}
 
 local os = require("os")
-local ipairs = ipairs
+
+-- local WidgetClass = require("util.widget_util.Widget")
+-- local widgetobject = WidgetClass:new(1000, 500)
+
 
 --[[ Awesome Modules ]]--
 local gears = require("gears") -- utilities such as color parsing and objects
 local awful = require("awful") -- everything related to window management
+local naughty = require("naughty")
 require("awful.remote")
 
 require("awful.autofocus") -- Handling of focus when focused window disappears
@@ -41,6 +44,8 @@ local main = {
     rules   = require("main.rules"),   -- ./main/rules.lua
 }
 
+local position = require("util.position_util.position_util")
+
 local binding = {
     globalbuttons = require("binding.globalbuttons"), -- ./binding/globalbuttons.lua
     clientbuttons = require("binding.clientbuttons"), -- ./binding/clientbuttons.lua
@@ -49,31 +54,25 @@ local binding = {
     clientkeys    = require("binding.clientkeys"),    -- ./binding/clientkeys.lua
 }
 
--- local utils = {
---     win = require("util.windows")
--- }
-
--- test
--- local x01 = utils.win.align_x(0.5, 1000)
--- print(x01)
-
 --  TODO: Need to figure out what do with this for modular approach
 -- initialize theme variables
 beautiful.init(gears.filesystem.get_xdg_config_home() .. "awesome/themes/everforest/theme.lua")
 
 
 --[[ Third Party Modules ]]--
-local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
+local volume_widget = require('lib.awesome-wm-widgets.volume-widget.volume')
 
-local bling_module = require("bling.module")
+local bling_module = require("lib.bling.module")
 
-local rubato = require ("rubato")
+-- local rubato = require ("lib.rubato")
+
 
 
 --[[ Bling Modules ]]--
 -- variables
 local spad_term = "kitty -c '/home/rc/Repos/configs-ril/kitty/specialconfigs/scratchpad.conf'"
--- Scratchpads
+
+-- Scratchpad terminals
 local term_scratch = bling_module.scratchpad {
     command = spad_term .. " --class spadone",
     rule = { instance = "spadone" },
@@ -99,7 +98,9 @@ local term_scratch_two = bling_module.scratchpad {
     dont_focus_before_close  = true,
     -- rubato = {x = anim_x, y = anim_y}
 }
+--
 
+-- Scratchpad scripts
 local clip_scratch = bling_module.scratchpad {
     command = spad_term .. " --class spadthree bash -i '/home/rc/Repos/scripts-ril/menus/fzf-clip.sh'",
     -- command = spad_term .. " -o shell_integration=disabled --class spadthree " ..  "clipcat-menu",
@@ -126,7 +127,9 @@ local repos_scratch = bling_module.scratchpad {
     dont_focus_before_close  = true,
     -- rubato = {x = anim_x, y = anim_y}
 }
+--
 
+-- Scratchpad tools
 local calc_scratch = bling_module.scratchpad {
     command = spad_term .. " --class spadfive kalker",
     rule = { instance = "spadfive" },
@@ -139,30 +142,53 @@ local calc_scratch = bling_module.scratchpad {
     dont_focus_before_close  = true,
     -- rubato = {x = anim_x, y = anim_y}
 }
+--
+
+-- Testing Scratchpad
+local test_scratch = bling_module.scratchpad {
+    command = spad_term .. " --class spadtest bash -i /home/rc/Repos/scripts-ril/cmdrunandwait 'xwininfo -id $WINDOWID'",
+    rule = { instance = "spadtest" },
+    sticky = true,
+    above = true,
+    autoclose = true,
+    floating = true,
+    -- geometry = { x=1860, y=30, height=500, width=1000 },
+    geometry = position.calculateGeometry{
+        x_align = "center", y_align = 0.2,
+        width = 1500, height = 750
+    },
+    reapply = true,
+    dont_focus_before_close  = true,
+    -- rubato = {x = anim_x, y = anim_y}
+}
+--
+
+-- Flash Focus
+bling_module.flash_focus.enable()
+-- 
 
 --[[ Hotkeys popup ]]--
 -- Popup widget that shows declared hotkeys w/ descriptions
 local hotkeys = require("awful.hotkeys_popup")
 local my_hotkeys_popup = hotkeys.widget.new({
     -- width        = 2560,
-    width        = 2560,
-    height       = 550,
+    width        = 1600, 
+    height       = 1000,
     border_width = 3,
-    group_margin = 65,
+    group_margin = 100,
     shape    = gears.shape.rounded_rect,
 })
 
 -- Setting group colors
-my_hotkeys_popup:add_group_rules("󱃻  Client Actions",    { color = "#83C092" })
-my_hotkeys_popup:add_group_rules("󰂮  Client Editing",    { color = "#7FBBB3" })
-my_hotkeys_popup:add_group_rules("󰲋  Client Navigation", { color = "#83C092" })
-my_hotkeys_popup:add_group_rules("󰌨  Layout Actions",    { color = "#7FBBB3" })
-my_hotkeys_popup:add_group_rules("󱢒  Layout Editing",    { color = "#83C092" })
-my_hotkeys_popup:add_group_rules("󰽏  Open Popups",       { color = "#7FBBB3" })
-my_hotkeys_popup:add_group_rules("󰌧  Run Programs",      { color = "#83C092" })
-my_hotkeys_popup:add_group_rules("󱤈  Tag Navigation",    { color = "#7FBBB3" })
-my_hotkeys_popup:add_group_rules("  Window Manager",    { color = "#859289" })
-
+my_hotkeys_popup:add_group_rules("󱃻  Client Actions",    { color = beautiful.blue })
+my_hotkeys_popup:add_group_rules("󰂮  Client Editing",    { color = beautiful.cyan })
+my_hotkeys_popup:add_group_rules("󰲋  Client Navigation", { color = beautiful.yellow })
+my_hotkeys_popup:add_group_rules("󰌨  Layout Actions",    { color = beautiful.blue })
+my_hotkeys_popup:add_group_rules("󱢒  Layout Editing",    { color = beautiful.cyan })
+my_hotkeys_popup:add_group_rules("󰽏  Open Popups",       { color = beautiful.yellow })
+my_hotkeys_popup:add_group_rules("󰌧  Run Programs",      { color = beautiful.blue })
+my_hotkeys_popup:add_group_rules("󱤈  Tag Navigation",    { color = beautiful.cyan })
+my_hotkeys_popup:add_group_rules("  Window Manager",    { color = beautiful.yellow })
 
 --[[ Variables ]]--
 
@@ -192,6 +218,11 @@ screen.connect_signal("request::wallpaper", function(s)
         widget = {
             {
                 image     = beautiful.wallpaper,
+                -- image     = gears.filesystem.get_random_file_from_dir(
+                --     "/home/rc/Repos/awesome-rc/themes/everforest/wallpapers",
+                --     {".jpg", ".png"},
+                --     true
+                -- ),
                 upscale   = true,
                 downscale = true,
                 widget    = wibox.widget.imagebox,
@@ -204,6 +235,17 @@ screen.connect_signal("request::wallpaper", function(s)
     }
 end)
 
+--[[ Timers ]]--
+-- gears.timer { -- wallpaper
+--     timout = 50000,
+--     autostart = true,
+--     callback = function ()
+--         for s in screen do
+--             s:emit_signal("request::wallpaper")
+--         end
+--     end,
+-- }
+
 
 --[[ Tags ~ Workspaces ]]--
 RC.tags = main.tags()
@@ -211,7 +253,7 @@ RC.tags = main.tags()
 
 --[[ Wibar ]]--
 screen.connect_signal("request::desktop_decoration", function(s)
-    s.myrightwibox = awful.wibar { -- {{{
+    s.myrightwibox = awful.wibar { --
         position = "right",
         stretch  = true,
         width    = dpi(80),
@@ -222,10 +264,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
         widget   = {
             layout = wibox.layout.align.vertical,
 
-            { --[[-( Top Widgets )-]]-- {{{{
+            { --[[-( Top Widgets )-]]--
                 layout = wibox.layout.fixed.vertical,
 
-                { --[[ Time Widget ]]-- {{{{{
+                { --[[ Time Widget ]]--
                     widget = wibox.container.margin,
                     top    = dpi(8),
                     left   = dpi(0),
@@ -247,7 +289,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
                             },
                             { -- ( AM | PM )
                                 widget = wibox.container.background,
-                                fg     = "#83C09265",
+                                fg     = "#83C092AA",
                                 {
                                     widget = wibox.container.margin,
                                     top    = dpi(-1),
@@ -273,9 +315,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
                             },
                         },
                     },
-                }, -- }}}}}
+                }, --
 
-                { --[[ Date Widget ]]-- {{{{{
+                { --[[ Date Widget ]]--
                     widget = wibox.container.margin,
                     top    = dpi(2),
                     left   = dpi(0),
@@ -310,7 +352,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
                                 right  = dpi(0),
                                 {
                                     widget = wibox.container.background,
-                                    fg     = "#83C09265",
+                                    fg     = "#83C092AA",
                                     {
                                         widget = wibox.widget.textclock,
                                         format = "%m-%d",
@@ -321,10 +363,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
                             },
                         },
                     },
-                }, -- }}}}}
-            }, -- }}}}
+                },
+            },
 
-            { --[[-( Middle Widgets )-]]--  {{{{
+            { --[[-( Middle Widgets )-]]--
                 widget = wibox.container.place,
                 valign = "center",
                 {
@@ -350,9 +392,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
                         },
                     },
                 },
-            }, -- }}}}
+            }, --
 
-            { --[[-( Bottom Widgets )-]]-- {{{{
+            { --[[-( Bottom Widgets )-]]--
                 widget = wibox.container.place,
                 valign = "bottom",
                 halign = "center",
@@ -364,10 +406,10 @@ screen.connect_signal("request::desktop_decoration", function(s)
                     right  = dpi(16),
                     {
                         widget = wibox.container.background,
-                        border_width = 2,
+                        border_width = 3,
                         border_color = beautiful.hotkeys_border_color,
                         bg           = "#00000000",
-                        shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 3) end,
+                        shape = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 4) end,
                         {
                             widget = wibox.widget.imagebox,
                             image  = beautiful.awesome_icon,
@@ -375,11 +417,11 @@ screen.connect_signal("request::desktop_decoration", function(s)
                         },
                     },
                 },
-            }, -- }}}}
+            },
         },
-    } -- }}}
+    }
 
-    s.myleftwibox = awful.wibar { -- {{{
+    s.myleftwibox = awful.wibar {
         position = "left",
         stretch  = true,
         width    = dpi(80),
@@ -388,7 +430,7 @@ screen.connect_signal("request::desktop_decoration", function(s)
         widget   = {
             layout = wibox.layout.align.vertical,
 
-            { --[[-( Top Widgets )-]]-- {{{{
+            { --[[-( Top Widgets )-]]--
                 layout = wibox.layout.fixed.vertical,
                 {
                     widget = wibox.container.margin,
@@ -433,14 +475,14 @@ screen.connect_signal("request::desktop_decoration", function(s)
                         halign = "center",
                         {
                             widget = wibox.widget.textbox,
-                            markup = "<span foreground='#83C092AA'>DEBIAN</span>",
+                            markup = "<span foreground='#83C092bb'>DEBIAN</span>",
                             font   = "Varino 10",
                         }
                     }
                 },
-            }, -- }}}}
+            }, --
 
-            { --[[-( Middle Widgets )-]]-- {{{{
+            { --[[-( Middle Widgets )-]]--
                 widget = wibox.container.place,
                 valign = "center",
                 {
@@ -497,9 +539,9 @@ screen.connect_signal("request::desktop_decoration", function(s)
                         },
                     },
                 },
-            }, -- }}}}
+            }, --
 
-            { --[[-( Bottom Widgets )-]]-- {{{{
+            { --[[-( Bottom Widgets )-]]--
                 -- widget = wibox.container.place,
                 layout = wibox.layout.fixed.vertical,
                 -- widget = wibox.container.place,
@@ -547,21 +589,20 @@ screen.connect_signal("request::desktop_decoration", function(s)
                         },
                     },
                 },
-            }, -- }}}}
+            }, --
         },
-    } -- }}}
+    } --
 end)
 
---{{{ --[[ Bindings ]]-
---[[ Global Mouse ]]-- {{{{
+--[[ Bindings ]]--
+--[[ Global Mouse ]]--
 awful.mouse.append_global_mousebindings( binding.globalbuttons() )
--- }}}}
 
 
 --[[ Global Keys ]]--
 -- use xev to see button values for system
 awful.keyboard.append_global_keybindings({
-    -- General Awesome keys -- {{{{
+    -- General Awesome keys --
     awful.key({ modkey }, "s",
         function() my_hotkeys_popup:show_help() end,
         {description="-   Keys", group="󰽏  Open Popups"}
@@ -574,10 +615,32 @@ awful.keyboard.append_global_keybindings({
         awesome.quit,
         {description = "-   Logout", group = "  Window Manager"}
     ),
-    -- }}}}
+
+    -- Volume Control --
+    awful.key({ }, "XF86AudioMute", function ()
+        awful.util.spawn("amixer set Master toggle") end
+    ),
+    awful.key({ }, "XF86AudioLowerVolume", function ()
+        awful.util.spawn("amixer set Master 1%- unmute") end
+    ),
+    awful.key({ }, "XF86AudioRaiseVolume", function ()
+        awful.util.spawn("amixer set Master 1%+ unmute") end
+    ),
+
+    -- Media Control --
+    awful.key({ }, "XF86AudioPlay", function ()
+        awful.util.spawn("playerctl play-pause")
+    end),
+    awful.key({ }, "XF86AudioPrev", function ()
+        awful.util.spawn("playerctl previous")
+    end),
+    awful.key({ }, "XF86AudioNext", function ()
+        awful.util.spawn("playerctl next")
+    end),
+
 
     --[[ My keybindings ]]--
-    -- Launching Programs -- {{{{
+    -- Launching Programs --
     -- TODO: add more common applications
     awful.key({ modkey,         }, "b",
         function() awful.spawn(browser) end,
@@ -595,13 +658,12 @@ awful.keyboard.append_global_keybindings({
         function() awful.spawn(launcher) end,
         { description = "-   Rofi", group = "󰌧  Run Programs" }
     ),
-    awful.key({ modkey,         }, "p",
+    awful.key({ modkey, "Shift" }, "p",
         function() awful.spawn("flatpak run org.kde.kcolorchooser") end,
         { description = "-   Color Picker", group = "󰌧  Run Programs" }
     ),
-    -- }}}}
 
-    -- Scratchpads -- {{{{
+    -- Scratchpads --
     awful.key({ modkey }, "t",
         function() term_scratch:toggle() end,
         { description = "-   Terminal 1", group = "󰽏  Open Popups" }
@@ -622,19 +684,21 @@ awful.keyboard.append_global_keybindings({
         function() calc_scratch:toggle() end,
         { description = "-   Kalculator", group = "󰽏  Open Popups" }
     ),
+    awful.key({ modkey, "Control", "Shift" }, "t",
+        function() test_scratch:toggle() end,
+        { description = "-   Test Sractch", group = "󰽏  Open Popups" }
+    ),
 })
--- }}}}
 
--- Tags related keybindings -- {{{{
+-- Tags related keybindings --
 awful.keyboard.append_global_keybindings({
     awful.key({ modkey,           }, "Escape",
         awful.tag.history.restore,
         {description = "-   Previous tag", group = "󱤈  Tag Navigation"}
     ),
 })
--- }}}}
 
--- Focus related keybindings -- {{{{
+-- Focus related keybindings --
 awful.keyboard.append_global_keybindings({
     awful.key({ modkey }, "j",
         function()
@@ -675,9 +739,8 @@ awful.keyboard.append_global_keybindings({
         {description = "-   Restore minimized", group = "󱃻  Client Actions"}
     ),
 })
--- }}}}
 
--- Layout related keybindings -- {{{{
+-- Layout related keybindings --
 awful.keyboard.append_global_keybindings({
     awful.key({ modkey, "Shift" }, "j",
         function() awful.client.swap.bydirection("down") end,
@@ -732,9 +795,8 @@ awful.keyboard.append_global_keybindings({
         {description = "-   Prev layout", group = "󰌨  Layout Actions"}
     ),
 })
--- }}}}
 
--- [[ Tag Keymaps ]] -- {{{{
+-- [[ Tag Keymaps ]] --
 awful.keyboard.append_global_keybindings({
     awful.key {
         modifiers   = { modkey },
@@ -790,17 +852,16 @@ awful.keyboard.append_global_keybindings({
         end,
     },
 })
--- }}}}
 
 
---[[ Client Mouse ]]-- {{{{
+--[[ Client Mouse ]]--
 client.connect_signal("request::default_mousebindings", function() ---@diagnostic disable-line: undefined-global
     awful.mouse.append_client_mousebindings( binding.clientbuttons() )
 end)
--- }}}}
+--
 
 
---[[ Client Keys ]]-- {{{{
+--[[ Client Keys ]]--
 client.connect_signal("request::default_keybindings", function() ---@diagnostic disable-line: undefined-global
     awful.keyboard.append_client_keybindings({
         awful.key({ modkey, "Shift" }, "Right",
@@ -841,8 +902,12 @@ client.connect_signal("request::default_keybindings", function() ---@diagnostic 
         ),
     })
 end)
--- }}}}
--- }}}
+
+-- [[ Modal Keybindings ]] --
+-- require("binding.modal")
+
+-- [[ Popups ]] --
+-- require("popups.power-menu.lua")
 
 --[[  Rules  ]]--
 ruled.client.connect_signal("request::rules", function()
@@ -867,4 +932,3 @@ awful.spawn.with_shell(os.getenv("HOME") .. "/Repos/awesome-rc/scripts/autostart
 -- Tag 7 --- File | Git | Repo Management ---
 -- Tag 8 --- Media Editing | Misc Configs ---
 -- Tag 9 --- Music | Streaming | Chatting ---
-

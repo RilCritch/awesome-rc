@@ -1,0 +1,74 @@
+-- vim:fileencoding=utf-8:shiftwidth=4:tabstop=4:foldmethod=marker
+
+--  -> Create pop ups easily using this utility function
+
+-- [[ Modules ]] --
+
+local wibox = require("wibox")
+local awful = require("awful")
+local theme = require("beautiful")
+local gears = require("gears")
+local gfs   = require("gears.filesystem")
+local dpi   = require("beautiful.xresources.apply_dpi")
+
+local a_buttons = require("lib.awesome-buttons.awesome-buttons")
+local win_util = require("util.win_utils")
+local text_util = require("util.text_style")
+
+
+-- [[ Variables ]] --
+
+-- Utility
+local s_geometry = win_util.get_geometry()
+
+
+-- Defaults
+local default = {}
+
+-- Size
+default.width  = dpi(s_geometry.width / 3)
+default.height = dpi(s_geometry.height / 3)
+-- default.x = win_util.align_x(0.5, default.width)
+-- default.y = win_util.align_y(0.5, default.height)
+
+-- Content and Styling
+default.title      = "POPUP WIDGET"
+default.title_font = theme.special_font .. " 16"
+default.font       = theme.main_font .. " 14"
+default.content    = wibox.widget {
+    widget = wibox.widget.textbox,
+    markup = text_util.build_markup({ text = "Main content goes here, please provide a widget", fg = theme.fg_important }),
+    wrap   = "word",
+    valign = "center",
+    halign = "center",
+    font   = default.font
+}
+
+-- Spacing and Alignment
+default.spacing = dpi(10)
+default.layout  = wibox.layout.ratio.vertical()
+
+
+-- Popup widget components
+local popup_title = wibox.widget {
+    widget = wibox.widget.textbox,
+    markup = " ",
+    halign = "center",
+}
+
+-- [[ Utility Functions ]] --
+
+
+-- [[ Popup Module ]] --
+local popup = {}
+
+-- table arguments
+local size = {
+    width = default.width,
+    height = default.height
+}
+
+
+-- Contructor
+function popup.new(title, size)
+end

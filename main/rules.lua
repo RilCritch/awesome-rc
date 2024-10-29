@@ -4,7 +4,6 @@
 
 -- Imports
 local awful = require("awful")
-local ruled = require("ruled")
 local gears = require("gears")
 -- local beautiful = require("beautiful")
 
@@ -41,13 +40,15 @@ function _M.get()
                 class    = {
                     "arandr", "blueman-manager", "gpick", "kruler", "sxiv",
                     "tor browser", "wpa_gui", "veromix", "xtightvncviewer",
-                    "Pavucontrol"
+                    "Pavucontrol", "xencelabs"
                 },
                 -- note that the name property shown in xprop might be set slightly after creation of the client
                 -- and the name shown there might not match defined rules here.
                 name    = {
                     "event tester",  -- xev.
-                    "Swatch"
+                    "Swatch",
+                    "Xencelabs",
+                    "Dialog"
                 },
                 role    = {
                     "alarmwindow",    -- thunderbird's calendar.
@@ -57,7 +58,7 @@ function _M.get()
             },
             properties = {
                 floating = true,
-                shape  = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 8) end,
+                -- shape  = function(cr, w, h) gears.shape.rounded_rect(cr, w, h, 8) end,
                 placement = awful.placement.cenetered
             }
         },
